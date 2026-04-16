@@ -7,7 +7,6 @@
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Ops Hub">
     <link rel="apple-touch-icon" href="icon.png">
 
     <style>
@@ -53,12 +52,7 @@
         .blue-btn { background: #1e3a8a !important; }
         .grey-btn { background: #262626 !important; }
         .full-width { grid-column: span 2; }
-
-        /* Assessment View */
         .hidden { display: none; }
-        .assessment-view { background: rgba(0,0,0,0.9); padding: 20px; border-radius: 20px; border: 2px solid #ff4500; margin-top: 20px; }
-        .group { margin-bottom: 15px; text-align: left; }
-        .group label { display: block; color: #ffaa00; font-size: 0.8em; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
         textarea { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; }
         .nav-btn { background: #444; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 10px; }
     </style>
@@ -66,13 +60,12 @@
 <body>
 
 <div class="container">
-    
     <div id="dashboard">
         <div class="header"><h1>OPS HUB</h1></div>
 
         <h4>Active Response</h4>
         <div class="btn-grid">
-            <a onclick="smartLink('iamresponding://', 'https://www.iarservices.com/')" class="btn red-btn"><span>🚨</span> IaR App</a>
+            <a onclick="smartLink('iar://', 'https://www.iarservices.com/')" class="btn red-btn"><span>🚨</span> IaR App</a>
             <a href="https://www.google.com" class="btn red-btn"><span>🚑</span> Emerg Network</a>
         </div>
 
@@ -116,24 +109,21 @@
         <h4>Education</h4>
         <div class="btn-grid">
             <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" class="btn grey-btn"><span>🎓</span> MFA</a>
-            <a href="https://www.iaff.org/" class="btn grey-btn"><span>📚</span> IAFF</a>
-            <a href="https://training.fema.gov/" class="btn grey-btn"><span>🏛️</span> NFA Portal</a>
             <a href="https://alerrt.org/" class="btn grey-btn"><span>🛡️</span> ALERRT</a>
         </div>
     </div>
 
     <div id="scratchpad" class="hidden">
-        <div class="assessment-view">
+        <div style="background: rgba(0,0,0,0.9); padding: 20px; border-radius: 20px; border: 2px solid #ff4500;">
             <h3>Patient Assessment</h3>
-            <div class="group"><label>Mental Status (GCS/AVPU)</label><textarea id="m" rows="2" placeholder="Notes..."></textarea></div>
-            <div class="group"><label>Vitals (BP, HR, RR, SpO2)</label><textarea id="v" rows="2" placeholder="120/80..."></textarea></div>
-            <div class="group"><label>Physical Exam / Injuries</label><textarea id="p" rows="4" placeholder="Findings..."></textarea></div>
-            <div class="group"><label>Meds / Allergies</label><textarea id="ma" rows="2" placeholder="List..."></textarea></div>
+            <div style="text-align:left; margin-bottom:15px;"><label>Mental Status</label><textarea id="m" rows="2"></textarea></div>
+            <div style="text-align:left; margin-bottom:15px;"><label>Vitals</label><textarea id="v" rows="2"></textarea></div>
+            <div style="text-align:left; margin-bottom:15px;"><label>Physical Exam</label><textarea id="p" rows="4"></textarea></div>
+            <div style="text-align:left; margin-bottom:15px;"><label>Meds / Allergies</label><textarea id="ma" rows="2"></textarea></div>
             <button class="nav-btn" onclick="toggleView('dashboard')">⬅ Back to Dashboard</button>
             <button class="nav-btn" style="background:#8b0000" onclick="clearAll()">🗑 Clear All Notes</button>
         </div>
     </div>
-
 </div>
 
 <script>
