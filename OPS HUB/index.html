@@ -24,7 +24,7 @@
         table { width: 100%; color: white; font-size: 0.72em; border-collapse: collapse; margin-top: 10px; }
         td, th { border: 1px solid #444; padding: 10px 4px; text-align: left; }
         tr:nth-child(even) { background: rgba(255,255,255,0.05); }
-        .cat-head { background: #444; color: #fff; font-weight: bold; padding: 5px; }
+        .cat-head { background: #444; color: #fff; font-weight: bold; padding: 5px; text-align: center; }
     </style>
 </head>
 <body>
@@ -72,14 +72,39 @@
         </div>
     </div>
 
+    <div id="roster" class="hidden sub-menu">
+        <h3>Bondsville Personnel Directory</h3>
+        <div style="overflow-x:auto;">
+            <table>
+                <tr><th>ID</th><th>Rank</th><th>Name</th><th>Call</th></tr>
+                <tr><td>C31</td><td>Chief</td><td>Mike Germaine</td><td><a href="tel:4135392144">📞</a></td></tr>
+                <tr><td>C32</td><td>Asst. Chief</td><td>Brian Benoit</td><td><a href="tel:4136872929">📞</a></td></tr>
+                <tr><td>C33</td><td>Deputy Chief</td><td>Andrew Golas</td><td><a href="tel:4136685864">📞</a></td></tr>
+                <tr><td>C31</td><td>Captain</td><td>Kevin Sullivan</td><td><a href="tel:3157082913">📞</a></td></tr>
+                <tr><td>C32</td><td>Captain</td><td>Mike DuBois</td><td><a href="tel:4136688577">📞</a></td></tr>
+                <tr><td>3F1</td><td>Fire Fighter</td><td>Matthew Lemieux</td><td><a href="tel:4138862591">📞</a></td></tr>
+                <tr><td>3F4</td><td>Fire Fighter</td><td>Brian Sullivan</td><td><a href="tel:4138005785">📞</a></td></tr>
+                <tr><td>3F5</td><td>Fire Fighter</td><td>Nick Mainville</td><td><a href="tel:4135440329">📞</a></td></tr>
+                <tr><td>3F7</td><td>Fire Fighter</td><td>McKinley Chase</td><td><a href="tel:4134395179">📞</a></td></tr>
+                <tr><td>3F8</td><td>Fire Fighter</td><td>Nathaniel Haley</td><td><a href="tel:4132047294">📞</a></td></tr>
+                <tr><td>3F13</td><td>Fire Fighter</td><td>Shane Chase</td><td><a href="tel:4133305156">📞</a></td></tr>
+                <tr><td>3F14</td><td>Fire Fighter</td><td>Jonah Bachand</td><td><a href="tel:4136400193">📞</a></td></tr>
+                <tr><td>3F2</td><td>Prob. FF</td><td>Gabriella Potenti</td><td><a href="tel:7745026543">📞</a></td></tr>
+                <tr><td>3F3</td><td>Prob. FF</td><td>Patrick Wilbur</td><td><a href="tel:7742625962">📞</a></td></tr>
+                <tr><td>3F9</td><td>Prob. FF</td><td>Nicolas Boulrice</td><td><a href="tel:4135071170">📞</a></td></tr>
+            </table>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
     <div id="emergency-list" class="hidden sub-menu">
         <h3>Emergency Call List</h3>
         <div style="overflow-x:auto;">
             <table>
                 <tr><th colspan="2" class="cat-head">Police Departments</th></tr>
-                <tr><td>Palmer (Recorded)</td><td><a href="tel:4132838792">413-283-8792</a></td></tr>
-                <tr><td>Belchertown</td><td><a href="tel:4133236655">413-323-6655</a></td></tr>
-                <tr><td>Monson</td><td><a href="tel:4132674128">413-267-4128</a></td></tr>
+                <tr><td>Palmer PD (Recorded)</td><td><a href="tel:4132838792">413-283-8792</a></td></tr>
+                <tr><td>Belchertown PD</td><td><a href="tel:4133236655">413-323-6655</a></td></tr>
+                <tr><td>Monson PD</td><td><a href="tel:4132674128">413-267-4128</a></td></tr>
                 <tr><th colspan="2" class="cat-head">Fire Stations</th></tr>
                 <tr><td>Bondsville Station</td><td><a href="tel:4132839036">413-283-9036</a></td></tr>
                 <tr><td>Palmer Station</td><td><a href="tel:4132833861">413-283-3861</a></td></tr>
@@ -113,26 +138,6 @@
         <div class="btn-grid">
             <a href="tel:8772473602" class="btn blue-btn">NatGrid Priority 1</a>
             <a href="tel:8004629852" class="btn blue-btn">NatGrid Priority 2</a>
-        </div>
-        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-    </div>
-
-    <div id="roster" class="hidden sub-menu">
-        <h3>BFD ROSTER</h3>
-        <div style="overflow-x:auto;">
-            <table>
-                <tr><th>ID</th><th>Rank</th><th>Name</th><th>Call</th></tr>
-                <tr><td>C31</td><td>Chief</td><td>Mike Germaine</td><td><a href="tel:4135392144">📞</a></td></tr>
-                <tr><td>C32</td><td>Asst. Chief</td><td>Brian Benoit</td><td><a href="tel:4136872929">📞</a></td></tr>
-                <tr><td>C33</td><td>Dep. Chief</td><td>Andrew Golas</td><td><a href="tel:4136685864">📞</a></td></tr>
-                <tr><td>C31</td><td>Captain</td><td>Kevin Sullivan</td><td><a href="tel:3157082913">📞</a></td></tr>
-                <tr><td>C32</td><td>Captain</td><td>Mike DuBois</td><td><a href="tel:4136688577">📞</a></td></tr>
-                <tr><td>3F1</td><td>FF</td><td>Matthew Lemieux</td><td><a href="tel:4138862591">📞</a></td></tr>
-                <tr><td>3F5</td><td>FF</td><td>Nick Mainville</td><td><a href="tel:4135440329">📞</a></td></tr>
-                <tr><td>3F2</td><td>Prob. FF</td><td>Gabriella Potenti</td><td><a href="tel:7745026543">📞</a></td></tr>
-                <tr><td>3F3</td><td>Prob. FF</td><td>Patrick Wilbur</td><td><a href="tel:7742625962">📞</a></td></tr>
-                <tr><td>3F9</td><td>Prob. FF</td><td>Nicolas Boulrice</td><td><a href="tel:4135071170">📞</a></td></tr>
-            </table>
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
