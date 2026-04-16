@@ -43,7 +43,8 @@
             cursor: pointer;
         }
         .btn span { font-size: 1.5em; margin-bottom: 8px; }
-        .btn img { width: 35px; height: 35px; margin-bottom: 8px; border-radius: 8px; }
+        /* Style for Patches and Logos */
+        .btn img { width: 40px; height: 40px; margin-bottom: 8px; border-radius: 4px; object-fit: contain; }
         .red-btn { background: #d32f2f !important; }
         .blue-btn { background: #1e3a8a !important; }
         .grey-btn { background: #262626 !important; }
@@ -75,8 +76,14 @@
         <h4>Local Departments</h4>
         <div class="btn-grid">
             <a href="https://www.townofpalmer.com/" class="btn grey-btn"><span>🏛️</span> Town Main</a>
-            <a href="https://www.palmerfire.org/" class="btn grey-btn"><span>🚒</span> Palmer FD</a>
-            <a href="#" class="btn grey-btn"><span>🚒</span> Bondsville FD</a>
+            <a href="https://www.palmerfire.org/" class="btn grey-btn">
+                <img src="palmer.png" alt="Palmer">
+                Palmer FD
+            </a>
+            <a href="#" class="btn grey-btn">
+                <img src="bondsville.png" alt="Bondsville">
+                Bondsville FD
+            </a>
             <a href="#" class="btn grey-btn"><span>🚒</span> Three Rivers</a>
         </div>
 
@@ -108,21 +115,12 @@
             <a href="https://firms.modaps.eosdis.nasa.gov/" class="btn blue-btn"><span>🛰️</span> NASA FIRMS</a>
         </div>
 
-        <h4>Health & Wellness</h4>
+        <h4>Education & Health</h4>
         <div class="btn-grid">
-            <a href="https://www.iaffcenterforcenterforoncology.org/" class="btn grey-btn"><span>🧠</span> IAFF Center</a>
-            <a href="https://www.nvfc.org/share-the-load/" class="btn grey-btn"><span>🛟</span> Share The Load</a>
-        </div>
-
-        <h4>Education</h4>
-        <div class="btn-grid">
-            <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" class="btn grey-btn"><span>🎓</span> MFA</a>
+            <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" class="btn grey-btn"><span>🎓</span> MFA Portal</a>
             <a href="https://alerrt.org/" class="btn grey-btn"><span>🛡️</span> ALERRT</a>
-            <a href="https://www.iaff.org/" class="btn grey-btn"><span>📚</span> IAFF</a>
-            <a href="https://training.fema.gov/" class="btn grey-btn"><span>🏛️</span> NFA Portal</a>
-            <a href="https://training.fema.gov/is/nims.aspx" class="btn grey-btn"><span>📋</span> FEMA NIMS</a>
-            <a href="https://training.fema.gov/emi.aspx" class="btn grey-btn"><span>🏫</span> FEMA EMI</a>
-            <a href="https://elearning.heart.org/" class="btn grey-btn full-width"><span>❤️</span> AHA Training</a>
+            <a href="https://elearning.heart.org/" class="btn grey-btn"><span>❤️</span> AHA Training</a>
+            <a href="https://www.nvfc.org/share-the-load/" class="btn grey-btn"><span>🛟</span> Help Line</a>
         </div>
     </div>
 
@@ -145,13 +143,11 @@
     function smartLink(appUrl, webUrl) {
         var start = Date.now();
         window.location.href = appUrl;
-
         fallbackTimer = setTimeout(function() {
             if (Date.now() - start < 3000) {
                 window.location.href = webUrl;
             }
         }, 2500);
-
         window.onblur = function() {
             clearTimeout(fallbackTimer);
         };
