@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Ops Hub</title>
-
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="icon.png">
@@ -22,14 +21,11 @@
             margin: 0;
             padding: env(safe-area-inset-top) 15px env(safe-area-inset-bottom) 15px;
         }
-
         .container { max-width: 500px; margin: auto; padding-bottom: 50px; }
         .header { padding: 20px 0; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.8); }
         .header h1 { margin: 0; font-size: 1.5em; letter-spacing: 2px; text-transform: uppercase; }
         h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
-
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        
         .btn {
             color: white;
             padding: 20px 5px;
@@ -46,7 +42,6 @@
             border: 1px solid rgba(255,255,255,0.1);
             cursor: pointer;
         }
-
         .btn span { font-size: 1.5em; margin-bottom: 8px; }
         .red-btn { background: #d32f2f !important; }
         .blue-btn { background: #1e3a8a !important; }
@@ -99,18 +94,6 @@
             <a href="#" class="btn blue-btn"><span>📋</span> Running Cards</a>
             <a href="https://www.axisgis.com/palmerma/" class="btn blue-btn full-width"><span>📍</span> Palmer GIS</a>
         </div>
-
-        <h4>Wildland & Brush</h4>
-        <div class="btn-grid">
-            <a href="https://www.mass.gov/service-details/fire-weather-forecast" class="btn blue-btn"><span>🌲</span> MA Fire Wx</a>
-            <a href="https://firms.modaps.eosdis.nasa.gov/" class="btn blue-btn"><span>🛰️</span> NASA FIRMS</a>
-        </div>
-
-        <h4>Education</h4>
-        <div class="btn-grid">
-            <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" class="btn grey-btn"><span>🎓</span> MFA</a>
-            <a href="https://alerrt.org/" class="btn grey-btn"><span>🛡️</span> ALERRT</a>
-        </div>
     </div>
 
     <div id="scratchpad" class="hidden">
@@ -127,15 +110,21 @@
 </div>
 
 <script>
+    let fallbackTimer;
+
     function smartLink(appUrl, webUrl) {
-        var start = new Date().getTime();
+        // Try to open the app
         window.location.href = appUrl;
 
-        setTimeout(function() {
-            if (new Date().getTime() - start < 2500) {
-                window.location.href = webUrl;
-            }
-        }, 2000);
+        // Start the timer to redirect to web if app doesn't open
+        fallbackTimer = setTimeout(function() {
+            window.location.href = webUrl;
+        }, 2500);
+
+        // MAGIC FIX: If the user leaves the page (the app opens), kill the timer
+        window.onblur = function() {
+            clearTimeout(fallbackTimer);
+        };
     }
 
     function toggleView(v) {
@@ -157,6 +146,5 @@
         }
     }
 </script>
-
 </body>
 </html>
