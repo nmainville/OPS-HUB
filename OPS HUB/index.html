@@ -21,8 +21,9 @@
         .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; }
         .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
         textarea { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
-        table { width: 100%; color: white; font-size: 0.75em; border-collapse: collapse; margin-top: 10px; }
-        td, th { border: 1px solid #444; padding: 10px 5px; text-align: left; }
+        table { width: 100%; color: white; font-size: 0.72em; border-collapse: collapse; margin-top: 10px; }
+        td, th { border: 1px solid #444; padding: 10px 4px; text-align: left; }
+        tr:nth-child(even) { background: rgba(255,255,255,0.05); }
     </style>
 </head>
 <body>
@@ -35,6 +36,7 @@
         <div class="btn-grid">
             <a onclick="smartLink('iar://', 'https://www.iarservices.com/')" class="btn red-btn"><span>🚨</span> IaR App</a>
             <a href="https://login.emergencynetworking.com/" class="btn red-btn"><span>🚑</span> Emerg Network</a>
+            <a href="tel:8773850822" class="btn red-btn full-width"><span>☢️</span> HazMat Activation: 877-385-0822</a>
         </div>
 
         <h4>Medical Tools</h4>
@@ -47,7 +49,7 @@
         <h4>Local Departments</h4>
         <div class="btn-grid">
             <a href="https://www.townofpalmer.com/" class="btn grey-btn"><span>🏛️</span> Town Main</a>
-            <a href="https://www.townofpalmer.com/fire-department" class="btn grey-btn">
+            <a href="http://www.palmerfiredepartment.org/" class="btn grey-btn">
                 <img src="palmer.png" alt="🚒">Palmer FD
             </a>
             <a href="https://bondsvillefireandwaterdistrict.us/" class="btn grey-btn">
@@ -63,7 +65,6 @@
             <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn">
                 <img src="zello.png" alt="📻">Zello Radio
             </a>
-            <a href="tel:8773850822" class="btn blue-btn full-width"><span>☢️</span> HazMat Activation: 877-385-0822</a>
             <a onclick="smartLink('weather://', 'https://weather.com')" class="btn blue-btn"><span>☁️</span> Weather App</a>
             <a href="https://www.axisgis.com/palmerma/" class="btn blue-btn"><span>📍</span> Palmer GIS</a>
             <a onclick="smartLink('erg2024://', 'https://www.phmsa.dot.gov/hazmat/erg/erg2024-mobile-app')" class="btn blue-btn"><span>☢️</span> ERG 2024</a>
@@ -84,6 +85,38 @@
         <div style="text-align:left;"><label>Meds / Allergies</label><textarea id="ma" rows="2"></textarea></div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back to Dashboard</button>
         <button class="nav-btn" style="background:#8b0000" onclick="clearAll()">Clear Notes</button>
+    </div>
+
+    <div id="roster" class="hidden sub-menu">
+        <h3>Personnel Directory</h3>
+        <div style="overflow-x:auto;">
+            <table>
+                <tr><th>Name</th><th>Rank</th><th>Call</th></tr>
+                <tr><td>Mike Germaine</td><td>Chief</td><td><a href="tel:4135392144">📞</a></td></tr>
+                <tr><td>Brian Benoit</td><td>Asst Chief</td><td><a href="tel:4136872929">📞</a></td></tr>
+                <tr><td>Andrew Golas</td><td>Dep Chief</td><td><a href="tel:4136685864">📞</a></td></tr>
+                <tr><td>Scott Sullivan</td><td>Captain</td><td><a href="tel:4135313988">📞</a></td></tr>
+                <tr><td>Bob Belisle</td><td>Captain</td><td><a href="tel:4132371905">📞</a></td></tr>
+                <tr><td>David Cierpial</td><td>Captain</td><td><a href="tel:4132444391">📞</a></td></tr>
+                <tr><td>Jeff Sullivan</td><td>FF/Para</td><td><a href="tel:4134263474">📞</a></td></tr>
+                <tr><td>Nick Mainville</td><td>FF/EMT</td><td><a href="tel:4135440329">📞</a></td></tr>
+                <tr><td>Ryan Belisle</td><td>FF/EMT</td><td><a href="tel:4132374340">📞</a></td></tr>
+                <tr><td>Kevin Cierpial</td><td>FF/EMT</td><td><a href="tel:4132446453">📞</a></td></tr>
+                <tr><td>Michael Cierpial</td><td>FF/EMT</td><td><a href="tel:4132445509">📞</a></td></tr>
+                <tr><td>Stephen Desmarais</td><td>FF</td><td><a href="tel:4132441229">📞</a></td></tr>
+                <tr><td>Travis Golas</td><td>FF/EMT</td><td><a href="tel:4132440985">📞</a></td></tr>
+                <tr><td>Michael Golas</td><td>FF</td><td><a href="tel:4132440983">📞</a></td></tr>
+                <tr><td>Justin Orszulak</td><td>FF/EMT</td><td><a href="tel:4132848890">📞</a></td></tr>
+                <tr><td>Michael Orszulak</td><td>FF</td><td><a href="tel:4134270112">📞</a></td></tr>
+                <tr><td>Mitchell Orszulak</td><td>FF/EMT</td><td><a href="tel:4132848891">📞</a></td></tr>
+                <tr><td>Tyler Golas</td><td>FF</td><td><a href="tel:4132441185">📞</a></td></tr>
+                <tr><td>Alex Cierpial</td><td>FF/EMT</td><td><a href="tel:4133355126">📞</a></td></tr>
+                <tr><td>Connor Benoit</td><td>FF</td><td><a href="tel:4132144113">📞</a></td></tr>
+                <tr><td>Joseph Orszulak</td><td>FF/EMT</td><td><a href="tel:4134272525">📞</a></td></tr>
+                <tr><td>Ryan Benoit</td><td>FF/EMT</td><td><a href="tel:4132144112">📞</a></td></tr>
+            </table>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="education" class="hidden sub-menu">
@@ -112,21 +145,6 @@
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
-
-    <div id="roster" class="hidden sub-menu">
-        <h3>Personnel Directory</h3>
-        <div style="overflow-x:auto;">
-            <table>
-                <tr><th>Name</th><th>Rank</th><th>Call</th></tr>
-                <tr><td>Mike Germaine</td><td>Chief</td><td><a href="tel:4135392144">📞</a></td></tr>
-                <tr><td>Brian Benoit</td><td>Asst Chief</td><td><a href="tel:4136872929">📞</a></td></tr>
-                <tr><td>Andrew Golas</td><td>Dep Chief</td><td><a href="tel:4136685864">📞</a></td></tr>
-                <tr><td>Scott Sullivan</td><td>Captain</td><td><a href="tel:4135313988">📞</a></td></tr>
-                <tr><td>Nick Mainville</td><td>FF</td><td><a href="tel:4135440329">📞</a></td></tr>
-            </table>
-        </div>
-        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-    </div>
 </div>
 
 <script>
@@ -136,7 +154,6 @@
         let clickedAt = Date.now();
         window.location.href = appUrl;
 
-        // Kill timer if user switches apps
         const clearTimer = () => {
             clearTimeout(fallbackTimer);
             window.removeEventListener('blur', clearTimer);
@@ -147,7 +164,6 @@
         document.addEventListener('visibilitychange', clearTimer);
 
         fallbackTimer = setTimeout(() => {
-            // Only redirect if page is still visible/focused
             if (Date.now() - clickedAt < 3000 && document.visibilityState === 'visible') {
                 window.location.href = webUrl;
             }
