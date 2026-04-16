@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Ops Hub</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Ops Hub">
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #000;
+            background-image: url('flag.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: env(safe-area-inset-top) 15px env(safe-area-inset-bottom) 15px;
+        }
+
+        .container { max-width: 500px; margin: auto; padding-bottom: 50px; }
+
+        /* Header */
+        .header { padding: 20px 0; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.8); }
+        .header h1 { margin: 0; font-size: 1.5em; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Section Labels */
+        h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
+
+        /* Button Grids */
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        .btn {
+            color: white;
+            padding: 20px 5px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            background: rgba(40, 40, 40, 0.9); /* Default Grey */
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn span { font-size: 1.5em; margin-bottom: 8px; }
+
+        /* Colors based on your screenshots */
+        .red-btn { background: #d32f2f !important; }
+        .blue-btn { background: #1e3a8a !important; } /* Dark Blue like your screen */
+        .grey-btn { background: #262626 !important; }
+        
+        .full-width { grid-column: span 2; }
+
+        /* Assessment Form Styling */
+        .hidden { display: none; }
+        .assessment-view { background: rgba(0,0,0,0.9); padding: 20px; border-radius: 20px; border: 2px solid #ff4500; margin-top: 20px; }
+        .group { margin-bottom: 15px; text-align: left; }
+        .group label { display: block; color: #ffaa00; font-size: 0.8em; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
+        textarea { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; }
+        .nav-btn { background: #444; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div id="dashboard">
+        <div class="header"><h1>OPS HUB</h1></div>
+
+        <h4>Active Response</h4>
+        <div class="btn-grid">
+            <a href="shortcuts://run-shortcut?name=OpenIaR" class="btn red-btn"><span>🚨</span> IaR App</a>
+            <a href="#" class="btn red-btn"><span>🚑</span> Emerg Network</a>
+        </div>
+
+        <h4>Medical Tools</h4>
+        <div class="btn-grid">
+            <a href="#" class="btn red-btn full-width" onclick="toggleView('scratchpad')"><span>📝</span> Assessment Scratchpad</a>
+            <a href="https://www.mass.gov/lists/ems-statewide-treatment-protocols" class="btn red-btn"><span>⚕️</span> MA Protocols</a>
+            <a href="https://www.cdc.gov/niosh/npg/default.html" class="btn red-btn"><span>🧪</span> NIOSH Guide</a>
+        </div>
+
+        <h4>Local Departments</h4>
+        <div class="btn-grid">
+            <a href="#" class="btn grey-btn"><span>🏛️</span> Town Main</a>
+            <a href="#" class="btn grey-btn"><span>🚒</span> Palmer FD</a>
+            <a href="#" class="btn grey-btn"><span>🚒</span> Bondsville FD</a>
+            <a href="#" class="btn grey-btn"><span>🚒</span> Three Rivers</a>
+        </div>
+
+        <h4>Live Conditions</h4>
+        <div class="btn-grid">
+            <a href="#" class="btn blue-btn"><span>🌬️</span> Windy Map</a>
+            <a href="shortcuts://run-shortcut?name=Weather" class="btn blue-btn"><span>☁️</span> Weather App</a>
+            <a href="https://mass511.com/" class="btn blue-btn"><span>🚥</span> Mass511</a>
+            <a href="https://www.google.com/maps/@42.2323,-72.3275,12z/data=!5m1!1e1" class="btn blue-btn"><span>🚧</span> Road Closures</a>
+            <a href="#" class="btn blue-btn full-width"><span>⚡</span> NatGrid</a>
+        </div>
+
+        <h4>Field Resources</h4>
+        <div class="btn-grid">
+            <a href="shortcuts://run-shortcut?name=ERG" class="btn blue-btn"><span>☢️</span> ERG 2024 App</a>
+            <a href="#" class="btn blue-btn"><span>📋</span> Running Cards</a>
+            <a href="#" class="btn blue-btn full-width"><span>📍</span> Palmer GIS</a>
+        </div>
+
+        <h4>Wildland & Brush</h4>
+        <div class="btn-grid">
+            <a href="#" class="btn blue-btn"><span>🌲</span> MA Fire Wx</a>
+            <a href="#" class="btn blue-btn"><span>🛰️</span> NASA FIRMS</a>
+        </div>
+
+        <h4>Health & Wellness</h4>
+        <div class="btn-grid">
+            <a href="#" class="btn grey-btn"><span>🧠</span> IAFF Center</a>
+            <a href="#" class="btn grey-btn"><span>🛟</span> Share The Load</a>
+        </div>
+
+        <h4>Education</h4>
+        <div class="btn-grid">
+            <a href="#" class="btn grey-btn"><span>🎓</span> MFA</a>
+            <a href="#" class="btn grey-btn"><span>📚</span> IAFF</a>
+            <a href="#" class="btn grey-btn"><span>🏛️</span> NFA Portal</a>
+            <a href="#" class="btn grey-btn"><span>🛡️</span> ALERRT</a>
+            <a href="#" class="btn grey-btn"><span>📋</span> FEMA NIMS</a>
+            <a href="#" class="btn grey-btn"><span>🏫</span> FEMA EMI</a>
+            <a href="#" class="btn grey-btn full-width"><span>❤️</span> AHA Training</a>
+        </div>
+    </div>
+
+    <div id="scratchpad" class="hidden">
+        <div class="assessment-view">
+            <h3>Patient Assessment</h3>
+            <div class="group"><label>Mental Status (GCS/AVPU)</label><textarea id="m" rows="2"></textarea></div>
+            <div class="group"><label>Vitals (BP, HR, RR, SpO2)</label><textarea id="v" rows="2"></textarea></div>
+            <div class="group"><label>Physical Exam / Injuries</label><textarea id="p" rows="4"></textarea></div>
+            <div class="group"><label>Meds / Allergies</label><textarea id="ma" rows="2"></textarea></div>
+            <button class="nav-btn" onclick="toggleView('dashboard')">⬅ Back to Dashboard</button>
+            <button class="nav-btn" style="background:#8b0000" onclick="clearAll()">🗑 Clear All Notes</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleView(v) {
+        document.getElementById('dashboard').classList.toggle('hidden', v === 'scratchpad');
+        document.getElementById('scratchpad').classList.toggle('hidden', v === 'dashboard');
+        window.scrollTo(0,0);
+    }
+
+    const ids = ['m', 'v', 'p', 'ma'];
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        el.value = localStorage.getItem(id) || '';
+        el.addEventListener('input', () => localStorage.setItem(id, el.value));
+    });
+
+    function clearAll() {
+        if (confirm("Clear notes?")) {
+            ids.forEach(id => { document.getElementById(id).value = ''; localStorage.removeItem(id); });
+        }
+    }
+</script>
+
+</body>
+</html>
