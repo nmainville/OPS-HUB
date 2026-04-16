@@ -7,176 +7,182 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="icon.png">
-
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: #000;
-            background-image: url('flag.jpg');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            color: white;
-            text-align: center;
-            margin: 0;
-            padding: env(safe-area-inset-top) 15px env(safe-area-inset-bottom) 15px;
-        }
-        .container { max-width: 500px; margin: auto; padding-bottom: 50px; }
-        .header { padding: 20px 0; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.8); }
-        .header h1 { margin: 0; font-size: 1.5em; letter-spacing: 2px; text-transform: uppercase; }
+        body { font-family: -apple-system, system-ui; background: #000 url('flag.jpg') no-repeat center center fixed; background-size: cover; color: white; text-align: center; margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; }
+        .container { max-width: 500px; margin: auto; }
+        .header { padding: 20px 0; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; }
         h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn {
-            color: white;
-            padding: 20px 5px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.85em;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            background: rgba(40, 40, 40, 0.9);
-            border: 1px solid rgba(255,255,255,0.1);
-            cursor: pointer;
-        }
+        .btn { color: white; padding: 18px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.85em; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .btn img { width: 38px; height: 38px; margin-bottom: 8px; border-radius: 5px; object-fit: contain; }
         .btn span { font-size: 1.5em; margin-bottom: 8px; }
-        .btn img { width: 40px; height: 40px; margin-bottom: 8px; border-radius: 4px; object-fit: contain; }
-        .red-btn { background: #d32f2f !important; }
-        .blue-btn { background: #1e3a8a !important; }
-        .grey-btn { background: #262626 !important; }
-        .full-width { grid-column: span 2; }
-        .hidden { display: none; }
-        textarea { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; }
-        .nav-btn { background: #444; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 10px; }
+        .red-btn { background: #d32f2f !important; } .blue-btn { background: #1e3a8a !important; } .grey-btn { background: #262626 !important; }
+        .full-width { grid-column: span 2; } .hidden { display: none; }
+        .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; position: relative; }
+        .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
+        table { width: 100%; color: white; font-size: 0.75em; border-collapse: collapse; margin-top: 10px; }
+        td, th { border: 1px solid #444; padding: 10px 5px; text-align: left; }
+        tr:nth-child(even) { background: rgba(255,255,255,0.05); }
+        .tel-link { color: #58a6ff; text-decoration: none; font-weight: bold; font-size: 1.2em; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="dashboard">
+    <div id="main-view">
         <div class="header"><h1>OPS HUB</h1></div>
 
         <h4>Active Response</h4>
         <div class="btn-grid">
             <a onclick="smartLink('iar://', 'https://www.iarservices.com/')" class="btn red-btn"><span>🚨</span> IaR App</a>
             <a href="https://login.emergencynetworking.com/" class="btn red-btn"><span>🚑</span> Emerg Network</a>
+            <a href="tel:4132833331" class="btn red-btn"><span>📞</span> Dispatch (Palmer)</a>
+            <a href="tel:8773850822" class="btn red-btn"><span>☢️</span> HazMat Support</a>
         </div>
 
-        <h4>Medical Tools</h4>
+        <h4>Medical & Comms</h4>
         <div class="btn-grid">
-            <a onclick="toggleView('scratchpad')" class="btn red-btn full-width"><span>📝</span> Assessment Scratchpad</a>
-            <a href="https://www.mass.gov/lists/ems-statewide-treatment-protocols" class="btn red-btn"><span>⚕️</span> MA Protocols</a>
-            <a href="https://www.cdc.gov/niosh/npg/default.html" class="btn red-btn"><span>🧪</span> NIOSH Guide</a>
-        </div>
-
-        <h4>Local Departments</h4>
-        <div class="btn-grid">
-            <a href="https://www.townofpalmer.com/" class="btn grey-btn"><span>🏛️</span> Town Main</a>
-            <a href="https://www.palmerfire.org/" class="btn grey-btn">
-                <img src="palmer.png" alt="🚒">
-                Palmer FD
+            <a onclick="toggleView('scratchpad')" class="btn red-btn full-width"><span>📝</span> Patient Scratchpad</a>
+            <a onclick="toggleView('hospitals')" class="btn red-btn"><span>🏥</span> Hospitals / CMED</a>
+            <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn">
+                <img src="zello.png" alt="📻">Zello Radio
             </a>
-            <a href="#" class="btn grey-btn">
-                <img src="bondsville.png" alt="🚒">
-                Bondsville FD
+        </div>
+
+        <h4>Departments & Personnel</h4>
+        <div class="btn-grid">
+            <a onclick="toggleView('stations')" class="btn grey-btn">
+                <img src="bondsville.png" alt="🚒">Station Lines
             </a>
-            <a href="#" class="btn grey-btn"><span>🚒</span> Three Rivers</a>
+            <a onclick="toggleView('roster')" class="btn grey-btn"><span>👥</span> Personnel Roster</a>
+            <a href="https://www.palmerfire.org/" class="btn grey-btn full-width">
+                <img src="palmer.png" alt="🚒">Palmer FD Portal
+            </a>
         </div>
 
-        <h4>Quick Contacts</h4>
+        <h4>Scene Safety & Utilities</h4>
         <div class="btn-grid">
-            <a href="tel:911" class="btn red-btn"><span>📞</span> Dispatch</a>
-            <a href="tel:4130000000" class="btn grey-btn"><span>🏢</span> Station 3</a>
-        </div>
-
-        <h4>Live Conditions</h4>
-        <div class="btn-grid">
-            <a href="https://www.windy.com" class="btn blue-btn"><span>🌬️</span> Windy Map</a>
+            <a onclick="toggleView('utilities')" class="btn blue-btn full-width"><span>⚡</span> Utility Emergency Contacts</a>
             <a onclick="smartLink('weather://', 'https://weather.com')" class="btn blue-btn"><span>☁️</span> Weather App</a>
-            <a href="https://mass511.com/" class="btn blue-btn"><span>🚥</span> Mass511</a>
-            <a href="http://maps.apple.com/?q=Traffic&ll=42.1584,-72.3287&z=13" class="btn blue-btn"><span>🚧</span> Road Closures</a>
-            <a href="https://www.nationalgridus.com/MA-Home/Outage-Central/" class="btn blue-btn full-width"><span>⚡</span> NatGrid</a>
+            <a href="https://www.axisgis.com/palmerma/" class="btn blue-btn"><span>📍</span> Palmer GIS</a>
         </div>
 
-        <h4>Field Resources</h4>
+        <h4>Resources & Training</h4>
         <div class="btn-grid">
-            <a onclick="smartLink('erg2024://', 'https://www.phmsa.dot.gov/hazmat/erg/erg2024-mobile-app')" class="btn blue-btn"><span>☢️</span> ERG 2024 App</a>
-            <a href="#" class="btn blue-btn"><span>📋</span> Running Cards</a>
-            <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn full-width">
-                <img src="zello.png" alt="📻">
-                Zello Radio
-            </a>
-            <a href="https://www.axisgis.com/palmerma/" class="btn blue-btn full-width"><span>📍</span> Palmer GIS</a>
-        </div>
-
-        <h4>Wildland & Brush</h4>
-        <div class="btn-grid">
-            <a href="https://www.mass.gov/service-details/fire-weather-forecast" class="btn blue-btn"><span>🌲</span> MA Fire Wx</a>
-            <a href="https://firms.modaps.eosdis.nasa.gov/" class="btn blue-btn"><span>🛰️</span> NASA FIRMS</a>
-        </div>
-
-        <h4>Health & Wellness</h4>
-        <div class="btn-grid">
-            <a href="https://www.iaffrecoverycenter.com/" class="btn grey-btn"><span>🧠</span> IAFF Wellness</a>
-            <a href="https://www.nvfc.org/share-the-load/" class="btn grey-btn"><span>🛟</span> Share The Load</a>
-        </div>
-
-        <h4>Education</h4>
-        <div class="btn-grid">
-            <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" class="btn grey-btn"><span>🎓</span> MFA Portal</a>
-            <a href="https://alerrt.org/" class="btn grey-btn"><span>🛡️</span> ALERRT</a>
-            <a href="https://www.iaff.org/" class="btn grey-btn"><span>📚</span> IAFF</a>
-            <a href="https://training.fema.gov/" class="btn grey-btn"><span>🏛️</span> NFA Portal</a>
-            <a href="https://training.fema.gov/is/nims.aspx" class="btn grey-btn"><span>📋</span> FEMA NIMS</a>
-            <a href="https://training.fema.gov/emi.aspx" class="btn grey-btn"><span>🏫</span> FEMA EMI</a>
-            <a href="https://elearning.heart.org/" class="btn grey-btn full-width"><span>❤️</span> AHA Training</a>
+            <a onclick="toggleView('education')" class="btn grey-btn full-width"><span>🎓</span> Education & Wellness</a>
         </div>
     </div>
 
-    <div id="scratchpad" class="hidden">
-        <div style="background: rgba(0,0,0,0.9); padding: 20px; border-radius: 20px; border: 2px solid #ff4500;">
-            <h3>Patient Assessment</h3>
-            <div style="text-align:left; margin-bottom:15px;"><label>Mental Status</label><textarea id="m" rows="2"></textarea></div>
-            <div style="text-align:left; margin-bottom:15px;"><label>Vitals</label><textarea id="v" rows="2"></textarea></div>
-            <div style="text-align:left; margin-bottom:15px;"><label>Physical Exam</label><textarea id="p" rows="4"></textarea></div>
-            <div style="text-align:left; margin-bottom:15px;"><label>Meds / Allergies</label><textarea id="ma" rows="2"></textarea></div>
-            <button class="nav-btn" onclick="toggleView('dashboard')">⬅ Back to Dashboard</button>
-            <button class="nav-btn" style="background:#8b0000" onclick="clearAll()">🗑 Clear All Notes</button>
+    <div id="hospitals" class="hidden sub-menu">
+        <h3>Medical & CMED</h3>
+        <div class="btn-grid">
+            <a href="tel:4132833611" class="btn red-btn">Wing Memorial</a>
+            <a href="tel:4137940000" class="btn red-btn">Baystate Medical</a>
+            <a href="tel:4135342500" class="btn red-btn">Holyoke Hospital</a>
+            <a href="tel:5087659771" class="btn red-btn">Harrington</a>
+            <a href="tel:4137489000" class="btn red-btn">Mercy Medical</a>
+            <a href="tel:4135363000" class="btn red-btn">Providence</a>
         </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back to Dashboard</button>
+    </div>
+
+    <div id="stations" class="hidden sub-menu">
+        <h3>Local Stations</h3>
+        <div class="btn-grid">
+            <a href="tel:4132839036" class="btn grey-btn">Bondsville (St. 3)</a>
+            <a href="tel:4132833861" class="btn grey-btn">Palmer (St. 1)</a>
+            <a href="tel:4132837161" class="btn grey-btn">Three Rivers (St. 2)</a>
+            <a href="tel:4139675901" class="btn grey-btn">Ware Fire</a>
+            <a href="tel:4133236131" class="btn grey-btn">Belchertown Fire</a>
+            <a href="tel:4132673314" class="btn grey-btn">Monson Fire</a>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back to Dashboard</button>
+    </div>
+
+    <div id="roster" class="hidden sub-menu">
+        <h3>Personnel Contact Directory</h3>
+        <div style="overflow-x:auto;">
+            <table>
+                <tr><th>Name</th><th>Rank</th><th>Call</th></tr>
+                <tr><td>Mike Germaine</td><td>Chief</td><td><a href="tel:4135392144" class="tel-link">📞</a></td></tr>
+                <tr><td>Brian Benoit</td><td>Asst Chief</td><td><a href="tel:4136872929" class="tel-link">📞</a></td></tr>
+                <tr><td>Andrew Golas</td><td>Dep Chief</td><td><a href="tel:4136685864" class="tel-link">📞</a></td></tr>
+                <tr><td>Scott Sullivan</td><td>Captain</td><td><a href="tel:4135313988" class="tel-link">📞</a></td></tr>
+                <tr><td>Bob Belisle</td><td>Captain</td><td><a href="tel:4132371905" class="tel-link">📞</a></td></tr>
+                <tr><td>D. Cierpial</td><td>Captain</td><td><a href="tel:4132444391" class="tel-link">📞</a></td></tr>
+                <tr><td>Nick Mainville</td><td>FF</td><td><a href="tel:4135440329" class="tel-link">📞</a></td></tr>
+            </table>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back to Dashboard</button>
+    </div>
+
+    <div id="utilities" class="hidden sub-menu">
+        <h3>Utility Emergencies</h3>
+        <h4>National Grid Priority</h4>
+        <div class="btn-grid">
+            <a href="tel:8772473602" class="btn blue-btn">Priority 1 (Life)</a>
+            <a href="tel:8004629852" class="btn blue-btn">Priority 2 (Ops)</a>
+            <a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a>
+        </div>
+        <h4>Local Fuel & Support</h4>
+        <div class="btn-grid">
+            <a href="tel:4132837674" class="btn grey-btn">AmeriGas</a>
+            <a href="tel:4132838356" class="btn grey-btn">Chudy Oil</a>
+            <a href="tel:4132835444" class="btn grey-btn">Ed & Son</a>
+            <a href="tel:4132832594" class="btn grey-btn">Palmer Highway</a>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back to Dashboard</button>
+    </div>
+
+    <div id="education" class="hidden sub-menu">
+        <h3>Training & Wellness</h3>
+        <h4>Field Tools</h4>
+        <div class="btn-grid">
+            <a href="https://www.mass.gov/lists/ems-statewide-treatment-protocols" class="btn red-btn">MA Protocols</a>
+            <a href="https://www.cdc.gov/niosh/npg/default.html" class="btn red-btn">NIOSH Guide</a>
+        </div>
+        <h4>Education Portals</h4>
+        <div class="btn-grid">
+            <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" class="btn grey-btn">MFA Portal</a>
+            <a href="https://training.fema.gov/" class="btn grey-btn">NFA / FEMA</a>
+            <a href="https://elearning.heart.org/" class="btn grey-btn">AHA Training</a>
+            <a href="https://alerrt.org/" class="btn grey-btn">ALERRT</a>
+            <a href="https://training.fema.gov/is/nims.aspx" class="btn grey-btn">FEMA NIMS</a>
+            <a href="https://training.fema.gov/emi.aspx" class="btn grey-btn">FEMA EMI</a>
+        </div>
+        <h4>Wellness & Support</h4>
+        <div class="btn-grid">
+            <a href="https://www.iaffrecoverycenter.com/" class="btn grey-btn">IAFF Wellness</a>
+            <a href="https://www.nvfc.org/share-the-load/" class="btn grey-btn">Share The Load</a>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back to Dashboard</button>
+    </div>
+
+    <div id="scratchpad" class="hidden sub-menu">
+        <h3>Patient Scratchpad</h3>
+        <p style="font-size: 0.7em; color: #aaa;">Data saves locally to your phone.</p>
+        <textarea id="scratch" placeholder="Type assessment here..." style="width:100%; height:200px; padding:10px; border-radius:10px; border:none;"></textarea>
+        <button class="nav-btn" onclick="toggleView('main-view')">Save & Close</button>
+        <button class="nav-btn" style="background:#555;" onclick="clearPad()">Clear All</button>
     </div>
 </div>
 
 <script>
-    let fallbackTimer;
+    function toggleView(viewId) {
+        const views = ['main-view', 'hospitals', 'stations', 'roster', 'utilities', 'education', 'scratchpad'];
+        views.forEach(v => document.getElementById(v).classList.add('hidden'));
+        document.getElementById(viewId).classList.remove('hidden');
+        window.scrollTo(0,0);
+    }
     function smartLink(appUrl, webUrl) {
         var start = Date.now();
         window.location.href = appUrl;
-        fallbackTimer = setTimeout(function() {
-            if (Date.now() - start < 3000) {
-                window.location.href = webUrl;
-            }
-        }, 2500);
-        window.onblur = function() { clearTimeout(fallbackTimer); };
+        setTimeout(() => { if (Date.now() - start < 3000) window.location.href = webUrl; }, 2500);
     }
-    function toggleView(v) {
-        document.getElementById('dashboard').classList.toggle('hidden', v === 'scratchpad');
-        document.getElementById('scratchpad').classList.toggle('hidden', v === 'dashboard');
-        window.scrollTo(0,0);
-    }
-    const ids = ['m', 'v', 'p', 'ma'];
-    ids.forEach(id => {
-        const el = document.getElementById(id);
-        el.value = localStorage.getItem(id) || '';
-        el.addEventListener('input', () => localStorage.setItem(id, el.value));
-    });
-    function clearAll() {
-        if (confirm("Clear notes?")) {
-            ids.forEach(id => { document.getElementById(id).value = ''; localStorage.removeItem(id); });
-        }
-    }
+    const pad = document.getElementById('scratch');
+    pad.value = localStorage.getItem('hub_scratch') || '';
+    pad.addEventListener('input', () => localStorage.setItem('hub_scratch', pad.value));
+    function clearPad() { if(confirm("Clear notes?")) { pad.value = ''; localStorage.removeItem('hub_scratch'); } }
 </script>
 </body>
 </html>
