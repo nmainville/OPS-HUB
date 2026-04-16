@@ -1,176 +1,314 @@
-]<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Fire Ops Hub</title>
+    
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: #1a1a1a;
-            background-image: url('flag.jpg');
+            background-image: linear-gradient(rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0.8)), 
+                              url('flag.jpg');
             background-size: cover;
-            background-attachment: fixed;
             background-position: center;
-            color: white;
-            text-align: center;
+            background-attachment: fixed;
+            background-color: #0a0a0a; 
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: rgba(26, 26, 26, 0.85); 
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px);
+            width: 100%;
+            padding: 25px 0 15px 0;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            border-bottom: 3px solid #e53935;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .container {
-            max-width: 500px;
-            margin: auto;
-            background: rgba(0, 0, 0, 0.85);
-            padding: 20px;
-            border-radius: 15px;
-            border: 2px solid #ff4500;
+            width: 92%;
+            max-width: 500px; 
+            margin-top: 20px;
+            padding-bottom: 40px;
         }
 
-        h1, h3 { color: #ff4500; text-shadow: 2px 2px 4px #000; }
-        h4 { color: #ccc; text-transform: uppercase; margin-top: 25px; border-bottom: 1px solid #444; padding-bottom: 5px; }
+        h2 {
+            font-size: 14px;
+            color: #e0e0e0; 
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            padding-left: 5px;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.9); 
+        }
 
-        /* Button Grid Styling */
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-        
-        .app-btn {
-            background: #b22222; /* Firebrick red */
-            color: white;
-            padding: 18px 10px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9em;
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .span-2 {
+            grid-column: span 2;
+        }
+
+        .btn {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.4);
-        }
-
-        .full-btn { grid-column: span 2; background: #d32f2f; padding: 25px; font-size: 1.1em; }
-
-        /* Labeled Boxes Styling */
-        .hidden { display: none; }
-        
-        .assessment-group { margin-bottom: 15px; text-align: left; }
-        .assessment-group label {
-            display: block;
-            font-weight: bold;
-            color: #ffaa00;
-            margin-bottom: 5px;
-            font-size: 0.85em;
-            text-transform: uppercase;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #444;
-            background: rgba(255, 255, 255, 0.9);
-            color: #222;
-            font-size: 16px;
+            padding: 20px 10px;
+            border-radius: 16px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
             box-sizing: border-box;
+            transition: transform 0.1s;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.6); 
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .nav-btn {
-            background: #444;
+        .btn-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-primary {
+            background: linear-gradient(145deg, rgba(211, 47, 47, 0.9), rgba(183, 28, 28, 0.9));
+            color: white;
+            border: 1px solid #ff5252;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(145deg, rgba(42, 42, 42, 0.8), rgba(31, 31, 31, 0.8));
+            color: #ffffff;
+            border: 1px solid #555;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .btn-tertiary {
+            background: linear-gradient(145deg, rgba(30, 58, 138, 0.9), rgba(21, 41, 96, 0.9));
+            color: #ffffff;
+            border: 1px solid #3b82f6;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        /* Scratchpad Overlay */
+        #scratchpad {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #1a1a1a;
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        #scratchpad textarea {
+            width: 100%;
+            background: #2a2a2a;
+            color: white;
+            border: 1px solid #444;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+        .close-btn {
+            background: #d32f2f;
             color: white;
             border: none;
-            padding: 12px;
+            padding: 10px 20px;
             border-radius: 8px;
-            width: 100%;
             font-weight: bold;
+            width: 100%;
             margin-top: 10px;
         }
-
-        .clear-btn { background: #8b0000; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    
-    <div id="dashboard">
-        <h1>OPS HUB</h1>
+    <header>OPS HUB</header>
 
-        <h4>Active Response</h4>
-        <div class="btn-grid">
-            <a href="shortcuts://run-shortcut?name=OpenIaR" class="app-btn">🚨 IaR App</a>
-            <a href="https://www.google.com" class="app-btn">🚑 Emerg Network</a>
-        </div>
-
-        <h4>Medical Tools</h4>
-        <div class="btn-grid">
-            <a href="#" class="app-btn full-btn" onclick="toggleView('scratchpad')">📝 Assessment Scratchpad</a>
-            <a href="https://www.mass.gov/lists/ems-statewide-treatment-protocols" class="app-btn">⚕️ MA Protocols</a>
-            <a href="https://www.cdc.gov/niosh/npg/default.html" class="app-btn">🧪 NIOSH Guide</a>
-        </div>
-
-        <h4>Field Resources</h4>
-        <div class="btn-grid">
-            <a href="shortcuts://run-shortcut?name=ERG" class="app-btn">☢️ ERG App</a>
-            <a href="shortcuts://run-shortcut?name=Weather" class="app-btn">🌩️ Weather App</a>
-        </div>
-    </div>
-
-    <div id="scratchpad" class="hidden">
-        <h3>Patient Assessment</h3>
+    <div class="container">
         
-        <div class="assessment-group">
-            <label>Mental Status (GCS/AVPU)</label>
-            <textarea id="mental" rows="2" placeholder="e.g. A&O x4..."></textarea>
+        <h2>Active Response</h2>
+        <div class="grid-container">
+            <a href="shortcuts://run-shortcut?name=OpenIaR" class="btn btn-primary">
+                <span class="btn-icon">🚨</span>
+                IaR App
+            </a>
+            <a href="https://emergencynetworking.com" class="btn btn-primary" target="_blank">
+                <span class="btn-icon">🚑</span>
+                Emerg Network
+            </a>
         </div>
 
-        <div class="assessment-group">
-            <label>Vitals (BP, HR, RR, SpO2)</label>
-            <textarea id="vitals" rows="2" placeholder="e.g. 120/80..."></textarea>
+        <h2>Medical Tools</h2>
+        <div class="grid-container">
+            <button onclick="document.getElementById('scratchpad').style.display='block'" class="btn btn-primary span-2">
+                <span class="btn-icon">📝</span>
+                Assessment Scratchpad
+            </button>
+            <a href="https://www.mass.gov/doc/emergency-medical-services-statewide-treatment-protocols-version-20261-effective-june-1-2026-0/download" class="btn btn-primary" target="_blank">
+                <span class="btn-icon">⚕️</span>
+                MA Protocols
+            </a>
+            <a href="https://www.cdc.gov/niosh/npg/default.html" class="btn btn-primary" target="_blank">
+                <span class="btn-icon">🧪</span>
+                NIOSH Guide
+            </a>
         </div>
 
-        <div class="assessment-group">
-            <label>Physical Exam / Injuries</label>
-            <textarea id="physical" rows="4" placeholder="Head-to-toe findings..."></textarea>
+        <div id="scratchpad">
+            <h2 style="margin-top:0;">Pt Assessment</h2>
+            <textarea placeholder="Age/Gender/Chief Complaint" rows="2"></textarea>
+            <textarea placeholder="Vitals (BP, HR, RR, SpO2)" rows="2"></textarea>
+            <textarea placeholder="SAMPLE / History" rows="4"></textarea>
+            <textarea placeholder="Narrative / Treatments" rows="4"></textarea>
+            <button class="close-btn" onclick="document.getElementById('scratchpad').style.display='none'">Close & Return</button>
+            <p style="font-size: 10px; color: #666; text-align: center;">Note: Closing or refreshing will clear this data.</p>
         </div>
 
-        <div class="assessment-group">
-            <label>Meds / Allergies</label>
-            <textarea id="meds" rows="2" placeholder="Current medications..."></textarea>
+        <h2>Local Departments</h2>
+        <div class="grid-container">
+            <a href="https://townofpalmer.com/" class="btn btn-secondary" target="_blank">
+                <span class="btn-icon">🏛️</span>
+                Town Main
+            </a>
+            <a href="https://www.townofpalmer.com/index.asp?SEC=E3EF158B-7092-480A-AAAC-2BB1E0A4B36C&DE=F74380B6-2157-49A4-ABCC-058AA3555375" class="btn btn-secondary" target="_blank">
+                <span class="btn-icon">🚒</span>
+                Palmer FD
+            </a>
+            <a href="https://www.townofpalmer.com/index.asp?SEC=C9A187C9-1E0A-4341-BE77-A6E7A4E46AA9&DE=32EECF55-0995-4CEF-A4FE-B3F7FA326971" class="btn btn-secondary" target="_blank">
+                <span class="btn-icon">🚒</span>
+                Bondsville FD
+            </a>
+            <a href="https://www.townofpalmer.com/index.asp?SEC=98D8F89E-9FF3-49B5-9C65-AEDF8D0F88FA&DE=C0F71699-9086-4FBD-AFD9-3D38304EBEC7" class="btn btn-secondary" target="_blank">
+                <span class="btn-icon">🚒</span>
+                Three Rivers
+            </a>
         </div>
 
-        <button class="nav-btn" onclick="toggleView('dashboard')">⬅ Back to Dashboard</button>
-        <button class="nav-btn clear-btn" onclick="clearAll()">🗑 Clear All Notes</button>
+        <h2>Live Conditions</h2>
+        <div class="grid-container">
+            <a href="https://www.windy.com/" class="btn btn-tertiary" target="_blank">
+                <span class="btn-icon">🌬️</span>
+                Windy Map
+            </a>
+            <a href="shortcuts://run-shortcut?name=OpenWeather" class="btn btn-tertiary">
+                <span class="btn-icon">🌩️</span>
+                Weather App
+            </a>
+            <a href="https://mass511.com/" class="btn btn-tertiary" target="_blank">
+                <span class="btn-icon">🚦</span>
+                Mass511
+            </a>
+            <a href="https://outagemap.ma.nationalgridus.com/" class="btn btn-tertiary" target="_blank">
+                <span class="btn-icon">⚡</span>
+                NatGrid
+            </a>
+        </div>
+
+        <h2>Field Resources</h2>
+        <div class="grid-container">
+            <a href="shortcuts://run-shortcut?name=OpenERG" class="btn btn-tertiary">
+                <span class="btn-icon">☢️</span>
+                ERG 2024 App
+            </a>
+            <a href="https://www.mass.gov/lists/fire-mobilization-running-cards" class="btn btn-tertiary" target="_blank">
+                <span class="btn-icon">📋</span>
+                Running Cards
+            </a>
+            <a href="https://hosting.tighebond.com/palmerma_Public/" class="btn btn-tertiary span-2" target="_blank">
+                <span class="btn-icon">📍</span>
+                Palmer GIS
+            </a>
+        </div>
+
+        <h2>Wildland & Brush</h2>
+        <div class="grid-container">
+            <a href="https://www.weather.gov/box/fire" class="btn btn-tertiary" target="_blank">
+                <span class="btn-icon">🌲</span>
+                MA Fire Wx
+            </a>
+            <a href="https://firms.modaps.eosdis.nasa.gov/usfs/map/" class="btn btn-tertiary" target="_blank">
+                <span class="btn-icon">🛰️</span>
+                NASA FIRMS
+            </a>
+        </div>
+
+        <h2>Health & Wellness</h2>
+        <div class="grid-container">
+            <a href="https://www.iaffrecoverycenter.com/" class="btn btn-secondary" target="_blank">
+                <span class="btn-icon">🧠</span>
+                IAFF Center
+            </a>
+            <a href="https://www.nvfc.org/programs/share-the-load-program/" class="btn btn-secondary" target="_blank">
+                <span class="btn-icon">🛟</span>
+                Share The Load
+            </a>
+        </div>
+
+        <h2>Education</h2>
+        <div class="grid-container">
+            <a href="https://hraccess-us.technomedia.com/mfa/index.cfm" class="btn btn-secondary" target="_blank">
+                <span class="btn-icon">🎓</span>
+                MFA
+            </a>
+            <a href="https://my.iaff.org/Web/Contacts/SignIn_withCreateNewAccount.aspx?LoginRedirect=true&returnurl=/Web/Events/Event_Display.aspx?EventKey=LMS_151" class="btn btn-secondary" target="_blank">
+                <span class="btn-icon">📚</span>
+                IAFF
+            </a>
+            <a href="https://auth-hcm03.ns2cloud.com/secureauth9/" class="btn btn-secondary" target="_blank">
+                <span class="btn-icon">🏛️</span>
+                NFA Portal
+            </a>
+            <a href="https://alerrt.org/login" class="btn btn-secondary" target="_blank">
+                <span class="btn-icon">🛡️</span>
+                ALERRT
+            </a>
+            <a href="https://training.fema.gov/nims/" class="btn btn-secondary" target="_blank">
+                <span class="btn-icon">📋</span>
+                FEMA NIMS
+            </a>
+            <a href="https://www.firstrespondertraining.gov/frts/npccatalog?catalog=EMI" class="btn btn-secondary" target="_blank">
+                <span class="btn-icon">🏫</span>
+                FEMA EMI
+            </a>
+            <a href="https://elearning.heart.org/" class="btn btn-secondary span-2" target="_blank">
+                <span class="btn-icon">❤️</span>
+                AHA Training
+            </a>
+        </div>
+
     </div>
-
-</div>
-
-<script>
-    // Switches between Dashboard and Scratchpad
-    function toggleView(viewId) {
-        document.getElementById('dashboard').classList.toggle('hidden', viewId === 'scratchpad');
-        document.getElementById('scratchpad').classList.toggle('hidden', viewId === 'dashboard');
-        window.scrollTo(0,0);
-    }
-
-    // Auto-Save Logic
-    const fields = ['mental', 'vitals', 'physical', 'meds'];
-    fields.forEach(id => {
-        const box = document.getElementById(id);
-        box.value = localStorage.getItem(id) || '';
-        box.addEventListener('input', () => {
-            localStorage.setItem(id, box.value);
-        });
-    });
-
-    function clearAll() {
-        if (confirm("Delete all patient notes?")) {
-            fields.forEach(id => {
-                document.getElementById(id).value = '';
-                localStorage.removeItem(id);
-            });
-        }
-    }
-</script>
 
 </body>
 </html>
