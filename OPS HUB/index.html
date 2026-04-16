@@ -24,6 +24,7 @@
         table { width: 100%; color: white; font-size: 0.72em; border-collapse: collapse; margin-top: 10px; }
         td, th { border: 1px solid #444; padding: 10px 4px; text-align: left; }
         tr:nth-child(even) { background: rgba(255,255,255,0.05); }
+        .cat-head { background: #444; color: #fff; font-weight: bold; padding: 5px; }
     </style>
 </head>
 <body>
@@ -59,6 +60,7 @@
 
         <h4>Field Resources</h4>
         <div class="btn-grid">
+            <a onclick="toggleView('emergency-list')" class="btn blue-btn full-width"><span>📞</span> EMERGENCY CALL LIST</a>
             <a href="tel:4132838792" class="btn blue-btn"><span>📞</span> Dispatch</a>
             <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn">
                 <img src="zello.png" alt="📻">Zello Radio
@@ -74,6 +76,37 @@
         <div class="btn-grid">
             <a onclick="toggleView('education')" class="btn grey-btn full-width"><span>🎓</span> Education & Wellness</a>
         </div>
+    </div>
+
+    <div id="emergency-list" class="hidden sub-menu">
+        <h3>Emergency Call List</h3>
+        <div style="overflow-x:auto;">
+            <table>
+                <tr><th colspan="2" class="cat-head">Police Departments</th></tr>
+                <tr><td>Palmer (Non-Emergency)</td><td><a href="tel:4132891196">413-289-1196</a></td></tr>
+                <tr><td>Palmer (Recorded)</td><td><a href="tel:4132838792">413-283-8792</a></td></tr>
+                <tr><td>Belchertown</td><td><a href="tel:4133236655">413-323-6655</a></td></tr>
+                <tr><td>Monson</td><td><a href="tel:4132674128">413-267-4128</a></td></tr>
+                <tr><td>Ware</td><td><a href="tel:4139673571">413-967-3571</a></td></tr>
+                
+                <tr><th colspan="2" class="cat-head">Fire Emergency #'s</th></tr>
+                <tr><td>Belchertown/Amherst Disp</td><td><a href="tel:4132564899">413-256-4899</a></td></tr>
+                <tr><td>Brimfield</td><td><a href="tel:8008896323">800-889-6323</a></td></tr>
+                <tr><td>Monson</td><td><a href="tel:4132674081">413-267-4081</a></td></tr>
+                <tr><td>Ware</td><td><a href="tel:4139675901">413-967-5901</a></td></tr>
+
+                <tr><th colspan="2" class="cat-head">Fire Stations</th></tr>
+                <tr><td>Bondsville Station</td><td><a href="tel:4132839036">413-283-9036</a></td></tr>
+                <tr><td>Belchertown Station</td><td><a href="tel:4133237571">413-323-7571</a></td></tr>
+                <tr><td>Brimfield Station</td><td><a href="tel:4132457334">413-245-7334</a></td></tr>
+                <tr><td>Monson Station</td><td><a href="tel:4132673132">413-267-3132</a></td></tr>
+                <tr><td>Palmer Chief</td><td><a href="tel:4132839718">413-283-9718</a></td></tr>
+                <tr><td>Palmer Station</td><td><a href="tel:4132833861">413-283-3861</a></td></tr>
+                <tr><td>Three Rivers Chief</td><td><a href="tel:4132832269">413-283-2269</a></td></tr>
+                <tr><td>Three Rivers Station</td><td><a href="tel:4132837161">413-283-7161</a></td></tr>
+            </table>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="scratchpad" class="hidden sub-menu">
@@ -148,7 +181,7 @@
             <a href="https://training.fema.gov/is/nims.aspx" class="btn grey-btn">FEMA NIMS</a>
             <a href="https://training.fema.gov/emi.aspx" class="btn grey-btn">FEMA EMI</a>
             <a href="https://www.iaff.org/" class="btn grey-btn">IAFF Main</a>
-            <a href="https://www.iaffrecoverycenter.com/" class="btn iaff-btn">IAFF Wellness</a>
+            <a href="https://www.iaffrecoverycenter.com/" class="btn grey-btn">IAFF Wellness</a>
             <a href="https://www.nvfc.org/share-the-load/" class="btn grey-btn">Share The Load</a>
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
@@ -179,7 +212,10 @@
     }
 
     function toggleView(v) {
-        ['main-view', 'education', 'scratchpad', 'utilities', 'roster', 'hospitals'].forEach(id => document.getElementById(id).classList.add('hidden'));
+        ['main-view', 'education', 'scratchpad', 'utilities', 'roster', 'hospitals', 'emergency-list'].forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.classList.add('hidden');
+        });
         document.getElementById(v).classList.remove('hidden');
         window.scrollTo(0,0);
     }
