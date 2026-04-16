@@ -13,7 +13,7 @@
         .header { padding: 20px 0; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; }
         h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { color: white; padding: 18px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.85em; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .btn { color: white; padding: 18px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.85em; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
         .btn img { width: 38px; height: 38px; margin-bottom: 8px; border-radius: 5px; object-fit: contain; }
         .btn span { font-size: 1.5em; margin-bottom: 8px; }
         .red-btn { background: #d32f2f !important; } .blue-btn { background: #1e3a8a !important; } .grey-btn { background: #262626 !important; }
@@ -60,12 +60,12 @@
 
         <h4>Field Resources</h4>
         <div class="btn-grid">
-            <a onclick="toggleView('emergency-list')" class="btn blue-btn full-width"><span>📞</span> EMERGENCY CALL LIST</a>
+            <a onclick="toggleView('emergency-list')" class="btn blue-btn"><span>📞</span> Emergency Call List</a>
             <a href="tel:4132838792" class="btn blue-btn"><span>📞</span> Dispatch</a>
             <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn">
                 <img src="zello.png" alt="📻">Zello Radio
             </a>
-            <a href="tel:8773850822" class="btn blue-btn full-width"><span>☢️</span> HazMat Activation: 877-385-0822</a>
+            <a href="tel:8773850822" class="btn blue-btn"><span>☢️</span> HazMat Activation</a>
             <a onclick="smartLink('weather://', 'https://weather.com')" class="btn blue-btn"><span>☁️</span> Weather App</a>
             <a href="https://www.axisgis.com/palmerma/" class="btn blue-btn"><span>📍</span> Palmer GIS</a>
             <a onclick="smartLink('erg2024://', 'https://www.phmsa.dot.gov/hazmat/erg/erg2024-mobile-app')" class="btn blue-btn"><span>☢️</span> ERG 2024</a>
@@ -88,21 +88,14 @@
                 <tr><td>Belchertown</td><td><a href="tel:4133236655">413-323-6655</a></td></tr>
                 <tr><td>Monson</td><td><a href="tel:4132674128">413-267-4128</a></td></tr>
                 <tr><td>Ware</td><td><a href="tel:4139673571">413-967-3571</a></td></tr>
-                
                 <tr><th colspan="2" class="cat-head">Fire Emergency #'s</th></tr>
                 <tr><td>Belchertown/Amherst Disp</td><td><a href="tel:4132564899">413-256-4899</a></td></tr>
                 <tr><td>Brimfield</td><td><a href="tel:8008896323">800-889-6323</a></td></tr>
                 <tr><td>Monson</td><td><a href="tel:4132674081">413-267-4081</a></td></tr>
                 <tr><td>Ware</td><td><a href="tel:4139675901">413-967-5901</a></td></tr>
-
                 <tr><th colspan="2" class="cat-head">Fire Stations</th></tr>
                 <tr><td>Bondsville Station</td><td><a href="tel:4132839036">413-283-9036</a></td></tr>
-                <tr><td>Belchertown Station</td><td><a href="tel:4133237571">413-323-7571</a></td></tr>
-                <tr><td>Brimfield Station</td><td><a href="tel:4132457334">413-245-7334</a></td></tr>
-                <tr><td>Monson Station</td><td><a href="tel:4132673132">413-267-3132</a></td></tr>
-                <tr><td>Palmer Chief</td><td><a href="tel:4132839718">413-283-9718</a></td></tr>
                 <tr><td>Palmer Station</td><td><a href="tel:4132833861">413-283-3861</a></td></tr>
-                <tr><td>Three Rivers Chief</td><td><a href="tel:4132832269">413-283-2269</a></td></tr>
                 <tr><td>Three Rivers Station</td><td><a href="tel:4132837161">413-283-7161</a></td></tr>
             </table>
         </div>
@@ -127,7 +120,6 @@
             <a href="tel:4137489000" class="btn red-btn">Mercy Medical</a>
             <a href="tel:4135342500" class="btn red-btn">Holyoke Hospital</a>
             <a href="tel:4135363000" class="btn red-btn">Providence</a>
-            <a href="tel:5087659771" class="btn red-btn">Harrington</a>
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
@@ -139,9 +131,6 @@
             <a href="tel:8004629852" class="btn blue-btn">NatGrid Priority 2</a>
             <a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a>
             <a href="tel:4132837674" class="btn grey-btn">AmeriGas</a>
-            <a href="tel:4132838356" class="btn grey-btn">Chudy Oil</a>
-            <a href="tel:4132835444" class="btn grey-btn">Ed & Son</a>
-            <a href="tel:4132833431" class="btn grey-btn">Noonan Energy</a>
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
@@ -157,12 +146,7 @@
                 <tr><td>C31</td><td>Captain</td><td>Kevin Sullivan</td><td><a href="tel:3157082913">📞</a></td></tr>
                 <tr><td>C32</td><td>Captain</td><td>Mike DuBois</td><td><a href="tel:4136688577">📞</a></td></tr>
                 <tr><td>3F1</td><td>FF</td><td>Matthew Lemieux</td><td><a href="tel:4138862591">📞</a></td></tr>
-                <tr><td>3F4</td><td>FF</td><td>Brian Sullivan</td><td><a href="tel:4138005785">📞</a></td></tr>
                 <tr><td>3F5</td><td>FF</td><td>Nick Mainville</td><td><a href="tel:4135440329">📞</a></td></tr>
-                <tr><td>3F7</td><td>FF</td><td>McKinley Chase</td><td><a href="tel:4134395179">📞</a></td></tr>
-                <tr><td>3F8</td><td>FF</td><td>Nathaniel Haley</td><td><a href="tel:4132047294">📞</a></td></tr>
-                <tr><td>3F13</td><td>FF</td><td>Shane Chase</td><td><a href="tel:4133305156">📞</a></td></tr>
-                <tr><td>3F14</td><td>FF</td><td>Jonah Bachand</td><td><a href="tel:4136400193">📞</a></td></tr>
                 <tr><td>3F2</td><td>Prob. FF</td><td>Gabriella Potenti</td><td><a href="tel:7745026543">📞</a></td></tr>
                 <tr><td>3F3</td><td>Prob. FF</td><td>Patrick Wilbur</td><td><a href="tel:7742625962">📞</a></td></tr>
                 <tr><td>3F9</td><td>Prob. FF</td><td>Nicolas Boulrice</td><td><a href="tel:4135071170">📞</a></td></tr>
@@ -174,12 +158,6 @@
     <div id="education" class="hidden sub-menu">
         <h3>Training & Wellness</h3>
         <div class="btn-grid">
-            <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" class="btn grey-btn">MFA Portal</a>
-            <a href="https://training.fema.gov/" class="btn grey-btn">FEMA / NFA</a>
-            <a href="https://elearning.heart.org/" class="btn grey-btn">AHA Training</a>
-            <a href="https://alerrt.org/" class="btn grey-btn">ALERRT</a>
-            <a href="https://training.fema.gov/is/nims.aspx" class="btn grey-btn">FEMA NIMS</a>
-            <a href="https://training.fema.gov/emi.aspx" class="btn grey-btn">FEMA EMI</a>
             <a href="https://www.iaff.org/" class="btn grey-btn">IAFF Main</a>
             <a href="https://www.iaffrecoverycenter.com/" class="btn grey-btn">IAFF Wellness</a>
             <a href="https://www.nvfc.org/share-the-load/" class="btn grey-btn">Share The Load</a>
