@@ -92,7 +92,31 @@
         <div class="btn-grid">
             <a onclick="smartLink('erg2024://', 'https://www.phmsa.dot.gov/hazmat/erg/erg2024-mobile-app')" class="btn blue-btn"><span>☢️</span> ERG 2024 App</a>
             <a href="#" class="btn blue-btn"><span>📋</span> Running Cards</a>
+            <a onclick="smartLink('zello://BFD3%20TALK%20AROUND?add', 'https://zello.com/personal/')" class="btn blue-btn full-width"><span>📻</span> Zello Radio</a>
             <a href="https://www.axisgis.com/palmerma/" class="btn blue-btn full-width"><span>📍</span> Palmer GIS</a>
+        </div>
+
+        <h4>Wildland & Brush</h4>
+        <div class="btn-grid">
+            <a href="https://www.mass.gov/service-details/fire-weather-forecast" class="btn blue-btn"><span>🌲</span> MA Fire Wx</a>
+            <a href="https://firms.modaps.eosdis.nasa.gov/" class="btn blue-btn"><span>🛰️</span> NASA FIRMS</a>
+        </div>
+
+        <h4>Health & Wellness</h4>
+        <div class="btn-grid">
+            <a href="https://www.iaffcenterforcenterforoncology.org/" class="btn grey-btn"><span>🧠</span> IAFF Center</a>
+            <a href="https://www.nvfc.org/share-the-load/" class="btn grey-btn"><span>🛟</span> Share The Load</a>
+        </div>
+
+        <h4>Education</h4>
+        <div class="btn-grid">
+            <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" class="btn grey-btn"><span>🎓</span> MFA</a>
+            <a href="https://alerrt.org/" class="btn grey-btn"><span>🛡️</span> ALERRT</a>
+            <a href="https://www.iaff.org/" class="btn grey-btn"><span>📚</span> IAFF</a>
+            <a href="https://training.fema.gov/" class="btn grey-btn"><span>🏛️</span> NFA Portal</a>
+            <a href="https://training.fema.gov/is/nims.aspx" class="btn grey-btn"><span>📋</span> FEMA NIMS</a>
+            <a href="https://training.fema.gov/emi.aspx" class="btn grey-btn"><span>🏫</span> FEMA EMI</a>
+            <a href="https://elearning.heart.org/" class="btn grey-btn full-width"><span>❤️</span> AHA Training</a>
         </div>
     </div>
 
@@ -113,15 +137,10 @@
     let fallbackTimer;
 
     function smartLink(appUrl, webUrl) {
-        // Try to open the app
         window.location.href = appUrl;
-
-        // Start the timer to redirect to web if app doesn't open
         fallbackTimer = setTimeout(function() {
             window.location.href = webUrl;
         }, 2500);
-
-        // MAGIC FIX: If the user leaves the page (the app opens), kill the timer
         window.onblur = function() {
             clearTimeout(fallbackTimer);
         };
