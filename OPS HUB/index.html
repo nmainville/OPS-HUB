@@ -43,7 +43,6 @@
             cursor: pointer;
         }
         .btn span { font-size: 1.5em; margin-bottom: 8px; }
-        /* Style for Patches and Logos */
         .btn img { width: 40px; height: 40px; margin-bottom: 8px; border-radius: 4px; object-fit: contain; }
         .red-btn { background: #d32f2f !important; }
         .blue-btn { background: #1e3a8a !important; }
@@ -63,7 +62,7 @@
         <h4>Active Response</h4>
         <div class="btn-grid">
             <a onclick="smartLink('iar://', 'https://www.iarservices.com/')" class="btn red-btn"><span>🚨</span> IaR App</a>
-            <a href="https://www.google.com" class="btn red-btn"><span>🚑</span> Emerg Network</a>
+            <a href="https://login.emergencynetworking.com/" class="btn red-btn"><span>🚑</span> Emerg Network</a>
         </div>
 
         <h4>Medical Tools</h4>
@@ -77,14 +76,20 @@
         <div class="btn-grid">
             <a href="https://www.townofpalmer.com/" class="btn grey-btn"><span>🏛️</span> Town Main</a>
             <a href="https://www.palmerfire.org/" class="btn grey-btn">
-                <img src="palmer.png" alt="Palmer">
+                <img src="palmer.png" alt="🚒">
                 Palmer FD
             </a>
             <a href="#" class="btn grey-btn">
-                <img src="bondsville.png" alt="Bondsville">
+                <img src="bondsville.png" alt="🚒">
                 Bondsville FD
             </a>
             <a href="#" class="btn grey-btn"><span>🚒</span> Three Rivers</a>
+        </div>
+
+        <h4>Quick Contacts</h4>
+        <div class="btn-grid">
+            <a href="tel:911" class="btn red-btn"><span>📞</span> Dispatch</a>
+            <a href="tel:4130000000" class="btn grey-btn"><span>🏢</span> Station 3</a>
         </div>
 
         <h4>Live Conditions</h4>
@@ -100,12 +105,10 @@
         <div class="btn-grid">
             <a onclick="smartLink('erg2024://', 'https://www.phmsa.dot.gov/hazmat/erg/erg2024-mobile-app')" class="btn blue-btn"><span>☢️</span> ERG 2024 App</a>
             <a href="#" class="btn blue-btn"><span>📋</span> Running Cards</a>
-            
-            <a onclick="smartLink('zello://BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn full-width">
-                <img src="zello.png" alt="Z">
-                Zello: BFD3 Talk Around
+            <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn full-width">
+                <img src="zello.png" alt="📻">
+                Zello Radio
             </a>
-            
             <a href="https://www.axisgis.com/palmerma/" class="btn blue-btn full-width"><span>📍</span> Palmer GIS</a>
         </div>
 
@@ -115,12 +118,21 @@
             <a href="https://firms.modaps.eosdis.nasa.gov/" class="btn blue-btn"><span>🛰️</span> NASA FIRMS</a>
         </div>
 
-        <h4>Education & Health</h4>
+        <h4>Health & Wellness</h4>
+        <div class="btn-grid">
+            <a href="https://www.iaffrecoverycenter.com/" class="btn grey-btn"><span>🧠</span> IAFF Wellness</a>
+            <a href="https://www.nvfc.org/share-the-load/" class="btn grey-btn"><span>🛟</span> Share The Load</a>
+        </div>
+
+        <h4>Education</h4>
         <div class="btn-grid">
             <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" class="btn grey-btn"><span>🎓</span> MFA Portal</a>
             <a href="https://alerrt.org/" class="btn grey-btn"><span>🛡️</span> ALERRT</a>
-            <a href="https://elearning.heart.org/" class="btn grey-btn"><span>❤️</span> AHA Training</a>
-            <a href="https://www.nvfc.org/share-the-load/" class="btn grey-btn"><span>🛟</span> Help Line</a>
+            <a href="https://www.iaff.org/" class="btn grey-btn"><span>📚</span> IAFF</a>
+            <a href="https://training.fema.gov/" class="btn grey-btn"><span>🏛️</span> NFA Portal</a>
+            <a href="https://training.fema.gov/is/nims.aspx" class="btn grey-btn"><span>📋</span> FEMA NIMS</a>
+            <a href="https://training.fema.gov/emi.aspx" class="btn grey-btn"><span>🏫</span> FEMA EMI</a>
+            <a href="https://elearning.heart.org/" class="btn grey-btn full-width"><span>❤️</span> AHA Training</a>
         </div>
     </div>
 
@@ -139,7 +151,6 @@
 
 <script>
     let fallbackTimer;
-
     function smartLink(appUrl, webUrl) {
         var start = Date.now();
         window.location.href = appUrl;
@@ -148,24 +159,19 @@
                 window.location.href = webUrl;
             }
         }, 2500);
-        window.onblur = function() {
-            clearTimeout(fallbackTimer);
-        };
+        window.onblur = function() { clearTimeout(fallbackTimer); };
     }
-
     function toggleView(v) {
         document.getElementById('dashboard').classList.toggle('hidden', v === 'scratchpad');
         document.getElementById('scratchpad').classList.toggle('hidden', v === 'dashboard');
         window.scrollTo(0,0);
     }
-
     const ids = ['m', 'v', 'p', 'ma'];
     ids.forEach(id => {
         const el = document.getElementById(id);
         el.value = localStorage.getItem(id) || '';
         el.addEventListener('input', () => localStorage.setItem(id, el.value));
     });
-
     function clearAll() {
         if (confirm("Clear notes?")) {
             ids.forEach(id => { document.getElementById(id).value = ''; localStorage.removeItem(id); });
