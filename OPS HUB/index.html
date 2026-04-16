@@ -130,22 +130,45 @@
 </div>
 
 <script>
+    let fallbackTimer;
+
+    function smartLink(appUrl, webUrl) {
+        let clickedAt = Date.now();
+        window.location.href = appUrl;
+
+        // Kill timer if user switches apps
+        const clearTimer = () => {
+            clearTimeout(fallbackTimer);
+            window.removeEventListener('blur', clearTimer);
+            document.removeEventListener('visibilitychange', clearTimer);
+        };
+
+        window.addEventListener('blur', clearTimer);
+        document.addEventListener('visibilitychange', clearTimer);
+
+        fallbackTimer = setTimeout(() => {
+            // Only redirect if page is still visible/focused
+            if (Date.now() - clickedAt < 3000 && document.visibilityState === 'visible') {
+                window.location.href = webUrl;
+            }
+        }, 2500);
+    }
+
     function toggleView(v) {
         ['main-view', 'education', 'scratchpad', 'utilities', 'roster'].forEach(id => document.getElementById(id).classList.add('hidden'));
         document.getElementById(v).classList.remove('hidden');
         window.scrollTo(0,0);
     }
-    function smartLink(appUrl, webUrl) {
-        var start = Date.now();
-        window.location.href = appUrl;
-        setTimeout(() => { if (Date.now() - start < 3000) window.location.href = webUrl; }, 2500);
-    }
+
     const ids = ['m', 'v', 'p', 'ma'];
     ids.forEach(id => {
         const el = document.getElementById(id);
-        el.value = localStorage.getItem(id) || '';
-        el.addEventListener('input', () => localStorage.setItem(id, el.value));
+        if(el) {
+            el.value = localStorage.getItem(id) || '';
+            el.addEventListener('input', () => localStorage.setItem(id, el.value));
+        }
     });
+
     function clearAll() { if (confirm("Clear notes?")) { ids.forEach(id => { document.getElementById(id).value = ''; localStorage.removeItem(id); }); } }
 </script>
 </body>
