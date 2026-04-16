@@ -25,15 +25,10 @@
         }
 
         .container { max-width: 500px; margin: auto; padding-bottom: 50px; }
-
-        /* Header */
         .header { padding: 20px 0; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.8); }
         .header h1 { margin: 0; font-size: 1.5em; letter-spacing: 2px; text-transform: uppercase; }
-
-        /* Section Labels */
         h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
 
-        /* Button Grids */
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         
         .btn {
@@ -48,20 +43,18 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            background: rgba(40, 40, 40, 0.9); /* Default Grey */
+            background: rgba(40, 40, 40, 0.9);
             border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
         }
 
         .btn span { font-size: 1.5em; margin-bottom: 8px; }
-
-        /* Colors based on your screenshots */
         .red-btn { background: #d32f2f !important; }
-        .blue-btn { background: #1e3a8a !important; } /* Dark Blue like your screen */
+        .blue-btn { background: #1e3a8a !important; }
         .grey-btn { background: #262626 !important; }
-        
         .full-width { grid-column: span 2; }
 
-        /* Assessment Form Styling */
+        /* Assessment Form View */
         .hidden { display: none; }
         .assessment-view { background: rgba(0,0,0,0.9); padding: 20px; border-radius: 20px; border: 2px solid #ff4500; margin-top: 20px; }
         .group { margin-bottom: 15px; text-align: left; }
@@ -79,62 +72,53 @@
 
         <h4>Active Response</h4>
         <div class="btn-grid">
-            <a href="shortcuts://run-shortcut?name=OpenIaR" class="btn red-btn"><span>🚨</span> IaR App</a>
-            <a href="#" class="btn red-btn"><span>🚑</span> Emerg Network</a>
+            <a onclick="smartLink('iamresponding://', 'https://www.iarservices.com/')" class="btn red-btn"><span>🚨</span> IaR App</a>
+            <a href="https://www.google.com" class="btn red-btn"><span>🚑</span> Emerg Network</a>
         </div>
 
         <h4>Medical Tools</h4>
         <div class="btn-grid">
-            <a href="#" class="btn red-btn full-width" onclick="toggleView('scratchpad')"><span>📝</span> Assessment Scratchpad</a>
+            <a onclick="toggleView('scratchpad')" class="btn red-btn full-width"><span>📝</span> Assessment Scratchpad</a>
             <a href="https://www.mass.gov/lists/ems-statewide-treatment-protocols" class="btn red-btn"><span>⚕️</span> MA Protocols</a>
             <a href="https://www.cdc.gov/niosh/npg/default.html" class="btn red-btn"><span>🧪</span> NIOSH Guide</a>
         </div>
 
         <h4>Local Departments</h4>
         <div class="btn-grid">
-            <a href="#" class="btn grey-btn"><span>🏛️</span> Town Main</a>
-            <a href="#" class="btn grey-btn"><span>🚒</span> Palmer FD</a>
+            <a href="https://www.townofpalmer.com/" class="btn grey-btn"><span>🏛️</span> Town Main</a>
+            <a href="https://www.palmerfire.org/" class="btn grey-btn"><span>🚒</span> Palmer FD</a>
             <a href="#" class="btn grey-btn"><span>🚒</span> Bondsville FD</a>
             <a href="#" class="btn grey-btn"><span>🚒</span> Three Rivers</a>
         </div>
 
         <h4>Live Conditions</h4>
         <div class="btn-grid">
-            <a href="#" class="btn blue-btn"><span>🌬️</span> Windy Map</a>
-            <a href="shortcuts://run-shortcut?name=Weather" class="btn blue-btn"><span>☁️</span> Weather App</a>
+            <a href="https://www.windy.com" class="btn blue-btn"><span>🌬️</span> Windy Map</a>
+            <a onclick="smartLink('weather://', 'https://weather.com')" class="btn blue-btn"><span>☁️</span> Weather App</a>
             <a href="https://mass511.com/" class="btn blue-btn"><span>🚥</span> Mass511</a>
-            <a href="https://www.google.com/maps/@42.2323,-72.3275,12z/data=!5m1!1e1" class="btn blue-btn"><span>🚧</span> Road Closures</a>
-            <a href="#" class="btn blue-btn full-width"><span>⚡</span> NatGrid</a>
+            <a href="google.com/maps" class="btn blue-btn"><span>🚧</span> Road Closures</a>
+            <a href="https://www.nationalgridus.com/MA-Home/Outage-Central/" class="btn blue-btn full-width"><span>⚡</span> NatGrid</a>
         </div>
 
         <h4>Field Resources</h4>
         <div class="btn-grid">
-            <a href="shortcuts://run-shortcut?name=ERG" class="btn blue-btn"><span>☢️</span> ERG 2024 App</a>
+            <a onclick="smartLink('erg2024://', 'https://www.phmsa.dot.gov/hazmat/erg/erg2024-mobile-app')" class="btn blue-btn"><span>☢️</span> ERG 2024 App</a>
             <a href="#" class="btn blue-btn"><span>📋</span> Running Cards</a>
-            <a href="#" class="btn blue-btn full-width"><span>📍</span> Palmer GIS</a>
+            <a href="https://www.axisgis.com/palmerma/" class="btn blue-btn full-width"><span>📍</span> Palmer GIS</a>
         </div>
 
         <h4>Wildland & Brush</h4>
         <div class="btn-grid">
-            <a href="#" class="btn blue-btn"><span>🌲</span> MA Fire Wx</a>
-            <a href="#" class="btn blue-btn"><span>🛰️</span> NASA FIRMS</a>
-        </div>
-
-        <h4>Health & Wellness</h4>
-        <div class="btn-grid">
-            <a href="#" class="btn grey-btn"><span>🧠</span> IAFF Center</a>
-            <a href="#" class="btn grey-btn"><span>🛟</span> Share The Load</a>
+            <a href="https://www.mass.gov/service-details/fire-weather-forecast" class="btn blue-btn"><span>🌲</span> MA Fire Wx</a>
+            <a href="https://firms.modaps.eosdis.nasa.gov/" class="btn blue-btn"><span>🛰️</span> NASA FIRMS</a>
         </div>
 
         <h4>Education</h4>
         <div class="btn-grid">
-            <a href="#" class="btn grey-btn"><span>🎓</span> MFA</a>
-            <a href="#" class="btn grey-btn"><span>📚</span> IAFF</a>
-            <a href="#" class="btn grey-btn"><span>🏛️</span> NFA Portal</a>
-            <a href="#" class="btn grey-btn"><span>🛡️</span> ALERRT</a>
-            <a href="#" class="btn grey-btn"><span>📋</span> FEMA NIMS</a>
-            <a href="#" class="btn grey-btn"><span>🏫</span> FEMA EMI</a>
-            <a href="#" class="btn grey-btn full-width"><span>❤️</span> AHA Training</a>
+            <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" class="btn grey-btn"><span>🎓</span> MFA</a>
+            <a href="https://www.iaff.org/" class="btn grey-btn"><span>📚</span> IAFF</a>
+            <a href="https://training.fema.gov/" class="btn grey-btn"><span>🏛️</span> NFA Portal</a>
+            <a href="https://alerrt.org/" class="btn grey-btn"><span>🛡️</span> ALERRT</a>
         </div>
     </div>
 
@@ -153,12 +137,25 @@
 </div>
 
 <script>
+    // SMART LINK: Opens App directly or falls back to Web
+    function smartLink(appUrl, webUrl) {
+        var start = new Date().getTime();
+        window.location.href = appUrl;
+
+        setTimeout(function() {
+            if (new Date().getTime() - start < 2500) {
+                window.location.href = webUrl;
+            }
+        }, 2000);
+    }
+
     function toggleView(v) {
         document.getElementById('dashboard').classList.toggle('hidden', v === 'scratchpad');
         document.getElementById('scratchpad').classList.toggle('hidden', v === 'dashboard');
         window.scrollTo(0,0);
     }
 
+    // Auto-Save Data
     const ids = ['m', 'v', 'p', 'ma'];
     ids.forEach(id => {
         const el = document.getElementById(id);
@@ -167,7 +164,7 @@
     });
 
     function clearAll() {
-        if (confirm("Clear notes?")) {
+        if (confirm("Clear all patient notes?")) {
             ids.forEach(id => { document.getElementById(id).value = ''; localStorage.removeItem(id); });
         }
     }
