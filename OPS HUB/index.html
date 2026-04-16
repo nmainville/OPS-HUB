@@ -42,12 +42,12 @@
         <div class="btn-grid">
             <a onclick="toggleView('scratchpad')" class="btn red-btn full-width"><span>📝</span> Patient Scratchpad</a>
             <a href="https://www.mass.gov/lists/ems-statewide-treatment-protocols" class="btn red-btn"><span>⚕️</span> MA Protocols</a>
-            <a href="https://www.cdc.gov/niosh/npg/default.html" class="btn red-btn"><span>🧪</span> NIOSH Guide</a>
+            <a onclick="toggleView('hospitals')" class="btn red-btn"><span>🏥</span> Hospital Lines</a>
         </div>
 
         <h4>Local Departments</h4>
         <div class="btn-grid">
-            <a href="https://www.townofpalmer.com/fire-department" class="btn grey-btn">
+            <a href="https://www.townofpalmer.com/palmerfire" class="btn grey-btn">
                 <img src="palmer.png" alt="🚒">Palmer FD
             </a>
             <a href="https://www.townofpalmer.com/bondsvillefire" class="btn grey-btn">
@@ -67,7 +67,7 @@
             <a onclick="smartLink('weather://', 'https://weather.com')" class="btn blue-btn"><span>☁️</span> Weather App</a>
             <a href="https://www.axisgis.com/palmerma/" class="btn blue-btn"><span>📍</span> Palmer GIS</a>
             <a onclick="smartLink('erg2024://', 'https://www.phmsa.dot.gov/hazmat/erg/erg2024-mobile-app')" class="btn blue-btn"><span>☢️</span> ERG 2024</a>
-            <a onclick="toggleView('utilities')" class="btn blue-btn"><span>⚡</span> Utilities</a>
+            <a onclick="toggleView('utilities')" class="btn blue-btn full-width"><span>⚡</span> Utilities</a>
         </div>
 
         <h4>Resources & Education</h4>
@@ -84,6 +84,33 @@
         <div style="text-align:left;"><label>Meds / Allergies</label><textarea id="ma" rows="2"></textarea></div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back to Dashboard</button>
         <button class="nav-btn" style="background:#8b0000" onclick="clearAll()">Clear Notes</button>
+    </div>
+
+    <div id="hospitals" class="hidden sub-menu">
+        <h3>Medical Facilities</h3>
+        <div class="btn-grid">
+            <a href="tel:4132833611" class="btn red-btn">Wing Memorial</a>
+            <a href="tel:4137940000" class="btn red-btn">Baystate Med</a>
+            <a href="tel:4137489000" class="btn red-btn">Mercy Medical</a>
+            <a href="tel:4135342500" class="btn red-btn">Holyoke Hospital</a>
+            <a href="tel:4135363000" class="btn red-btn">Providence</a>
+            <a href="tel:5087659771" class="btn red-btn">Harrington</a>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
+    <div id="utilities" class="hidden sub-menu">
+        <h3>Emergency Utilities</h3>
+        <div class="btn-grid">
+            <a href="tel:8772473602" class="btn blue-btn">NatGrid Priority 1</a>
+            <a href="tel:8004629852" class="btn blue-btn">NatGrid Priority 2</a>
+            <a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a>
+            <a href="tel:4132837674" class="btn grey-btn">AmeriGas</a>
+            <a href="tel:4132838356" class="btn grey-btn">Chudy Oil</a>
+            <a href="tel:4132835444" class="btn grey-btn">Ed & Son</a>
+            <a href="tel:4132833431" class="btn grey-btn">Noonan Energy</a>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="roster" class="hidden sub-menu">
@@ -126,17 +153,6 @@
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
-
-    <div id="utilities" class="hidden sub-menu">
-        <h3>Emergency Utilities</h3>
-        <div class="btn-grid">
-            <a href="tel:8772473602" class="btn blue-btn">NatGrid Priority 1</a>
-            <a href="tel:8004629852" class="btn blue-btn">NatGrid Priority 2</a>
-            <a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a>
-            <a href="tel:4132837674" class="btn grey-btn">AmeriGas</a>
-        </div>
-        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-    </div>
 </div>
 
 <script>
@@ -163,7 +179,7 @@
     }
 
     function toggleView(v) {
-        ['main-view', 'education', 'scratchpad', 'utilities', 'roster'].forEach(id => document.getElementById(id).classList.add('hidden'));
+        ['main-view', 'education', 'scratchpad', 'utilities', 'roster', 'hospitals'].forEach(id => document.getElementById(id).classList.add('hidden'));
         document.getElementById(v).classList.remove('hidden');
         window.scrollTo(0,0);
     }
