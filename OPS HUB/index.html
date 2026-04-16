@@ -54,7 +54,7 @@
         .grey-btn { background: #262626 !important; }
         .full-width { grid-column: span 2; }
 
-        /* Assessment Form View */
+        /* Assessment View */
         .hidden { display: none; }
         .assessment-view { background: rgba(0,0,0,0.9); padding: 20px; border-radius: 20px; border: 2px solid #ff4500; margin-top: 20px; }
         .group { margin-bottom: 15px; text-align: left; }
@@ -96,7 +96,7 @@
             <a href="https://www.windy.com" class="btn blue-btn"><span>🌬️</span> Windy Map</a>
             <a onclick="smartLink('weather://', 'https://weather.com')" class="btn blue-btn"><span>☁️</span> Weather App</a>
             <a href="https://mass511.com/" class="btn blue-btn"><span>🚥</span> Mass511</a>
-            <a href="google.com/maps" class="btn blue-btn"><span>🚧</span> Road Closures</a>
+            <a href="http://maps.apple.com/?q=Traffic&ll=42.1584,-72.3287&z=13" class="btn blue-btn"><span>🚧</span> Road Closures</a>
             <a href="https://www.nationalgridus.com/MA-Home/Outage-Central/" class="btn blue-btn full-width"><span>⚡</span> NatGrid</a>
         </div>
 
@@ -125,10 +125,10 @@
     <div id="scratchpad" class="hidden">
         <div class="assessment-view">
             <h3>Patient Assessment</h3>
-            <div class="group"><label>Mental Status (GCS/AVPU)</label><textarea id="m" rows="2"></textarea></div>
-            <div class="group"><label>Vitals (BP, HR, RR, SpO2)</label><textarea id="v" rows="2"></textarea></div>
-            <div class="group"><label>Physical Exam / Injuries</label><textarea id="p" rows="4"></textarea></div>
-            <div class="group"><label>Meds / Allergies</label><textarea id="ma" rows="2"></textarea></div>
+            <div class="group"><label>Mental Status (GCS/AVPU)</label><textarea id="m" rows="2" placeholder="Notes..."></textarea></div>
+            <div class="group"><label>Vitals (BP, HR, RR, SpO2)</label><textarea id="v" rows="2" placeholder="120/80..."></textarea></div>
+            <div class="group"><label>Physical Exam / Injuries</label><textarea id="p" rows="4" placeholder="Findings..."></textarea></div>
+            <div class="group"><label>Meds / Allergies</label><textarea id="ma" rows="2" placeholder="List..."></textarea></div>
             <button class="nav-btn" onclick="toggleView('dashboard')">⬅ Back to Dashboard</button>
             <button class="nav-btn" style="background:#8b0000" onclick="clearAll()">🗑 Clear All Notes</button>
         </div>
@@ -137,7 +137,6 @@
 </div>
 
 <script>
-    // SMART LINK: Opens App directly or falls back to Web
     function smartLink(appUrl, webUrl) {
         var start = new Date().getTime();
         window.location.href = appUrl;
@@ -155,7 +154,6 @@
         window.scrollTo(0,0);
     }
 
-    // Auto-Save Data
     const ids = ['m', 'v', 'p', 'ma'];
     ids.forEach(id => {
         const el = document.getElementById(id);
@@ -164,7 +162,7 @@
     });
 
     function clearAll() {
-        if (confirm("Clear all patient notes?")) {
+        if (confirm("Clear notes?")) {
             ids.forEach(id => { document.getElementById(id).value = ''; localStorage.removeItem(id); });
         }
     }
