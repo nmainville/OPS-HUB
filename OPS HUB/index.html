@@ -43,6 +43,7 @@
             cursor: pointer;
         }
         .btn span { font-size: 1.5em; margin-bottom: 8px; }
+        .btn img { width: 32px; height: 32px; margin-bottom: 8px; border-radius: 6px; }
         .red-btn { background: #d32f2f !important; }
         .blue-btn { background: #1e3a8a !important; }
         .grey-btn { background: #262626 !important; }
@@ -92,20 +93,13 @@
         <div class="btn-grid">
             <a onclick="smartLink('erg2024://', 'https://www.phmsa.dot.gov/hazmat/erg/erg2024-mobile-app')" class="btn blue-btn"><span>☢️</span> ERG 2024 App</a>
             <a href="#" class="btn blue-btn"><span>📋</span> Running Cards</a>
-            <a onclick="smartLink('zello://BFD3%20TALK%20AROUND?add', 'https://zello.com/personal/')" class="btn blue-btn full-width"><span>📻</span> Zello Radio</a>
+            
+            <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/personal/')" class="btn blue-btn full-width">
+                <img src="https://zello.com/wp-content/uploads/2019/12/zello-logo-icon.png" alt="Z">
+                Zello: BFD3 Talk Around
+            </a>
+            
             <a href="https://www.axisgis.com/palmerma/" class="btn blue-btn full-width"><span>📍</span> Palmer GIS</a>
-        </div>
-
-        <h4>Wildland & Brush</h4>
-        <div class="btn-grid">
-            <a href="https://www.mass.gov/service-details/fire-weather-forecast" class="btn blue-btn"><span>🌲</span> MA Fire Wx</a>
-            <a href="https://firms.modaps.eosdis.nasa.gov/" class="btn blue-btn"><span>🛰️</span> NASA FIRMS</a>
-        </div>
-
-        <h4>Health & Wellness</h4>
-        <div class="btn-grid">
-            <a href="https://www.iaffcenterforcenterforoncology.org/" class="btn grey-btn"><span>🧠</span> IAFF Center</a>
-            <a href="https://www.nvfc.org/share-the-load/" class="btn grey-btn"><span>🛟</span> Share The Load</a>
         </div>
 
         <h4>Education</h4>
@@ -113,9 +107,6 @@
             <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" class="btn grey-btn"><span>🎓</span> MFA</a>
             <a href="https://alerrt.org/" class="btn grey-btn"><span>🛡️</span> ALERRT</a>
             <a href="https://www.iaff.org/" class="btn grey-btn"><span>📚</span> IAFF</a>
-            <a href="https://training.fema.gov/" class="btn grey-btn"><span>🏛️</span> NFA Portal</a>
-            <a href="https://training.fema.gov/is/nims.aspx" class="btn grey-btn"><span>📋</span> FEMA NIMS</a>
-            <a href="https://training.fema.gov/emi.aspx" class="btn grey-btn"><span>🏫</span> FEMA EMI</a>
             <a href="https://elearning.heart.org/" class="btn grey-btn full-width"><span>❤️</span> AHA Training</a>
         </div>
     </div>
@@ -137,10 +128,15 @@
     let fallbackTimer;
 
     function smartLink(appUrl, webUrl) {
+        var start = Date.now();
         window.location.href = appUrl;
+
         fallbackTimer = setTimeout(function() {
-            window.location.href = webUrl;
+            if (Date.now() - start < 3000) {
+                window.location.href = webUrl;
+            }
         }, 2500);
+
         window.onblur = function() {
             clearTimeout(fallbackTimer);
         };
