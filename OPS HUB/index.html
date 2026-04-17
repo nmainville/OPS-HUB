@@ -10,7 +10,12 @@
     <style>
         body { font-family: -apple-system, system-ui; background: #000 url('flag.jpg') no-repeat center center fixed; background-size: cover; color: white; text-align: center; margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; }
         .container { max-width: 500px; margin: auto; }
-        .header { padding: 20px 0; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; }
+        
+        /* HEADER UPDATED TO ALIGN PATCHES AND TEXT PERFECTLY */
+        .header { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; }
+        .header h1 { margin: 0; font-size: 1.8em; letter-spacing: 1px; }
+        .header img { width: 45px; height: 45px; object-fit: contain; }
+        
         h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { color: white; padding: 18px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.85em; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
@@ -31,7 +36,12 @@
 
 <div class="container">
     <div id="main-view">
-        <div class="header"><h1>OPS HUB</h1></div>
+        
+        <div class="header">
+            <img src="bondsville.png" alt="Patch">
+            <h1>OPS HUB</h1>
+            <img src="bondsville.png" alt="Patch">
+        </div>
 
         <h4>Active Response</h4>
         <div class="btn-grid">
