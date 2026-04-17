@@ -10,26 +10,40 @@
     <style>
         body { font-family: -apple-system, system-ui; background: #000 url('flag.jpg') no-repeat center center fixed; background-size: cover; color: white; text-align: center; margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; }
         .container { max-width: 500px; margin: auto; }
+        
+        /* HEADER */
         .header { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; }
         .title-container { display: flex; flex-direction: column; align-items: center; }
         .header h1 { margin: 0; font-size: 1.8em; letter-spacing: 1px; }
         .motto { color: rgba(255,255,255,0.7); font-family: 'Snell Roundhand', cursive, Georgia; font-size: 0.85em; margin-top: -2px; }
         .header img { width: 45px; height: 45px; object-fit: contain; }
+        
+        /* BUTTONS */
         h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { color: white; padding: 18px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.85em; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
         .btn img { width: 38px; height: 38px; margin-bottom: 8px; border-radius: 5px; object-fit: contain; }
         .btn span { font-size: 1.5em; margin-bottom: 8px; }
         .red-btn { background: #d32f2f !important; } .blue-btn { background: #1e3a8a !important; } .grey-btn { background: #262626 !important; }
-        .full-width { grid-column: span 2; } .hidden { display: none; }
+        .full-width { grid-column: span 2; }
+        
+        /* MENU & NAVIGATION */
+        .hidden { display: none !important; } /* THE FIX: FORCE HIDDEN */
         .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; }
         .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
+        
+        /* TABLES & TOOLS */
         .time-btn { background: #1e3a8a; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.8em; font-weight: bold; cursor: pointer; }
         textarea { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
         table { width: 100%; color: white; font-size: 0.72em; border-collapse: collapse; margin-top: 10px; }
         td, th { border: 1px solid #444; padding: 10px 4px; text-align: left; }
         tr:nth-child(even) { background: rgba(255,255,255,0.05); }
         .cat-head { background: #444; color: #fff; font-weight: bold; padding: 5px; text-align: center; }
+        
+        /* PDF VIEWER */
+        #pdf-viewer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 9999; display: flex; flex-direction: column; }
+        #pdf-frame { flex-grow: 1; border: none; width: 100%; }
+        .viewer-nav { background: #222; padding: env(safe-area-inset-top) 10px 10px 10px; border-bottom: 2px solid #d32f2f; }
     </style>
 </head>
 <body>
@@ -60,7 +74,7 @@
 
         <h4>Fire Prevention & Inspections</h4>
         <div class="btn-grid">
-            <a href="Smoke_Requirements.pdf" target="_blank" class="btn red-btn"><span>🏠</span> Smoke/CO Specs</a>
+            <a onclick="openPDF('Smoke_Requirements.pdf')" class="btn red-btn"><span>🏠</span> Smoke/CO Specs</a>
             <a onclick="toggleView('fees')" class="btn red-btn"><span>💰</span> Inspection Fees</a>
             <a href="https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter148" target="_blank" class="btn red-btn full-width"><span>⚖️</span> MGL Ch. 148</a>
         </div>
@@ -93,6 +107,13 @@
         <div class="btn-grid">
             <a onclick="toggleView('education')" class="btn grey-btn full-width"><span>🎓</span> Training Portal</a>
         </div>
+    </div>
+
+    <div id="pdf-viewer" class="hidden">
+        <div class="viewer-nav">
+            <button class="nav-btn" style="margin-top:10px;" onclick="toggleView('main-view')">⬅ BACK TO DASHBOARD</button>
+        </div>
+        <iframe id="pdf-frame"></iframe>
     </div>
 
     <div id="fees" class="hidden sub-menu">
@@ -261,14 +282,25 @@
             }
         }, 2500);
     }
+    
     function toggleView(v) {
-        ['main-view', 'education', 'scratchpad', 'utilities', 'roster', 'hospitals', 'emergency-list', 'fees'].forEach(id => {
+        // Hides all views
+        ['main-view', 'education', 'scratchpad', 'utilities', 'roster', 'hospitals', 'emergency-list', 'fees', 'pdf-viewer'].forEach(id => {
             const el = document.getElementById(id);
             if(el) el.classList.add('hidden');
         });
+        // Shows target view
         document.getElementById(v).classList.remove('hidden');
         window.scrollTo(0,0);
     }
+
+    function openPDF(filename) {
+        const frame = document.getElementById('pdf-frame');
+        frame.src = filename;
+        toggleView('pdf-viewer');
+    }
+
+    // LOCAL STORAGE FOR SCRATCHPAD
     const ids = ['m', 'v1', 'v2', 'v3', 'p', 'ma'];
     ids.forEach(id => {
         const el = document.getElementById(id);
