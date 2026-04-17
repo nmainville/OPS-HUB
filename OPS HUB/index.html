@@ -11,7 +11,6 @@
         body { font-family: -apple-system, system-ui; background: #000 url('flag.jpg') no-repeat center center fixed; background-size: cover; color: white; text-align: center; margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; }
         .container { max-width: 500px; margin: auto; }
         
-        /* HEADER ALIGNED WITH PATCH, TITLE, MOTTO, AND FLAG */
         .header { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; }
         .title-container { display: flex; flex-direction: column; align-items: center; }
         .header h1 { margin: 0; font-size: 1.8em; letter-spacing: 1px; }
@@ -28,7 +27,6 @@
         .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; }
         .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
         
-        /* TIME STAMP BUTTON STYLING */
         .time-btn { background: #1e3a8a; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.8em; font-weight: bold; cursor: pointer; }
         
         textarea { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
@@ -44,7 +42,6 @@
 
 <div class="container">
     <div id="main-view">
-        
         <div class="header">
             <img src="bondsville.png" alt="Patch">
             <div class="title-container">
@@ -87,9 +84,15 @@
             <a onclick="toggleView('utilities')" class="btn blue-btn"><span>⚡</span> Utilities</a>
         </div>
 
-        <h4>Resources & Education</h4>
+        <h4>Wellness & Peer Support</h4>
         <div class="btn-grid">
-            <a onclick="toggleView('education')" class="btn grey-btn full-width"><span>🎓</span> Education & Wellness</a>
+            <a href="https://www.iaffrecoverycenter.com/" class="btn red-btn"><span>🛡️</span> IAFF Wellness</a>
+            <a href="https://www.nvfc.org/share-the-load/" class="btn red-btn"><span>🤝</span> Share The Load</a>
+        </div>
+
+        <h4>Professional Resources</h4>
+        <div class="btn-grid">
+            <a onclick="toggleView('education')" class="btn grey-btn full-width"><span>🎓</span> Training Portal</a>
         </div>
     </div>
 
@@ -148,7 +151,7 @@
     </div>
 
     <div id="education" class="hidden sub-menu">
-        <h3>Training & Wellness</h3>
+        <h3>Training & Certification</h3>
         <div class="btn-grid">
             <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" class="btn grey-btn">MFA Portal</a>
             <a href="https://training.fema.gov/" class="btn grey-btn">FEMA / NFA</a>
@@ -157,17 +160,13 @@
             <a href="https://elearning.heart.org/" class="btn grey-btn">AHA Training</a>
             <a href="https://alerrt.org/" class="btn grey-btn">ALERRT</a>
             <a href="https://www.iaff.org/" class="btn grey-btn">IAFF Main</a>
-            <a href="https://www.iaffrecoverycenter.com/" class="btn grey-btn">IAFF Wellness</a>
-            <a href="https://www.nvfc.org/share-the-load/" class="btn grey-btn">Share The Load</a>
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="scratchpad" class="hidden sub-menu">
         <h3>Patient Assessment</h3>
-        
         <div style="text-align:left;"><label>Mental Status</label><textarea id="m" rows="2"></textarea></div>
-        
         <div style="text-align:left; margin-bottom:5px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
                 <label>Vitals - Set 1</label>
@@ -175,7 +174,6 @@
             </div>
             <textarea id="v1" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
         </div>
-
         <div style="text-align:left; margin-bottom:5px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
                 <label>Vitals - Set 2</label>
@@ -183,7 +181,6 @@
             </div>
             <textarea id="v2" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
         </div>
-
         <div style="text-align:left; margin-bottom:5px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
                 <label>Vitals - Set 3</label>
@@ -191,10 +188,8 @@
             </div>
             <textarea id="v3" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
         </div>
-
         <div style="text-align:left;"><label>Physical Exam</label><textarea id="p" rows="3"></textarea></div>
         <div style="text-align:left;"><label>Meds / Allergies</label><textarea id="ma" rows="2"></textarea></div>
-        
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
         <button class="nav-btn" style="background:#8b0000" onclick="clearAll()">Clear Notes</button>
     </div>
@@ -212,14 +207,12 @@
                 <tr><td>Ware PD</td><td><a href="tel:4139673571">413-967-3571</a></td></tr>
                 <tr><td>Ludlow PD</td><td><a href="tel:4135838305">413-583-8305</a></td></tr>
                 <tr><td>Warren PD</td><td><a href="tel:4134369595">413-436-9595</a></td></tr>
-                
                 <tr><th colspan="2" class="cat-head">Fire Emergency #'s</th></tr>
                 <tr><td>B'town/Amherst Disp</td><td><a href="tel:4132564899">413-256-4899</a></td></tr>
                 <tr><td>Brimfield Emergency</td><td><a href="tel:8008896323">800-889-6323</a></td></tr>
                 <tr><td>Monson Emergency</td><td><a href="tel:4132674081">413-267-4081</a></td></tr>
                 <tr><td>Ware Emergency</td><td><a href="tel:4139675901">413-967-5901</a></td></tr>
                 <tr><td>Warren Emergency</td><td><a href="tel:4134365050">413-436-5050</a></td></tr>
-
                 <tr><th colspan="2" class="cat-head">Fire Stations</th></tr>
                 <tr><td>Bondsville Station</td><td><a href="tel:4132839036">413-283-9036</a></td></tr>
                 <tr><td>Belchertown Station</td><td><a href="tel:4133237571">413-323-7571</a></td></tr>
@@ -240,27 +233,22 @@
 
 <script>
     let fallbackTimer;
-
     function smartLink(appUrl, webUrl) {
         let clickedAt = Date.now();
         window.location.href = appUrl;
-
         const clearTimer = () => {
             clearTimeout(fallbackTimer);
             window.removeEventListener('blur', clearTimer);
             document.removeEventListener('visibilitychange', clearTimer);
         };
-
         window.addEventListener('blur', clearTimer);
         document.addEventListener('visibilitychange', clearTimer);
-
         fallbackTimer = setTimeout(() => {
             if (Date.now() - clickedAt < 3000 && document.visibilityState === 'visible') {
                 window.location.href = webUrl;
             }
         }, 2500);
     }
-
     function toggleView(v) {
         ['main-view', 'education', 'scratchpad', 'utilities', 'roster', 'hospitals', 'emergency-list'].forEach(id => {
             const el = document.getElementById(id);
@@ -269,8 +257,6 @@
         document.getElementById(v).classList.remove('hidden');
         window.scrollTo(0,0);
     }
-
-    // UPDATED SCRIPT TO HANDLE THE NEW VITALS BOXES
     const ids = ['m', 'v1', 'v2', 'v3', 'p', 'ma'];
     ids.forEach(id => {
         const el = document.getElementById(id);
@@ -279,24 +265,16 @@
             el.addEventListener('input', () => localStorage.setItem(id, el.value));
         }
     });
-
-    // AUTO TIME-STAMP FUNCTION
     function stampTime(boxId) {
         const now = new Date();
         let hours = now.getHours();
         let minutes = now.getMinutes();
-        // Adds a leading zero to single digit minutes (e.g. 14:05 instead of 14:5)
         minutes = minutes < 10 ? '0' + minutes : minutes;
-        
         const timeStr = hours + ':' + minutes + ' - ';
         const box = document.getElementById(boxId);
-        
-        // Puts the time at the start of the box
         box.value = timeStr + box.value;
-        // Instantly saves it to offline memory
         localStorage.setItem(boxId, box.value);
     }
-
     function clearAll() { if (confirm("Clear notes?")) { ids.forEach(id => { document.getElementById(id).value = ''; localStorage.removeItem(id); }); } }
 </script>
 </body>
