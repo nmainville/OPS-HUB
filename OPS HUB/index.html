@@ -11,7 +11,7 @@
         body { font-family: -apple-system, system-ui; background: #000 url('flag.jpg') no-repeat center center fixed; background-size: cover; color: white; text-align: center; margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; }
         .container { max-width: 500px; margin: auto; }
         
-        /* HEADER - Bondsville L / Title C / Red-Blue Flag R */
+        /* HEADER - Patch L / Title C / Red-Blue Flag R */
         .header { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; }
         .title-container { display: flex; flex-direction: column; align-items: center; }
         .header h1 { margin: 0; font-size: 1.8em; letter-spacing: 1px; }
@@ -91,6 +91,8 @@
             <a href="https://hosting.tighebond.com/palmerma_Public/" target="_blank" class="btn blue-btn"><span>📍</span> Palmer GIS</a>
             <a href="https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/ERG2024-Eng-Web-a.pdf" target="_blank" class="btn blue-btn"><span>☢️</span> ERG 2024</a>
             <a onclick="toggleView('utilities')" class="btn blue-btn"><span>⚡</span> Utilities</a>
+            <a href="tel:8883041133" class="btn blue-btn"><span>☣️</span> Hazmat Activation</a>
+            <a onclick="smartLink('weather://', 'https://weather.com/')" class="btn blue-btn"><span>☀️</span> Weather</a>
         </div>
 
         <h4>Wellness & Peer Support</h4>
@@ -103,6 +105,21 @@
         <div class="btn-grid">
             <a onclick="toggleView('education')" class="btn grey-btn full-width"><span>🎓</span> Training Portal</a>
         </div>
+    </div>
+
+    <div id="utilities" class="hidden sub-menu">
+        <h3>Emergency Utilities</h3>
+        <div class="btn-grid">
+            <a href="tel:8772473602" class="btn blue-btn">NatGrid Priority 1</a>
+            <a href="tel:8004629852" class="btn blue-btn">NatGrid Priority 2</a>
+            <a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a>
+            <a href="tel:8003223223" class="btn blue-btn">Gas Customer</a>
+            <a href="tel:4132837674" class="btn grey-btn">AmeriGas</a>
+            <a href="tel:4132838356" class="btn grey-btn">Chudy Oil</a>
+            <a href="tel:4134367485" class="btn grey-btn">Ed & Son</a>
+            <a href="tel:4132891777" class="btn grey-btn">Noonan Energy</a>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="fees" class="hidden sub-menu">
@@ -127,19 +144,6 @@
             <a href="tel:4135342500" class="btn red-btn">Holyoke Hospital</a>
             <a href="tel:4135363000" class="btn red-btn">Providence</a>
             <a href="tel:5087659771" class="btn red-btn">Harrington</a>
-        </div>
-        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-    </div>
-
-    <div id="utilities" class="hidden sub-menu">
-        <h3>Emergency Utilities</h3>
-        <div class="btn-grid">
-            <a href="tel:8772473602" class="btn blue-btn">NatGrid Priority 1</a>
-            <a href="tel:8004629852" class="btn blue-btn">NatGrid Priority 2</a>
-            <a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a>
-            <a href="tel:8003223223" class="btn blue-btn">Gas Customer</a>
-            <a href="tel:4132837674" class="btn grey-btn">AmeriGas</a>
-            <a href="tel:4132838356" class="btn grey-btn">Chudy Oil</a>
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
