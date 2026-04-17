@@ -10,13 +10,11 @@
     <style>
         body { font-family: -apple-system, system-ui; background: #000 url('flag.jpg') no-repeat center center fixed; background-size: cover; color: white; text-align: center; margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; }
         .container { max-width: 500px; margin: auto; }
-        
         .header { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; }
         .title-container { display: flex; flex-direction: column; align-items: center; }
         .header h1 { margin: 0; font-size: 1.8em; letter-spacing: 1px; }
         .motto { color: rgba(255,255,255,0.7); font-family: 'Snell Roundhand', cursive, Georgia; font-size: 0.85em; margin-top: -2px; }
         .header img { width: 45px; height: 45px; object-fit: contain; }
-        
         h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { color: white; padding: 18px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.85em; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
@@ -26,12 +24,8 @@
         .full-width { grid-column: span 2; } .hidden { display: none; }
         .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; }
         .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
-        
         .time-btn { background: #1e3a8a; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.8em; font-weight: bold; cursor: pointer; }
-        
         textarea { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
-        ::placeholder { color: #888; font-style: italic; }
-
         table { width: 100%; color: white; font-size: 0.72em; border-collapse: collapse; margin-top: 10px; }
         td, th { border: 1px solid #444; padding: 10px 4px; text-align: left; }
         tr:nth-child(even) { background: rgba(255,255,255,0.05); }
@@ -64,6 +58,13 @@
             <a onclick="toggleView('hospitals')" class="btn red-btn"><span>🏥</span> Hospital Lines</a>
         </div>
 
+        <h4>Fire Prevention & Inspections</h4>
+        <div class="btn-grid">
+            <a href="Smoke_Requirements.pdf" class="btn red-btn"><span>🏠</span> Smoke/CO Specs</a>
+            <a onclick="toggleView('fees')" class="btn red-btn"><span>💰</span> Inspection Fees</a>
+            <a href="https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter148" class="btn red-btn full-width"><span>⚖️</span> MGL Ch. 148</a>
+        </div>
+
         <h4>Local Departments</h4>
         <div class="btn-grid">
             <a href="https://www.townofpalmer.com/palmerfire" class="btn grey-btn"><img src="palmer.png" alt="🚒">Palmer FD</a>
@@ -74,11 +75,9 @@
 
         <h4>Field Resources</h4>
         <div class="btn-grid">
-            <a onclick="toggleView('emergency-list')" class="btn blue-btn"><span>📞</span> Emergency Call List</a>
+            <a onclick="toggleView('emergency-list')" class="btn blue-btn"><span>📞</span> Call List</a>
             <a href="tel:4132838792" class="btn blue-btn"><span>📞</span> Dispatch</a>
             <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn"><img src="zello.png" alt="📻">Zello Radio</a>
-            <a href="tel:8773850822" class="btn blue-btn"><span>☢️</span> HazMat Activation</a>
-            <a onclick="smartLink('weather://', 'https://weather.com')" class="btn blue-btn"><span>☁️</span> Weather App</a>
             <a href="https://hosting.tighebond.com/palmerma_Public/" class="btn blue-btn"><span>📍</span> Palmer GIS</a>
             <a href="https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/ERG2024-Eng-Web-a.pdf" class="btn blue-btn"><span>☢️</span> ERG 2024</a>
             <a onclick="toggleView('utilities')" class="btn blue-btn"><span>⚡</span> Utilities</a>
@@ -94,6 +93,19 @@
         <div class="btn-grid">
             <a onclick="toggleView('education')" class="btn grey-btn full-width"><span>🎓</span> Training Portal</a>
         </div>
+    </div>
+
+    <div id="fees" class="hidden sub-menu">
+        <h3>Inspection Fee Schedule</h3>
+        <table>
+            <tr><th class="cat-head">Service</th><th class="cat-head">Fee</th></tr>
+            <tr><td>Smoke/CO (1-Family)</td><td>$50</td></tr>
+            <tr><td>Smoke/CO (2-Family)</td><td>$100</td></tr>
+            <tr><td>Oil Burner Permit</td><td>$50</td></tr>
+            <tr><td>Propane Tank Install</td><td>$50</td></tr>
+            <tr><td>Tank Removal</td><td>$100</td></tr>
+        </table>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="hospitals" class="hidden sub-menu">
@@ -250,7 +262,7 @@
         }, 2500);
     }
     function toggleView(v) {
-        ['main-view', 'education', 'scratchpad', 'utilities', 'roster', 'hospitals', 'emergency-list'].forEach(id => {
+        ['main-view', 'education', 'scratchpad', 'utilities', 'roster', 'hospitals', 'emergency-list', 'fees'].forEach(id => {
             const el = document.getElementById(id);
             if(el) el.classList.add('hidden');
         });
