@@ -25,7 +25,14 @@
         .full-width { grid-column: span 2; } .hidden { display: none; }
         .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; }
         .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
+        
+        /* TIME STAMP BUTTON STYLING */
+        .time-btn { background: #1e3a8a; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.8em; font-weight: bold; cursor: pointer; }
+        
         textarea { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
+        /* MAKES PLACEHOLDER TEXT VISIBLE BUT LIGHTER */
+        ::placeholder { color: #888; font-style: italic; }
+
         table { width: 100%; color: white; font-size: 0.72em; border-collapse: collapse; margin-top: 10px; }
         td, th { border: 1px solid #444; padding: 10px 4px; text-align: left; }
         tr:nth-child(even) { background: rgba(255,255,255,0.05); }
@@ -60,9 +67,7 @@
         <div class="btn-grid">
             <a href="https://www.townofpalmer.com/palmerfire" class="btn grey-btn"><img src="palmer.png" alt="🚒">Palmer FD</a>
             <a href="https://www.townofpalmer.com/bondsvillefire" class="btn grey-btn"><img src="bondsville.png" alt="🚒">Bondsville FD</a>
-            
             <a href="https://www.townofpalmer.com/?SEC=98D8F89E-9FF3-49B5-9C65-AEDF8D0F88FA" class="btn grey-btn"><img src="threeriverspatch.png" alt="🚒">Three Rivers FD</a>
-            
             <a onclick="toggleView('roster')" class="btn grey-btn"><img src="bondsville.png" alt="👥">BFD ROSTER</a>
         </div>
 
@@ -156,10 +161,36 @@
 
     <div id="scratchpad" class="hidden sub-menu">
         <h3>Patient Assessment</h3>
+        
         <div style="text-align:left;"><label>Mental Status</label><textarea id="m" rows="2"></textarea></div>
-        <div style="text-align:left;"><label>Vitals</label><textarea id="v" rows="2"></textarea></div>
-        <div style="text-align:left;"><label>Physical Exam</label><textarea id="p" rows="4"></textarea></div>
+        
+        <div style="text-align:left; margin-bottom:5px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                <label>Vitals - Set 1</label>
+                <button class="time-btn" onclick="stampTime('v1')">🕒 Time Stamp</button>
+            </div>
+            <textarea id="v1" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
+        </div>
+
+        <div style="text-align:left; margin-bottom:5px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                <label>Vitals - Set 2</label>
+                <button class="time-btn" onclick="stampTime('v2')">🕒 Time Stamp</button>
+            </div>
+            <textarea id="v2" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
+        </div>
+
+        <div style="text-align:left; margin-bottom:5px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                <label>Vitals - Set 3</label>
+                <button class="time-btn" onclick="stampTime('v3')">🕒 Time Stamp</button>
+            </div>
+            <textarea id="v3" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
+        </div>
+
+        <div style="text-align:left;"><label>Physical Exam</label><textarea id="p" rows="3"></textarea></div>
         <div style="text-align:left;"><label>Meds / Allergies</label><textarea id="ma" rows="2"></textarea></div>
+        
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
         <button class="nav-btn" style="background:#8b0000" onclick="clearAll()">Clear Notes</button>
     </div>
@@ -235,7 +266,8 @@
         window.scrollTo(0,0);
     }
 
-    const ids = ['m', 'v', 'p', 'ma'];
+    // UPDATED SCRIPT TO HANDLE THE NEW VITALS BOXES
+    const ids = ['m', 'v1', 'v2', 'v3', 'p', 'ma'];
     ids.forEach(id => {
         const el = document.getElementById(id);
         if(el) {
@@ -243,6 +275,23 @@
             el.addEventListener('input', () => localStorage.setItem(id, el.value));
         }
     });
+
+    // AUTO TIME-STAMP FUNCTION
+    function stampTime(boxId) {
+        const now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        // Adds a leading zero to single digit minutes (e.g. 14:05 instead of 14:5)
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        
+        const timeStr = hours + ':' + minutes + ' - ';
+        const box = document.getElementById(boxId);
+        
+        // Puts the time at the start of the box
+        box.value = timeStr + box.value;
+        // Instantly saves it to offline memory
+        localStorage.setItem(boxId, box.value);
+    }
 
     function clearAll() { if (confirm("Clear notes?")) { ids.forEach(id => { document.getElementById(id).value = ''; localStorage.removeItem(id); }); } }
 </script>
