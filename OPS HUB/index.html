@@ -11,14 +11,12 @@
         body { font-family: -apple-system, system-ui; background: #000 url('flag.jpg') no-repeat center center fixed; background-size: cover; color: white; text-align: center; margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; }
         .container { max-width: 500px; margin: auto; }
         
-        /* HEADER */
         .header { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; }
         .title-container { display: flex; flex-direction: column; align-items: center; }
         .header h1 { margin: 0; font-size: 1.8em; letter-spacing: 1px; }
         .motto { color: rgba(255,255,255,0.7); font-family: 'Snell Roundhand', cursive, Georgia; font-size: 0.85em; margin-top: -2px; }
         .header img { width: 45px; height: 45px; object-fit: contain; }
         
-        /* BUTTONS */
         h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { color: white; padding: 18px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.85em; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
@@ -27,22 +25,21 @@
         .red-btn { background: #d32f2f !important; } .blue-btn { background: #1e3a8a !important; } .grey-btn { background: #262626 !important; }
         .full-width { grid-column: span 2; }
         
-        /* NAVIGATION */
         .hidden { display: none !important; }
         .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; }
         .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
         
-        /* PDF VIEWER FIXES */
-        #pdf-viewer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #111; z-index: 9999; display: flex; flex-direction: column; }
-        .viewer-nav { background: #222; padding: env(safe-area-inset-top) 15px 15px 15px; border-bottom: 2px solid #d32f2f; }
-        .iframe-container { flex-grow: 1; -webkit-overflow-scrolling: touch; overflow-y: auto; background: #eee; }
-        #pdf-frame { width: 100%; height: 100%; border: none; }
-        
-        /* TABLES */
+        .time-btn { background: #1e3a8a; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.8em; font-weight: bold; cursor: pointer; }
+        textarea { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
         table { width: 100%; color: white; font-size: 0.72em; border-collapse: collapse; margin-top: 10px; }
         td, th { border: 1px solid #444; padding: 10px 4px; text-align: left; }
         tr:nth-child(even) { background: rgba(255,255,255,0.05); }
         .cat-head { background: #444; color: #fff; font-weight: bold; padding: 5px; text-align: center; }
+        
+        #pdf-viewer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #111; z-index: 9999; display: flex; flex-direction: column; }
+        .viewer-nav { background: #222; padding: env(safe-area-inset-top) 15px 15px 15px; border-bottom: 2px solid #d32f2f; }
+        .iframe-container { flex-grow: 1; -webkit-overflow-scrolling: touch; overflow-y: auto; background: #eee; }
+        #pdf-frame { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
@@ -64,7 +61,7 @@
             <a href="googlechromes://app.emergencynetworking.com/login" class="btn red-btn"><img src="EN.png" alt="🚑">Emerg Network</a>
         </div>
 
-        <h4>Fire Prevention</h4>
+        <h4>Fire Prevention & Inspections</h4>
         <div class="btn-grid">
             <a onclick="openPDF('Smoke_Requirements.pdf')" class="btn red-btn"><span>🏠</span> Smoke/CO Specs</a>
             <a onclick="toggleView('fees')" class="btn red-btn"><span>💰</span> Inspection Fees</a>
@@ -73,17 +70,38 @@
 
         <h4>Medical Tools</h4>
         <div class="btn-grid">
-            <a onclick="toggleView('scratchpad')" class="btn blue-btn full-width"><span>📝</span> Patient Scratchpad</a>
-            <a href="https://www.mass.gov/lists/emergency-medical-services-statewide-treatment-protocols" class="btn blue-btn"><span>⚕️</span> MA Protocols</a>
-            <a onclick="toggleView('hospitals')" class="btn blue-btn"><span>🏥</span> Hospital Lines</a>
+            <a onclick="toggleView('scratchpad')" class="btn red-btn full-width"><span>📝</span> Patient Scratchpad</a>
+            <a href="https://www.mass.gov/lists/emergency-medical-services-statewide-treatment-protocols" class="btn red-btn"><span>⚕️</span> MA Protocols</a>
+            <a onclick="toggleView('hospitals')" class="btn red-btn"><span>🏥</span> Hospital Lines</a>
+        </div>
+
+        <h4>Local Departments</h4>
+        <div class="btn-grid">
+            <a href="https://www.townofpalmer.com/palmerfire" class="btn grey-btn"><img src="palmer.png" alt="🚒">Palmer FD</a>
+            <a href="https://www.townofpalmer.com/bondsvillefire" class="btn grey-btn"><img src="bondsville.png" alt="🚒">Bondsville FD</a>
+            <a href="https://www.townofpalmer.com/?SEC=98D8F89E-9FF3-49B5-9C65-AEDF8D0F88FA" class="btn grey-btn"><img src="threeriverspatch.png" alt="🚒">Three Rivers FD</a>
+            <a onclick="toggleView('roster')" class="btn grey-btn"><img src="bondsville.png" alt="👥">BFD ROSTER</a>
         </div>
 
         <h4>Field Resources</h4>
         <div class="btn-grid">
-            <a onclick="toggleView('emergency-list')" class="btn grey-btn"><span>📞</span> Call List</a>
-            <a href="tel:4132838792" class="btn grey-btn"><span>📞</span> Dispatch</a>
-            <a onclick="toggleView('roster')" class="btn grey-btn"><img src="bondsville.png" alt="👥">BFD ROSTER</a>
-            <a href="https://hosting.tighebond.com/palmerma_Public/" class="btn grey-btn"><span>📍</span> Palmer GIS</a>
+            <a onclick="toggleView('emergency-list')" class="btn blue-btn"><span>📞</span> Call List</a>
+            <a href="tel:4132838792" class="btn blue-btn"><span>📞</span> Dispatch</a>
+            <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn"><img src="zello.png" alt="📻">Zello Radio</a>
+            <a href="https://hosting.tighebond.com/palmerma_Public/" class="btn blue-btn"><span>📍</span> Palmer GIS</a>
+            <a href="https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/ERG2024-Eng-Web-a.pdf" target="_blank" class="btn blue-btn"><span>☢️</span> ERG 2024</a>
+            <a onclick="toggleView('utilities')" class="btn blue-btn"><span>⚡</span> Utilities</a>
+        </div>
+
+        <h4>Wellness & Peer Support</h4>
+        <div class="btn-grid">
+            <a href="https://www.iaffrecoverycenter.com/" target="_blank" class="btn red-btn"><span>🛡️</span> IAFF Wellness</a>
+            <a href="https://www.nvfc.org/share-the-load/" target="_blank" class="btn red-btn"><span>🤝</span> Share The Load</a>
+        </div>
+
+        <h4>Professional Resources</h4>
+        <div class="btn-grid">
+            <a onclick="toggleView('education')" class="btn grey-btn full-width"><span>🎓</span> Training Portal</a>
         </div>
     </div>
 
@@ -97,22 +115,144 @@
     </div>
 
     <div id="fees" class="hidden sub-menu">
-        <h3>Inspection Fees</h3>
+        <h3>Inspection Fee Schedule</h3>
         <table>
             <tr><th class="cat-head">Service</th><th class="cat-head">Fee</th></tr>
             <tr><td>Smoke/CO (1-Family)</td><td>$50</td></tr>
             <tr><td>Smoke/CO (2-Family)</td><td>$100</td></tr>
             <tr><td>Oil Burner Permit</td><td>$50</td></tr>
+            <tr><td>Propane Tank Install</td><td>$50</td></tr>
             <tr><td>Tank Removal</td><td>$100</td></tr>
         </table>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
+    <div id="hospitals" class="hidden sub-menu">
+        <h3>Medical Facilities</h3>
+        <div class="btn-grid">
+            <a href="tel:4132833611" class="btn red-btn">Wing Memorial</a>
+            <a href="tel:4137940000" class="btn red-btn">Baystate Med</a>
+            <a href="tel:4137489000" class="btn red-btn">Mercy Medical</a>
+            <a href="tel:4135342500" class="btn red-btn">Holyoke Hospital</a>
+            <a href="tel:4135363000" class="btn red-btn">Providence</a>
+            <a href="tel:5087659771" class="btn red-btn">Harrington</a>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
+    <div id="utilities" class="hidden sub-menu">
+        <h3>Emergency Utilities</h3>
+        <div class="btn-grid">
+            <a href="tel:8772473602" class="btn blue-btn">NatGrid Priority 1</a>
+            <a href="tel:8004629852" class="btn blue-btn">NatGrid Priority 2</a>
+            <a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a>
+            <a href="tel:8003223223" class="btn blue-btn">Gas Customer</a>
+            <a href="tel:4132837674" class="btn grey-btn">AmeriGas</a>
+            <a href="tel:4132838356" class="btn grey-btn">Chudy Oil</a>
+            <a href="tel:4132835444" class="btn grey-btn">Ed & Son</a>
+            <a href="tel:4132833431" class="btn grey-btn">Noonan Energy</a>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
+    <div id="roster" class="hidden sub-menu">
+        <h3>BFD Personnel Directory</h3>
+        <div style="overflow-x:auto;">
+            <table>
+                <tr><th>ID</th><th>Rank</th><th>Name</th><th>Call</th></tr>
+                <tr><td>Chief 31</td><td>Chief</td><td>Mike Germaine</td><td><a href="tel:4135392144">📞</a></td></tr>
+                <tr><td>Chief 32</td><td>Asst. Chief</td><td>Brian Benoit</td><td><a href="tel:4136872929">📞</a></td></tr>
+                <tr><td>Chief 33</td><td>Dep. Chief</td><td>Andrew Golas</td><td><a href="tel:4136685864">📞</a></td></tr>
+                <tr><td>C31</td><td>Captain</td><td>Kevin Sullivan</td><td><a href="tel:3157082913">📞</a></td></tr>
+                <tr><td>C32</td><td>Captain</td><td>Mike DuBois</td><td><a href="tel:4136688577">📞</a></td></tr>
+                <tr><td>3F1</td><td>FF</td><td>Matthew Lemieux</td><td><a href="tel:4138862591">📞</a></td></tr>
+                <tr><td>3F4</td><td>FF</td><td>Brian Sullivan</td><td><a href="tel:4138005785">📞</a></td></tr>
+                <tr><td>3F5</td><td>FF</td><td>Nick Mainville</td><td><a href="tel:4135440329">📞</a></td></tr>
+                <tr><td>3F7</td><td>FF</td><td>McKinley Chase</td><td><a href="tel:4134395179">📞</a></td></tr>
+                <tr><td>3F8</td><td>FF</td><td>Nathaniel Haley</td><td><a href="tel:4132047294">📞</a></td></tr>
+                <tr><td>3F13</td><td>FF</td><td>Shane Chase</td><td><a href="tel:4133305156">📞</a></td></tr>
+                <tr><td>3F14</td><td>FF</td><td>Jonah Bachand</td><td><a href="tel:4136400193">📞</a></td></tr>
+                <tr><td colspan="4" class="cat-head">Probationary</td></tr>
+                <tr><td>3F2</td><td>Prob. FF</td><td>Gabriella Potenti</td><td><a href="tel:7745026543">📞</a></td></tr>
+                <tr><td>3F3</td><td>Prob. FF</td><td>Patrick Wilbur</td><td><a href="tel:7742625962">📞</a></td></tr>
+                <tr><td>3F9</td><td>Prob. FF</td><td>Nicolas Boulrice</td><td><a href="tel:4135071170">📞</a></td></tr>
+            </table>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
+    <div id="education" class="hidden sub-menu">
+        <h3>Training Portal</h3>
+        <div class="btn-grid">
+            <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" target="_blank" class="btn grey-btn">MFA Portal</a>
+            <a href="https://training.fema.gov/" target="_blank" class="btn grey-btn">FEMA / NFA</a>
+            <a href="https://training.fema.gov/is/nims.aspx" target="_blank" class="btn grey-btn">FEMA NIMS</a>
+            <a href="https://elearning.heart.org/" target="_blank" class="btn grey-btn">AHA Training</a>
+            <a href="https://alerrt.org/" target="_blank" class="btn grey-btn">ALERRT</a>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
+    <div id="scratchpad" class="hidden sub-menu">
+        <h3>Patient Assessment</h3>
+        <div style="text-align:left;"><label>Mental Status</label><textarea id="m" rows="2"></textarea></div>
+        <div style="text-align:left; margin-bottom:5px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                <label>Vitals - Set 1</label>
+                <button class="time-btn" onclick="stampTime('v1')">🕒 Time Stamp</button>
+            </div>
+            <textarea id="v1" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
+        </div>
+        <div style="text-align:left; margin-bottom:5px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                <label>Vitals - Set 2</label>
+                <button class="time-btn" onclick="stampTime('v2')">🕒 Time Stamp</button>
+            </div>
+            <textarea id="v2" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
+        </div>
+        <div style="text-align:left;"><label>Physical Exam</label><textarea id="p" rows="3"></textarea></div>
+        <div style="text-align:left;"><label>Meds / Allergies</label><textarea id="ma" rows="2"></textarea></div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+        <button class="nav-btn" style="background:#8b0000" onclick="clearAll()">Clear Notes</button>
+    </div>
+
+    <div id="emergency-list" class="hidden sub-menu">
+        <h3>Emergency Call List</h3>
+        <div style="overflow-x:auto;">
+            <table>
+                <tr><th colspan="2" class="cat-head">Police Departments</th></tr>
+                <tr><td>Palmer PD (Recorded)</td><td><a href="tel:4132838792">413-283-8792</a></td></tr>
+                <tr><td>MSP Belchertown (B-3)</td><td><a href="tel:4133237561">413-323-7561</a></td></tr>
+                <tr><th colspan="2" class="cat-head">Fire Stations</th></tr>
+                <tr><td>Bondsville Station</td><td><a href="tel:4132839036">413-283-9036</a></td></tr>
+                <tr><td>Palmer Station</td><td><a href="tel:4132833861">413-283-3861</a></td></tr>
+            </table>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+</div>
+
 <script>
+    let fallbackTimer;
+    function smartLink(appUrl, webUrl) {
+        let clickedAt = Date.now();
+        window.location.href = appUrl;
+        const clearTimer = () => {
+            clearTimeout(fallbackTimer);
+            window.removeEventListener('blur', clearTimer);
+            document.removeEventListener('visibilitychange', clearTimer);
+        };
+        window.addEventListener('blur', clearTimer);
+        document.addEventListener('visibilitychange', clearTimer);
+        fallbackTimer = setTimeout(() => {
+            if (Date.now() - clickedAt < 3000 && document.visibilityState === 'visible') {
+                window.location.href = webUrl;
+            }
+        }, 2500);
+    }
+    
     function toggleView(v) {
-        ['main-view', 'fees', 'pdf-viewer'].forEach(id => {
+        ['main-view', 'education', 'scratchpad', 'utilities', 'roster', 'hospitals', 'emergency-list', 'fees', 'pdf-viewer'].forEach(id => {
             const el = document.getElementById(id);
             if(el) el.classList.add('hidden');
         });
@@ -122,14 +262,31 @@
 
     function openPDF(filename) {
         const frame = document.getElementById('pdf-frame');
-        // This is the "Magic" Google Viewer that forces scrolling on iPhones
         const baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
         const fullUrl = baseUrl + '/' + filename;
         frame.src = 'https://docs.google.com/viewer?url=' + encodeURIComponent(fullUrl) + '&embedded=true';
         toggleView('pdf-viewer');
     }
 
-    // Keep your other scripts here...
+    const ids = ['m', 'v1', 'v2', 'p', 'ma'];
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) {
+            el.value = localStorage.getItem(id) || '';
+            el.addEventListener('input', () => localStorage.setItem(id, el.value));
+        }
+    });
+    function stampTime(boxId) {
+        const now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        const timeStr = hours + ':' + minutes + ' - ';
+        const box = document.getElementById(boxId);
+        box.value = timeStr + box.value;
+        localStorage.setItem(boxId, box.value);
+    }
+    function clearAll() { if (confirm("Clear notes?")) { ids.forEach(id => { document.getElementById(id).value = ''; localStorage.removeItem(id); }); } }
 </script>
 </body>
 </html>
