@@ -11,14 +11,14 @@
         body { font-family: -apple-system, system-ui; background: #000 url('flag.jpg') no-repeat center center fixed; background-size: cover; color: white; text-align: center; margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; }
         .container { max-width: 500px; margin: auto; }
         
-        /* HEADER */
+        /* HEADER - Patch L / Text C / Flag R */
         .header { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; }
         .title-container { display: flex; flex-direction: column; align-items: center; }
         .header h1 { margin: 0; font-size: 1.8em; letter-spacing: 1px; }
         .motto { color: rgba(255,255,255,0.7); font-family: 'Snell Roundhand', cursive, Georgia; font-size: 0.85em; margin-top: -2px; }
         .header img { width: 45px; height: 45px; object-fit: contain; }
         
-        /* BUTTONS */
+        /* BUTTONS & GRID */
         h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { color: white; padding: 18px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.85em; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
@@ -31,9 +31,11 @@
         .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; }
         .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
         
+        /* TOOLS & INPUTS */
         .time-btn { background: #1e3a8a; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.8em; font-weight: bold; cursor: pointer; }
         textarea { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
         
+        /* TABLES */
         table { width: 100%; color: white; font-size: 0.72em; border-collapse: collapse; margin-top: 10px; }
         td, th { border: 1px solid #444; padding: 10px 4px; text-align: left; }
         tr:nth-child(even) { background: rgba(255,255,255,0.05); }
@@ -50,7 +52,7 @@
                 <h1>OPS HUB</h1>
                 <div class="motto">TO PROTECT & SERVE</div>
             </div>
-            <img src="bondsville.png" alt="Patch">
+            <img src="redblueflag.png" alt="Flag">
         </div>
 
         <h4>Active Response</h4>
@@ -226,6 +228,20 @@
             </div>
             <textarea id="v1" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
         </div>
+        <div style="text-align:left; margin-bottom:5px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                <label>Vitals - Set 2</label>
+                <button class="time-btn" onclick="stampTime('v2')">🕒 Time Stamp</button>
+            </div>
+            <textarea id="v2" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
+        </div>
+        <div style="text-align:left; margin-bottom:5px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                <label>Vitals - Set 3</label>
+                <button class="time-btn" onclick="stampTime('v3')">🕒 Time Stamp</button>
+            </div>
+            <textarea id="v3" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
+        </div>
         <div style="text-align:left;"><label>Physical Exam</label><textarea id="p" rows="3"></textarea></div>
         <div style="text-align:left;"><label>Meds / Allergies</label><textarea id="ma" rows="2"></textarea></div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
@@ -241,7 +257,7 @@
         const clearTimer = () => {
             clearTimeout(fallbackTimer);
             window.removeEventListener('blur', clearTimer);
-            document.removeEventListener('visibilitychange', clearTimer);
+            document.addEventListener('visibilitychange', clearTimer);
         };
         window.addEventListener('blur', clearTimer);
         document.addEventListener('visibilitychange', clearTimer);
@@ -261,7 +277,7 @@
         window.scrollTo(0,0);
     }
 
-    const ids = ['m', 'v1', 'p', 'ma'];
+    const ids = ['m', 'v1', 'v2', 'v3', 'p', 'ma'];
     ids.forEach(id => {
         const el = document.getElementById(id);
         if(el) {
