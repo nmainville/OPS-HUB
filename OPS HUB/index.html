@@ -63,8 +63,8 @@
 
         <h4>Medical Tools</h4>
         <div class="btn-grid">
-            <a onclick="toggleView('scratchpad')" class="btn red-btn full-width"><span>📝</span> Patient Scratchpad</a>
-            <a href="https://www.mass.gov/lists/emergency-medical-services-statewide-treatment-protocols" target="_blank" class="btn red-btn"><span>⚕️</span> MA Protocols</a>
+            <a onclick="toggleView('scratchpad')" class="btn red-btn full-width"><img src="tacmed.png" alt="⚕️">Patient Scratchpad</a>
+            <a href="https://www.mass.gov/lists/emergency-medical-services-statewide-treatment-protocols" target="_blank" class="btn red-btn"><img src="tacmed.png" alt="⚕️">MA Protocols</a>
             <a onclick="toggleView('hospitals')" class="btn red-btn"><span>🏥</span> Hospital Lines</a>
         </div>
 
@@ -107,6 +107,21 @@
         </div>
     </div>
 
+    <div id="utilities" class="hidden sub-menu">
+        <h3>Emergency Utilities</h3>
+        <div class="btn-grid">
+            <a href="tel:8772473602" class="btn blue-btn">NatGrid Priority 1</a>
+            <a href="tel:8004629852" class="btn blue-btn">NatGrid Priority 2</a>
+            <a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a>
+            <a href="tel:8003223223" class="btn blue-btn">Gas Customer</a>
+            <a href="tel:4132837674" class="btn grey-btn">AmeriGas</a>
+            <a href="tel:4132838356" class="btn grey-btn">Chudy Oil</a>
+            <a href="tel:4134367485" class="btn grey-btn">Ed & Son</a>
+            <a href="tel:4132891777" class="btn grey-btn">Noonan Energy</a>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
     <div id="fees" class="hidden sub-menu">
         <h3>Inspection Fee Schedule</h3>
         <table>
@@ -129,21 +144,6 @@
             <a href="tel:4135342500" class="btn red-btn">Holyoke Hospital</a>
             <a href="tel:4135363000" class="btn red-btn">Providence</a>
             <a href="tel:5087659771" class="btn red-btn">Harrington</a>
-        </div>
-        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-    </div>
-
-    <div id="utilities" class="hidden sub-menu">
-        <h3>Emergency Utilities</h3>
-        <div class="btn-grid">
-            <a href="tel:8772473602" class="btn blue-btn">NatGrid Priority 1</a>
-            <a href="tel:8004629852" class="btn blue-btn">NatGrid Priority 2</a>
-            <a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a>
-            <a href="tel:8003223223" class="btn blue-btn">Gas Customer</a>
-            <a href="tel:4132837674" class="btn grey-btn">AmeriGas</a>
-            <a href="tel:4132838356" class="btn grey-btn">Chudy Oil</a>
-            <a href="tel:4134367485" class="btn grey-btn">Ed & Son</a>
-            <a href="tel:4132891777" class="btn grey-btn">Noonan Energy</a>
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
@@ -181,7 +181,7 @@
                 <tr><th colspan="2" class="cat-head">Police Departments</th></tr>
                 <tr><td>Palmer PD (Recorded)</td><td><a href="tel:4132838792">413-283-8792</a></td></tr>
                 <tr><td>Palmer PD (Admin)</td><td><a href="tel:4132891196">413-289-1196</a></td></tr>
-                <tr><td>MSP Belchertown (B-3)</td><td><a href="tel:4133237561">413-323-7561</a></td>    </tr>
+                <tr><td>MSP Belchertown (B-3)</td><td><a href="tel:4133237561">413-323-7561</a></td></tr>
                 <tr><td>Belchertown PD</td><td><a href="tel:4133236655">413-323-6655</a></td></tr>
                 <tr><td>Monson PD</td><td><a href="tel:4132674128">413-267-4128</a></td></tr>
                 <tr><td>Ware PD</td><td><a href="tel:4139673571">413-967-3571</a></td></tr>
