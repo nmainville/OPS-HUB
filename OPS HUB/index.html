@@ -320,17 +320,24 @@
     });
     function clearBurnLog() { if(confirm("Wipe Burn Log?")) dbBurn.set(null); }
 
-    // SCRATCHPAD LOGIC (3 VITALS)
+    // SCRATCHPAD LOGIC (DATE & TIME AUTO-ADDED)
     function submitScratchpad() {
         const id=document.getElementById('padId').value, m=document.getElementById('padMental').value, v1=document.getElementById('padVitals1').value, v2=document.getElementById('padVitals2').value, v3=document.getElementById('padVitals3').value;
-        const d = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        if(id || m || v1) { dbScratchpad.push({time: d, id: id, mental: m, vitals1: v1, vitals2: v2, vitals3: v3}); ['padId','padMental','padVitals1','padVitals2','padVitals3'].forEach(i=>document.getElementById(i).value=''); } else alert("Required fields missing.");
+        const now = new Date();
+        const dateStr = (now.getMonth()+1)+"/"+now.getDate()+"/"+now.getFullYear();
+        const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        const fullStamp = dateStr + " @ " + timeStr;
+
+        if(id || m || v1) { 
+            dbScratchpad.push({stamp: fullStamp, id: id, mental: m, vitals1: v1, vitals2: v2, vitals3: v3}); 
+            ['padId','padMental','padVitals1','padVitals2','padVitals3'].forEach(i=>document.getElementById(i).value=''); 
+        } else alert("Required fields missing.");
     }
     dbScratchpad.on('value', (snap) => {
         const se = document.getElementById('scratchpadEntries'); se.innerHTML = ''; const data = snap.val();
         for (let k in data) {
             const e = data[k];
-            se.innerHTML = `<div class="burn-entry" style="border-left: 5px solid #ff9800;"><p style="color:#ff9800; font-weight:bold; font-size:0.75em;">${e.time}</p><p><strong>${e.id || 'No Identifier'}</strong></p><p style="font-size: 0.85em; color: #ccc;">Status: ${e.mental || 'N/A'}</p><p style="font-size: 0.85em; color: #eee; margin-top:5px;">V1: ${e.vitals1 || 'N/A'}</p><p style="font-size: 0.85em; color: #eee;">V2: ${e.vitals2 || 'N/A'}</p><p style="font-size: 0.85em; color: #eee;">V3: ${e.vitals3 || 'N/A'}</p></div>` + se.innerHTML;
+            se.innerHTML = `<div class="burn-entry" style="border-left: 5px solid #ff9800;"><p style="color:#ff9800; font-weight:bold; font-size:0.75em;">${e.stamp}</p><p><strong>${e.id || 'No Identifier'}</strong></p><p style="font-size: 0.85em; color: #ccc;">Status: ${e.mental || 'N/A'}</p><p style="font-size: 0.85em; color: #eee; margin-top:5px;">V1: ${e.vitals1 || 'N/A'}</p><p style="font-size: 0.85em; color: #eee;">V2: ${e.vitals2 || 'N/A'}</p><p style="font-size: 0.85em; color: #eee;">V3: ${e.vitals3 || 'N/A'}</p></div>` + se.innerHTML;
         }
     });
     function clearScratchpad() { if(confirm("Wipe Notes?")) dbScratchpad.set(null); }
