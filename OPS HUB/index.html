@@ -90,9 +90,9 @@
             <a href="tel:4132838792" class="btn blue-btn"><img src="disp.png"> Dispatch</a>
             <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn"><img src="zello.png">Zello Radio</a>
             <a href="https://hosting.tighebond.com/palmerma_Public/" target="_blank" class="btn blue-btn"><img src="gis.png">Palmer GIS</a>
-
-<a onclick="smartLink('shortcuts://run-shortcut?name=OpenERG', 'https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/ERG2024-Eng-Web-a.pdf')" class="btn blue-btn"><img src="erg.png">ERG 2024</a>
-
+            
+            <a onclick="smartLink('shortcuts://run-shortcut?name=OpenERG', 'https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/ERG2024-Eng-Web-a.pdf')" class="btn blue-btn"><img src="erg.png">ERG 2024</a>
+            
             <a onclick="toggleView('utilities')" class="btn blue-btn"><img src="utilities.png"> Utilities</a>
             <a href="tel:8883041133" class="btn blue-btn"><img src="hazmatresponse.png" class="big-icon">Hazmat Activation</a>
             <a onclick="smartLink('weather://', 'https://weather.com/')" class="btn blue-btn"><img src="weather.png">Weather</a>
@@ -135,10 +135,20 @@
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
+    <div id="emergency-list" class="hidden sub-menu">
+        <h3>Emergency Call List</h3>
+        <div style="overflow-x:auto;">
+            <table id="callListTable">
+                </table>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
     <div id="admin-view" class="hidden sub-menu">
-        <h3>Roster Management</h3>
-        <p style="font-size:0.8em; color:#aaa; margin-top:-10px;">Add or edit personnel. Changes apply to all devices.</p>
-        
+        <h2 style="color: #d32f2f; margin-bottom: 5px;">Admin Portal</h2>
+        <p style="font-size:0.8em; color:#aaa; margin-top:0;">Changes apply instantly to all devices.</p>
+
+        <h3 style="margin-top: 30px; border-top: 1px solid #444; padding-top: 20px;">Roster Management</h3>
         <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
             <input type="hidden" id="editKey">
             <label style="color:#ccc; font-size:0.8em; text-align:left; display:block;">Personnel Info:</label>
@@ -149,47 +159,23 @@
             <button id="saveBtn" class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="saveMember()">Add New Member</button>
             <button id="cancelBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelEdit()">Cancel Edit</button>
         </div>
-        
         <h4 style="border-bottom: 1px solid #444; padding-bottom: 5px;">Current Roster</h4>
         <div id="adminRosterFeed"></div>
-        
-        <button class="nav-btn" style="margin-top: 30px;" onclick="toggleView('main-view')">Exit Admin</button>
-    </div>
 
-    <div id="emergency-list" class="hidden sub-menu">
-        <h3>Emergency Call List</h3>
-        <div style="overflow-x:auto;">
-            <table>
-                <tr><th colspan="2" class="cat-head">Police Departments</th></tr>
-                <tr><td>Palmer PD (Recorded)</td><td><a href="tel:4132838792">413-283-8792</a></td></tr>
-                <tr><td>Palmer PD (Admin)</td><td><a href="tel:4132891196">413-289-1196</a></td></tr>
-                <tr><td>MSP Belchertown (B-3)</td><td><a href="tel:4133237561">413-323-7561</a></td></tr>
-                <tr><td>Belchertown PD</td><td><a href="tel:4133236655">413-323-6655</a></td></tr>
-                <tr><td>Monson PD</td><td><a href="tel:4132674128">413-267-4128</a></td></tr>
-                <tr><td>Ware PD</td><td><a href="tel:4139673571">413-967-3571</a></td></tr>
-                <tr><td>Ludlow PD</td><td><a href="tel:4135838305">413-583-8305</a></td></tr>
-                <tr><td>Warren PD</td><td><a href="tel:4134369595">413-436-9595</a></td></tr>
-                <tr><th colspan="2" class="cat-head">Fire Emergency #'s</th></tr>
-                <tr><td>B'town/Amherst Disp</td><td><a href="tel:4132564899">413-256-4899</a></td></tr>
-                <tr><td>Brimfield Emergency</td><td><a href="tel:8008896323">800-889-6323</a></td></tr>
-                <tr><td>Monson Emergency</td><td><a href="tel:4132674081">413-267-4081</a></td></tr>
-                <tr><td>Ware Emergency</td><td><a href="tel:4139675901">967-5901</a></td></tr>
-                <tr><td>Warren Emergency</td><td><a href="tel:4134365050">413-436-5050</a></td></tr>
-                <tr><th colspan="2" class="cat-head">Fire Stations</th></tr>
-                <tr><td>Bondsville Station</td><td><a href="tel:4132839036">413-283-9036</a></td></tr>
-                <tr><td>Belchertown Station</td><td><a href="tel:4133237571">413-323-7571</a></td></tr>
-                <tr><td>Brimfield Station</td><td><a href="tel:4132457334">413-245-7334</a></td></tr>
-                <tr><td>Ludlow Station</td><td><a href="tel:4135838332">413-583-8332</a></td></tr>
-                <tr><td>Monson Station</td><td><a href="tel:4132673132">413-267-3132</a></td></tr>
-                <tr><td>Palmer Chief</td><td><a href="tel:4132839718">413-283-9718</a></td></tr>
-                <tr><td>Palmer Station</td><td><a href="tel:4132833861">413-283-3861</a></td></tr>
-                <tr><td>Three Rivers Chief</td><td><a href="tel:4132832269">413-283-2269</a></td></tr>
-                <tr><td>Three Rivers Station</td><td><a href="tel:4132837161">283-7161</a></td></tr>
-                <tr><td>Ware Station</td><td><a href="tel:4139675901">967-5901</a></td></tr>
-                <tr><td>Warren Station</td><td><a href="tel:4134365050">413-436-5050</a></td></tr>
-            </table>
+        <h3 style="margin-top: 40px; border-top: 1px solid #444; padding-top: 20px;">Call List Management</h3>
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+            <input type="hidden" id="editCallKey">
+            <label style="color:#ccc; font-size:0.8em; text-align:left; display:block;">Contact Info:</label>
+            <input type="text" id="admCallCat" placeholder="Category (e.g., Police, Fire Stations)">
+            <input type="text" id="admCallName" placeholder="Agency Name">
+            <input type="text" id="admCallPhone" placeholder="Phone (e.g., 413-555-1234)">
+            <button id="saveCallBtn" class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="saveCall()">Add Contact</button>
+            <button id="cancelCallBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelCallEdit()">Cancel Edit</button>
         </div>
-        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+        <h4 style="border-bottom: 1px solid #444; padding-bottom: 5px;">Current Call List</h4>
+        <div id="adminCallFeed"></div>
+        
+        <button class="nav-btn" style="margin-top: 40px;" onclick="toggleView('main-view')">Exit Admin</button>
     </div>
 
     <div id="hospitals" class="hidden sub-menu">
@@ -270,8 +256,9 @@
     firebase.initializeApp(firebaseConfig);
     const dbBurn = firebase.database().ref('burnLog');
     const dbRoster = firebase.database().ref('roster');
+    const dbCalls = firebase.database().ref('calls'); // <-- NEW DATABASE REFERENCE
 
-    // 2. AUTO-SEED INITIAL ROSTER (Runs once if DB is empty)
+    // 2. AUTO-SEED INITIAL ROSTER & CALLS
     dbRoster.once('value', (snapshot) => {
         if (!snapshot.exists()) {
             const initialRoster = [
@@ -295,6 +282,38 @@
         }
     });
 
+    dbCalls.once('value', (snapshot) => {
+        if (!snapshot.exists()) {
+            const initialCalls = [
+                {cat: "Police Departments", name: "Palmer PD (Recorded)", phone: "413-283-8792"},
+                {cat: "Police Departments", name: "Palmer PD (Admin)", phone: "413-289-1196"},
+                {cat: "Police Departments", name: "MSP Belchertown (B-3)", phone: "413-323-7561"},
+                {cat: "Police Departments", name: "Belchertown PD", phone: "413-323-6655"},
+                {cat: "Police Departments", name: "Monson PD", phone: "413-267-4128"},
+                {cat: "Police Departments", name: "Ware PD", phone: "413-967-3571"},
+                {cat: "Police Departments", name: "Ludlow PD", phone: "413-583-8305"},
+                {cat: "Police Departments", name: "Warren PD", phone: "413-436-9595"},
+                {cat: "Fire Emergency", name: "B'town/Amherst Disp", phone: "413-256-4899"},
+                {cat: "Fire Emergency", name: "Brimfield Emergency", phone: "800-889-6323"},
+                {cat: "Fire Emergency", name: "Monson Emergency", phone: "413-267-4081"},
+                {cat: "Fire Emergency", name: "Ware Emergency", phone: "413-967-5901"},
+                {cat: "Fire Emergency", name: "Warren Emergency", phone: "413-436-5050"},
+                {cat: "Fire Stations", name: "Bondsville Station", phone: "413-283-9036"},
+                {cat: "Fire Stations", name: "Belchertown Station", phone: "413-323-7571"},
+                {cat: "Fire Stations", name: "Brimfield Station", phone: "413-245-7334"},
+                {cat: "Fire Stations", name: "Ludlow Station", phone: "413-583-8332"},
+                {cat: "Fire Stations", name: "Monson Station", phone: "413-267-3132"},
+                {cat: "Fire Stations", name: "Palmer Chief", phone: "413-283-9718"},
+                {cat: "Fire Stations", name: "Palmer Station", phone: "413-283-3861"},
+                {cat: "Fire Stations", name: "Three Rivers Chief", phone: "413-283-2269"},
+                {cat: "Fire Stations", name: "Three Rivers Station", phone: "413-283-7161"},
+                {cat: "Fire Stations", name: "Ware Station", phone: "413-967-5901"},
+                {cat: "Fire Stations", name: "Warren Station", phone: "413-436-5050"}
+            ];
+            initialCalls.forEach(call => dbCalls.push(call));
+        }
+    });
+
     // 3. ADMIN SECURITY
     function openAdmin() { 
         if (prompt("Enter Admin Password:") === "BFD30") {
@@ -313,15 +332,10 @@
         const k = document.getElementById('editKey').value;
         
         if(n && p) { 
-            if(k) {
-                dbRoster.child(k).update({id:id, rank:r, name:n, phone:p}); 
-            } else {
-                dbRoster.push({id:id, rank:r, name:n, phone:p});
-            }
+            if(k) dbRoster.child(k).update({id:id, rank:r, name:n, phone:p}); 
+            else dbRoster.push({id:id, rank:r, name:n, phone:p});
             cancelEdit();
-        } else {
-            alert("Name and Phone are required.");
-        }
+        } else { alert("Name and Phone are required."); }
     }
 
     function cancelEdit() {
@@ -337,11 +351,7 @@
         const data = snap.val(); 
         for (let k in data) { 
             const m = data[k];
-            
-            // Populates the public Roster table
-            rb.innerHTML += `<tr><td>${m.id||''}</td><td>${m.rank||''}</td><td>${m.name}</td><td><a href="tel:${m.phone}">📞</a></td></tr>`;
-            
-            // Populates the Admin Portal list with Edit/Delete buttons
+            rb.innerHTML += `<tr><td>${m.id||''}</td><td>${m.rank||''}</td><td>${m.name}</td><td><a href="tel:${m.phone.replace(/[^0-9]/g, '')}">📞</a></td></tr>`;
             af.innerHTML += `
                 <div class="admin-item">
                     <strong>${m.name}</strong> (${m.id || 'No ID'})<br>
@@ -365,30 +375,88 @@
         window.scrollTo(0,0); 
     }
 
-    function deleteMember(k) {
-        if(confirm("Are you sure you want to delete this member?")) {
-            dbRoster.child(k).remove();
-        }
+    function deleteMember(k) { if(confirm("Are you sure you want to delete this member?")) dbRoster.child(k).remove(); }
+
+    // 5. CALL LIST MANAGEMENT LOGIC
+    function saveCall() {
+        const c = document.getElementById('admCallCat').value;
+        const n = document.getElementById('admCallName').value;
+        const p = document.getElementById('admCallPhone').value;
+        const k = document.getElementById('editCallKey').value;
+        
+        if(c && n && p) { 
+            if(k) dbCalls.child(k).update({cat:c, name:n, phone:p}); 
+            else dbCalls.push({cat:c, name:n, phone:p});
+            cancelCallEdit();
+        } else { alert("Category, Name, and Phone are required."); }
     }
 
-    // 5. SHARED BURN LOG LOGIC
+    function cancelCallEdit() {
+        ['admCallCat','admCallName','admCallPhone','editCallKey'].forEach(i => document.getElementById(i).value=''); 
+        document.getElementById('saveCallBtn').innerText='Add Contact'; 
+        document.getElementById('cancelCallBtn').classList.add('hidden');
+    }
+
+    dbCalls.on('value', (snap) => {
+        const cb = document.getElementById('callListTable');
+        const acf = document.getElementById('adminCallFeed'); 
+        cb.innerHTML=''; acf.innerHTML='';
+        const data = snap.val(); 
+        if(!data) return;
+
+        // Group data by Category for the public view
+        const grouped = {};
+        for (let k in data) {
+            const c = data[k];
+            if(!grouped[c.cat]) grouped[c.cat] = [];
+            grouped[c.cat].push(c);
+
+            // Populate the Admin Feed
+            acf.innerHTML += `
+                <div class="admin-item">
+                    <strong>${c.name}</strong><br>
+                    <span style="color:#aaa; font-size:0.8em;">${c.cat} | ${c.phone}</span>
+                    <div class="admin-controls">
+                        <button class="small-btn" style="background:#1e3a8a;" onclick="editCall('${k}','${c.cat}','${c.name}','${c.phone}')">Edit</button> 
+                        <button class="small-btn" style="background:#8b0000;" onclick="deleteCall('${k}')">Delete</button>
+                    </div>
+                </div>`;
+        }
+
+        // Populate the Public Call List
+        for(let cat in grouped) {
+            cb.innerHTML += `<tr><th colspan="2" class="cat-head">${cat}</th></tr>`;
+            grouped[cat].forEach(c => {
+                const cleanPhone = c.phone.replace(/[^0-9]/g, ''); // Removes dashes so phone dials correctly
+                cb.innerHTML += `<tr><td>${c.name}</td><td><a href="tel:${cleanPhone}">${c.phone}</a></td></tr>`;
+            });
+        }
+    });
+
+    function editCall(k,c,n,p) { 
+        document.getElementById('editCallKey').value=k; 
+        document.getElementById('admCallCat').value=c; 
+        document.getElementById('admCallName').value=n; 
+        document.getElementById('admCallPhone').value=p; 
+        document.getElementById('saveCallBtn').innerText='Update Contact'; 
+        document.getElementById('cancelCallBtn').classList.remove('hidden');
+        window.scrollTo(0,0); 
+    }
+
+    function deleteCall(k) { if(confirm("Are you sure you want to delete this contact?")) dbCalls.child(k).remove(); }
+
+    // 6. SHARED BURN LOG LOGIC
     function stampToday() { 
         const d = new Date(); 
         document.getElementById('burnDate').value = (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear(); 
     }
     
     function submitBurn() { 
-        const d=document.getElementById('burnDate').value;
-        const n=document.getElementById('burnName').value;
-        const a=document.getElementById('burnAddr').value;
-        const p=document.getElementById('burnPhone').value;
-        const pr=document.getElementById('burnPermit').value; 
+        const d=document.getElementById('burnDate').value, n=document.getElementById('burnName').value, a=document.getElementById('burnAddr').value, p=document.getElementById('burnPhone').value, pr=document.getElementById('burnPermit').value; 
         if(n && a) { 
             dbBurn.push({date:d, name:n, addr:a, phone:p, permit:pr}); 
             ['burnDate','burnName','burnAddr','burnPhone','burnPermit'].forEach(i=>document.getElementById(i).value=''); 
-        } else {
-            alert("Name and Address are required.");
-        }
+        } else { alert("Name and Address are required."); }
     }
     
     dbBurn.on('value', (snap) => { 
@@ -409,7 +477,7 @@
     
     function clearBurnLog() { if(confirm("Are you sure you want to wipe the Shared Burn Log?")) dbBurn.set(null); }
 
-    // 6. CORE APP LOGIC
+    // 7. CORE APP LOGIC
     function toggleView(v) { 
         document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); 
         document.getElementById(v).classList.remove('hidden'); 
@@ -424,15 +492,10 @@
     const ids=['m','v1']; 
     ids.forEach(id => { 
         const el=document.getElementById(id); 
-        if(el) { 
-            el.value=localStorage.getItem(id)||''; 
-            el.addEventListener('input',()=>localStorage.setItem(id,el.value)); 
-        } 
+        if(el) { el.value=localStorage.getItem(id)||''; el.addEventListener('input',()=>localStorage.setItem(id,el.value)); } 
     });
     
-    function clearAll() { 
-        if(confirm("Clear Notes?")) ids.forEach(id => { document.getElementById(id).value=''; localStorage.removeItem(id); }); 
-    }
+    function clearAll() { if(confirm("Clear Notes?")) ids.forEach(id => { document.getElementById(id).value=''; localStorage.removeItem(id); }); }
 </script>
 </body>
 </html>
