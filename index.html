@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.json">
     <style>
         body { font-family: -apple-system, system-ui; background: #000 url('flag.jpg') no-repeat center center fixed; background-size: cover; color: white; text-align: center; margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; }
         .container { max-width: 500px; margin: auto; }
@@ -90,9 +91,7 @@
             <a href="tel:4132838792" class="btn blue-btn"><img src="disp.png"> Dispatch</a>
             <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn"><img src="zello.png">Zello Radio</a>
             <a href="https://hosting.tighebond.com/palmerma_Public/" target="_blank" class="btn blue-btn"><img src="gis.png">Palmer GIS</a>
-            
             <a onclick="smartLink('shortcuts://run-shortcut?name=OpenERG', 'https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/ERG2024-Eng-Web-a.pdf')" class="btn blue-btn"><img src="erg.png">ERG 2024</a>
-            
             <a onclick="toggleView('utilities')" class="btn blue-btn"><img src="utilities.png"> Utilities</a>
             <a href="tel:8883041133" class="btn blue-btn"><img src="hazmatresponse.png" class="big-icon">Hazmat Activation</a>
             <a onclick="smartLink('weather://', 'https://weather.com/')" class="btn blue-btn"><img src="weather.png">Weather</a>
@@ -109,6 +108,47 @@
             <a onclick="toggleView('education')" class="btn grey-btn"><img src="learning.png">Training Portal</a>
             <a onclick="openAdmin()" class="btn grey-btn"><span>🔑</span> ADMIN PORTAL</a>
         </div>
+    </div>
+
+    <div id="admin-view" class="hidden sub-menu">
+        <h2 style="color: #d32f2f; margin-bottom: 5px;">Admin Portal</h2>
+        <p style="font-size:0.8em; color:#aaa; margin-top:0;">Select a module to manage.</p>
+
+        <div class="btn-grid" style="margin-top: 20px;">
+            <a onclick="toggleView('admin-roster')" class="btn grey-btn full-width"><span>👥</span> Edit Roster</a>
+            <a onclick="toggleView('admin-calls')" class="btn grey-btn full-width"><span>📞</span> Edit Call List</a>
+        </div>
+        
+        <button class="nav-btn" style="margin-top: 40px;" onclick="toggleView('main-view')">Exit Admin</button>
+    </div>
+
+    <div id="admin-roster" class="hidden sub-menu">
+        <h3 style="color: #d32f2f;">Roster Management</h3>
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+            <input type="hidden" id="editKey">
+            <input type="text" id="admID" placeholder="ID (e.g., Chief 31, 3F5)">
+            <input type="text" id="admRank" placeholder="Rank (e.g., Captain, FF)">
+            <input type="text" id="admName" placeholder="Full Name">
+            <input type="text" id="admPhone" placeholder="Phone">
+            <button id="saveBtn" class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="saveMember()">Add New Member</button>
+            <button id="cancelBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelEdit()">Cancel Edit</button>
+        </div>
+        <div id="adminRosterFeed"></div>
+        <button class="nav-btn" onclick="toggleView('admin-view')">Back to Admin</button>
+    </div>
+
+    <div id="admin-calls" class="hidden sub-menu">
+        <h3 style="color: #d32f2f;">Call List Management</h3>
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+            <input type="hidden" id="editCallKey">
+            <input type="text" id="admCallCat" placeholder="Category (e.g., Police, Fire Stations)">
+            <input type="text" id="admCallName" placeholder="Agency Name">
+            <input type="text" id="admCallPhone" placeholder="Phone">
+            <button id="saveCallBtn" class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="saveCall()">Add Contact</button>
+            <button id="cancelCallBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelCallEdit()">Cancel Edit</button>
+        </div>
+        <div id="adminCallFeed"></div>
+        <button class="nav-btn" onclick="toggleView('admin-view')">Back to Admin</button>
     </div>
 
     <div id="burn-view" class="hidden sub-menu">
@@ -129,7 +169,6 @@
 
     <div id="scratchpad" class="hidden sub-menu">
         <h3 style="color: #d32f2f;">Patient Scratchpad</h3>
-        
         <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
             <input type="text" id="padId" placeholder="Run # or Identifier (e.g., Pt A)">
             <input type="text" id="padMental" placeholder="Mental Status (e.g., A&O x4)">
@@ -138,10 +177,8 @@
             <input type="text" id="padVitals3" placeholder="Third Vitals: BP | HR | RR | SpO2">
             <button class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="submitScratchpad()">Post to Scratchpad</button>
         </div>
-        
         <h4 style="border-bottom: 1px solid #444; padding-bottom: 5px;">Active Patient Notes</h4>
         <div id="scratchpadEntries"></div>
-        
         <button class="nav-btn" style="margin-top: 30px;" onclick="toggleView('main-view')">Back</button>
         <button class="nav-btn" style="background:#8b0000; font-size:0.7em;" onclick="clearScratchpad()">Wipe All Notes</button>
     </div>
@@ -160,36 +197,6 @@
             <table id="callListTable"></table>
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-    </div>
-
-    <div id="admin-view" class="hidden sub-menu">
-        <h2 style="color: #d32f2f; margin-bottom: 5px;">Admin Portal</h2>
-        <p style="font-size:0.8em; color:#aaa; margin-top:0;">Changes apply instantly to all devices.</p>
-
-        <h3 style="margin-top: 30px; border-top: 1px solid #444; padding-top: 20px;">Roster Management</h3>
-        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
-            <input type="hidden" id="editKey">
-            <input type="text" id="admID" placeholder="ID (e.g., Chief 31, 3F5)">
-            <input type="text" id="admRank" placeholder="Rank (e.g., Captain, FF)">
-            <input type="text" id="admName" placeholder="Full Name">
-            <input type="text" id="admPhone" placeholder="Phone">
-            <button id="saveBtn" class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="saveMember()">Add New Member</button>
-            <button id="cancelBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelEdit()">Cancel Edit</button>
-        </div>
-        <div id="adminRosterFeed"></div>
-
-        <h3 style="margin-top: 40px; border-top: 1px solid #444; padding-top: 20px;">Call List Management</h3>
-        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
-            <input type="hidden" id="editCallKey">
-            <input type="text" id="admCallCat" placeholder="Category (e.g., Police, Fire Stations)">
-            <input type="text" id="admCallName" placeholder="Agency Name">
-            <input type="text" id="admCallPhone" placeholder="Phone">
-            <button id="saveCallBtn" class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="saveCall()">Add Contact</button>
-            <button id="cancelCallBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelCallEdit()">Cancel Edit</button>
-        </div>
-        <div id="adminCallFeed"></div>
-        
-        <button class="nav-btn" style="margin-top: 40px;" onclick="toggleView('main-view')">Exit Admin</button>
     </div>
 
     <div id="hospitals" class="hidden sub-menu">
@@ -320,16 +327,14 @@
     });
     function clearBurnLog() { if(confirm("Wipe Burn Log?")) dbBurn.set(null); }
 
-    // SCRATCHPAD LOGIC (DATE & TIME AUTO-ADDED)
+    // SCRATCHPAD LOGIC
     function submitScratchpad() {
         const id=document.getElementById('padId').value, m=document.getElementById('padMental').value, v1=document.getElementById('padVitals1').value, v2=document.getElementById('padVitals2').value, v3=document.getElementById('padVitals3').value;
         const now = new Date();
         const dateStr = (now.getMonth()+1)+"/"+now.getDate()+"/"+now.getFullYear();
         const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        const fullStamp = dateStr + " @ " + timeStr;
-
         if(id || m || v1) { 
-            dbScratchpad.push({stamp: fullStamp, id: id, mental: m, vitals1: v1, vitals2: v2, vitals3: v3}); 
+            dbScratchpad.push({stamp: dateStr + " @ " + timeStr, id: id, mental: m, vitals1: v1, vitals2: v2, vitals3: v3}); 
             ['padId','padMental','padVitals1','padVitals2','padVitals3'].forEach(i=>document.getElementById(i).value=''); 
         } else alert("Required fields missing.");
     }
@@ -345,6 +350,11 @@
     // NAV
     function toggleView(v) { document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); document.getElementById(v).classList.remove('hidden'); window.scrollTo(0,0); }
     function smartLink(appUrl, webUrl) { window.location.href=appUrl; setTimeout(()=> { if(!document.hidden) window.location.href=webUrl; }, 2500); }
+
+    // START OFFLINE MODE
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js'); });
+    }
 </script>
 </body>
 </html>
