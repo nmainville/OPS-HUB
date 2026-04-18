@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ops-hub-v2';
+const CACHE_NAME = 'ops-hub-v4';
 
 // Install the new sponge
 self.addEventListener('install', event => {
