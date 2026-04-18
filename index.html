@@ -10,26 +10,39 @@
     <style>
         body { font-family: -apple-system, system-ui; background: #000 url('flag.jpg') no-repeat center center fixed; background-size: cover; color: white; text-align: center; margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; }
         .container { max-width: 500px; margin: auto; }
+        
+        /* HEADER */
         .header { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; }
         .title-container { display: flex; flex-direction: column; align-items: center; }
         .header h1 { margin: 0; font-size: 1.8em; letter-spacing: 1px; }
         .motto { color: rgba(255,255,255,0.7); font-family: 'Snell Roundhand', cursive, Georgia; font-size: 0.85em; margin-top: -2px; }
         .header img { width: 45px; height: 45px; object-fit: contain; }
+        
+        /* BUTTONS & GRID */
         h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { color: white; padding: 18px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.85em; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
         .btn img { width: 38px; height: 38px; margin-bottom: 8px; border-radius: 5px; object-fit: contain; }
-        .btn span { font-size: 1.5em; margin-bottom: 8px; }
         .red-btn { background: #d32f2f !important; } .blue-btn { background: #1e3a8a !important; } .grey-btn { background: #262626 !important; }
-        .full-width { grid-column: span 2; } .hidden { display: none; }
+        .full-width { grid-column: span 2; } .hidden { display: none !important; }
+        .big-icon { width: 60px !important; height: 60px !important; }
+
+        /* SUB-MENUS */
         .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; }
         .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
-        .time-btn { background: #1e3a8a; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.8em; font-weight: bold; cursor: pointer; }
-        textarea { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
+        
+        /* INPUTS & TABLES */
+        textarea, input { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
         table { width: 100%; color: white; font-size: 0.72em; border-collapse: collapse; margin-top: 10px; }
         td, th { border: 1px solid #444; padding: 10px 4px; text-align: left; }
         tr:nth-child(even) { background: rgba(255,255,255,0.05); }
         .cat-head { background: #444; color: #fff; font-weight: bold; padding: 5px; text-align: center; }
+
+        /* FIREBASE STYLES */
+        .burn-entry { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; margin-bottom: 10px; text-align: left; border-left: 5px solid #d32f2f; }
+        .admin-item { background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 12px; border-radius: 8px; margin-bottom: 8px; text-align: left; }
+        .admin-controls { display: flex; gap: 8px; margin-top: 10px; }
+        .small-btn { padding: 8px 12px; border-radius: 6px; border: none; color: white; font-size: 0.8em; font-weight: bold; cursor: pointer; flex: 1; }
     </style>
 </head>
 <body>
@@ -38,74 +51,145 @@
     <div id="main-view">
         <div class="header">
             <img src="bondsville.png" alt="Patch">
-            <div class="title-container">
-                <h1>OPS HUB</h1>
-                <div class="motto">TO PROTECT & SERVE</div>
-            </div>
+            <div class="title-container"><h1>OPS HUB</h1><div class="motto">TO PROTECT & SERVE</div></div>
             <img src="redblueflag.png" alt="Flag">
         </div>
 
         <h4>Active Response</h4>
         <div class="btn-grid">
-            <a onclick="smartLink('iar://', 'https://www.iarservices.com/')" class="btn red-btn"><img src="IAR.png" alt="🚨">IaR App</a>
-            <a href="googlechromes://app.emergencynetworking.com/login" class="btn red-btn"><img src="EN.png" alt="🚑">Emerg Network</a>
+            <a onclick="smartLink('iar://', 'https://www.iarservices.com/')" class="btn red-btn"><img src="IAR.png">IaR App</a>
+            <a href="googlechromes://app.emergencynetworking.com/login" class="btn red-btn"><img src="EN.png">Emerg Network</a>
+            <a onclick="toggleView('burn-view')" class="btn red-btn full-width"><span>🔥</span> Burn Log</a>
         </div>
 
         <h4>Medical Tools</h4>
         <div class="btn-grid">
-            <a onclick="toggleView('scratchpad')" class="btn red-btn full-width"><span>📝</span> Patient Scratchpad</a>
-            <a href="https://www.mass.gov/lists/emergency-medical-services-statewide-treatment-protocols" class="btn red-btn"><span>⚕️</span> MA Protocols</a>
-            <a onclick="toggleView('hospitals')" class="btn red-btn"><span>🏥</span> Hospital Lines</a>
+            <a onclick="toggleView('scratchpad')" class="btn red-btn full-width"><img src="tacmed.png">Patient Scratchpad</a>
+            <a href="https://www.mass.gov/lists/emergency-medical-services-statewide-treatment-protocols" target="_blank" class="btn red-btn"><img src="tacmed.png">MA Protocols</a>
+            <a onclick="toggleView('hospitals')" class="btn red-btn"><img src="hospital.png">Hospital Lines</a>
         </div>
 
         <h4>Fire Prevention & Inspections</h4>
         <div class="btn-grid">
-            <a href="Smoke_Requirements.pdf" class="btn red-btn"><span>🏠</span> Smoke/CO Specs</a>
-            <a onclick="toggleView('fees')" class="btn red-btn"><span>💰</span> Inspection Fees</a>
-            <a href="https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter148" class="btn red-btn full-width"><span>⚖️</span> MGL Ch. 148</a>
+            <a href="Smoke_Requirements.pdf" target="_blank" class="btn red-btn"><img src="smoke.png">Smoke Specs</a>
+            <a onclick="toggleView('fees')" class="btn red-btn"><img src="fee.png">Inspection Fees</a>
+            <a href="https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter148" target="_blank" class="btn red-btn full-width"><span>⚖️</span> MGL Ch. 148</a>
         </div>
 
         <h4>Local Departments</h4>
         <div class="btn-grid">
-            <a href="https://www.townofpalmer.com/palmerfire" class="btn grey-btn"><img src="palmer.png" alt="🚒">Palmer FD</a>
-            <a href="https://www.townofpalmer.com/bondsvillefire" class="btn grey-btn"><img src="bondsville.png" alt="🚒">Bondsville FD</a>
-            <a href="https://www.townofpalmer.com/?SEC=98D8F89E-9FF3-49B5-9C65-AEDF8D0F88FA" class="btn grey-btn"><img src="threeriverspatch.png" alt="🚒">Three Rivers FD</a>
-            <a onclick="toggleView('roster')" class="btn grey-btn"><img src="bondsville.png" alt="👥">BFD ROSTER</a>
+            <a href="https://www.townofpalmer.com/palmerfire" target="_blank" class="btn grey-btn"><img src="palmer.png">Palmer FD</a>
+            <a href="https://www.townofpalmer.com/bondsvillefire" target="_blank" class="btn grey-btn"><img src="bondsville.png">Bondsville FD</a>
+            <a href="https://www.townofpalmer.com/?SEC=98D8F89E-9FF3-49B5-9C65-AEDF8D0F88FA" target="_blank" class="btn grey-btn"><img src="threeriverspatch.png">Three Rivers FD</a>
+            <a onclick="toggleView('roster-view')" class="btn grey-btn"><img src="bondsville.png">BFD ROSTER</a>
         </div>
 
         <h4>Field Resources</h4>
         <div class="btn-grid">
-            <a onclick="toggleView('emergency-list')" class="btn blue-btn"><span>📞</span> Call List</a>
-            <a href="tel:4132838792" class="btn blue-btn"><span>📞</span> Dispatch</a>
-            <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn"><img src="zello.png" alt="📻">Zello Radio</a>
-            <a href="https://hosting.tighebond.com/palmerma_Public/" class="btn blue-btn"><span>📍</span> Palmer GIS</a>
-            <a href="https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/ERG2024-Eng-Web-a.pdf" class="btn blue-btn"><span>☢️</span> ERG 2024</a>
-            <a onclick="toggleView('utilities')" class="btn blue-btn"><span>⚡</span> Utilities</a>
+            <a onclick="toggleView('emergency-list')" class="btn blue-btn"><img src="contacs.png">Call List</a>
+            <a href="tel:4132838792" class="btn blue-btn"><img src="disp.png"> Dispatch</a>
+            <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn"><img src="zello.png">Zello Radio</a>
+            <a href="https://hosting.tighebond.com/palmerma_Public/" target="_blank" class="btn blue-btn"><img src="gis.png">Palmer GIS</a>
+            
+            <a onclick="smartLink('shortcuts://run-shortcut?name=OpenERG', 'https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/ERG2024-Eng-Web-a.pdf')" class="btn blue-btn"><img src="erg.png">ERG 2024</a>
+            
+            <a onclick="toggleView('utilities')" class="btn blue-btn"><img src="utilities.png"> Utilities</a>
+            <a href="tel:8883041133" class="btn blue-btn"><img src="hazmatresponse.png" class="big-icon">Hazmat Activation</a>
+            <a onclick="smartLink('weather://', 'https://weather.com/')" class="btn blue-btn"><img src="weather.png">Weather</a>
         </div>
 
         <h4>Wellness & Peer Support</h4>
         <div class="btn-grid">
-            <a href="https://www.iaffrecoverycenter.com/" class="btn red-btn"><span>🛡️</span> IAFF Wellness</a>
-            <a href="https://www.nvfc.org/share-the-load/" class="btn red-btn"><span>🤝</span> Share The Load</a>
+            <a href="https://www.iaffrecoverycenter.com/" target="_blank" class="btn red-btn"><img src="iaff.png">IAFF Wellness</a>
+            <a href="https://www.nvfc.org/programs/share-the-load-program/" target="_blank" class="btn red-btn"><img src="sharetheload.png">Share The Load</a>
         </div>
 
-        <h4>Professional Resources</h4>
+        <h4>Logistics & Admin</h4>
         <div class="btn-grid">
-            <a onclick="toggleView('education')" class="btn grey-btn full-width"><span>🎓</span> Training Portal</a>
+            <a onclick="toggleView('education')" class="btn grey-btn"><img src="learning.png">Training Portal</a>
+            <a onclick="openAdmin()" class="btn grey-btn"><span>🔑</span> ADMIN PORTAL</a>
         </div>
     </div>
 
-    <div id="fees" class="hidden sub-menu">
-        <h3>Inspection Fee Schedule</h3>
-        <table>
-            <tr><th class="cat-head">Service</th><th class="cat-head">Fee</th></tr>
-            <tr><td>Smoke/CO (1-Family)</td><td>$50</td></tr>
-            <tr><td>Smoke/CO (2-Family)</td><td>$100</td></tr>
-            <tr><td>Oil Burner Permit</td><td>$50</td></tr>
-            <tr><td>Propane Tank Install</td><td>$50</td></tr>
-            <tr><td>Tank Removal</td><td>$100</td></tr>
-        </table>
+    <div id="burn-view" class="hidden sub-menu">
+        <h3>Burn Log</h3>
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+            <input type="text" id="burnDate" placeholder="Date (MM/DD/YYYY)">
+            <button class="nav-btn" style="margin-top:0; margin-bottom:10px; background:#1e3a8a; padding: 8px;" onclick="stampToday()">📅 Auto-Fill Today</button>
+            <input type="text" id="burnName" placeholder="Resident Name">
+            <input type="text" id="burnAddr" placeholder="Address">
+            <input type="text" id="burnPhone" placeholder="Phone Number">
+            <input type="text" id="burnPermit" placeholder="Permit #">
+            <button class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="submitBurn()">Post to Burn Log</button>
+        </div>
+        <div id="sharedEntries"></div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+        <button class="nav-btn" style="background:#8b0000; font-size:0.7em;" onclick="clearBurnLog()">Wipe All Entries</button>
+    </div>
+
+    <div id="scratchpad" class="hidden sub-menu">
+        <h3 style="color: #d32f2f;">Patient Scratchpad</h3>
+        
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+            <input type="text" id="padId" placeholder="Run # or Identifier (e.g., Pt A)">
+            <input type="text" id="padMental" placeholder="Mental Status (e.g., A&O x4)">
+            <input type="text" id="padVitals1" placeholder="Initial Vitals: BP | HR | RR | SpO2">
+            <input type="text" id="padVitals2" placeholder="Second Vitals: BP | HR | RR | SpO2">
+            <input type="text" id="padVitals3" placeholder="Third Vitals: BP | HR | RR | SpO2">
+            <button class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="submitScratchpad()">Post to Scratchpad</button>
+        </div>
+        
+        <h4 style="border-bottom: 1px solid #444; padding-bottom: 5px;">Active Patient Notes</h4>
+        <div id="scratchpadEntries"></div>
+        
+        <button class="nav-btn" style="margin-top: 30px;" onclick="toggleView('main-view')">Back</button>
+        <button class="nav-btn" style="background:#8b0000; font-size:0.7em;" onclick="clearScratchpad()">Wipe All Notes</button>
+    </div>
+
+    <div id="roster-view" class="hidden sub-menu">
+        <h3>BFD Personnel Directory</h3>
+        <div style="overflow-x:auto;">
+            <table><thead><tr><th>ID</th><th>Rank</th><th>Name</th><th>Call</th></tr></thead><tbody id="rosterBody"></tbody></table>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
+    <div id="emergency-list" class="hidden sub-menu">
+        <h3>Emergency Call List</h3>
+        <div style="overflow-x:auto;">
+            <table id="callListTable"></table>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
+    <div id="admin-view" class="hidden sub-menu">
+        <h2 style="color: #d32f2f; margin-bottom: 5px;">Admin Portal</h2>
+        <p style="font-size:0.8em; color:#aaa; margin-top:0;">Changes apply instantly to all devices.</p>
+
+        <h3 style="margin-top: 30px; border-top: 1px solid #444; padding-top: 20px;">Roster Management</h3>
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+            <input type="hidden" id="editKey">
+            <input type="text" id="admID" placeholder="ID (e.g., Chief 31, 3F5)">
+            <input type="text" id="admRank" placeholder="Rank (e.g., Captain, FF)">
+            <input type="text" id="admName" placeholder="Full Name">
+            <input type="text" id="admPhone" placeholder="Phone">
+            <button id="saveBtn" class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="saveMember()">Add New Member</button>
+            <button id="cancelBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelEdit()">Cancel Edit</button>
+        </div>
+        <div id="adminRosterFeed"></div>
+
+        <h3 style="margin-top: 40px; border-top: 1px solid #444; padding-top: 20px;">Call List Management</h3>
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+            <input type="hidden" id="editCallKey">
+            <input type="text" id="admCallCat" placeholder="Category (e.g., Police, Fire Stations)">
+            <input type="text" id="admCallName" placeholder="Agency Name">
+            <input type="text" id="admCallPhone" placeholder="Phone">
+            <button id="saveCallBtn" class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="saveCall()">Add Contact</button>
+            <button id="cancelCallBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelCallEdit()">Cancel Edit</button>
+        </div>
+        <div id="adminCallFeed"></div>
+        
+        <button class="nav-btn" style="margin-top: 40px;" onclick="toggleView('main-view')">Exit Admin</button>
     </div>
 
     <div id="hospitals" class="hidden sub-menu">
@@ -124,170 +208,143 @@
     <div id="utilities" class="hidden sub-menu">
         <h3>Emergency Utilities</h3>
         <div class="btn-grid">
-            <a href="tel:8772473602" class="btn blue-btn">NatGrid Priority 1</a>
-            <a href="tel:8004629852" class="btn blue-btn">NatGrid Priority 2</a>
+            <a href="tel:8772473602" class="btn blue-btn">NatGrid P1</a>
+            <a href="tel:8004629852" class="btn blue-btn">NatGrid P2</a>
             <a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a>
             <a href="tel:8003223223" class="btn blue-btn">Gas Customer</a>
             <a href="tel:4132837674" class="btn grey-btn">AmeriGas</a>
             <a href="tel:4132838356" class="btn grey-btn">Chudy Oil</a>
-            <a href="tel:4132835444" class="btn grey-btn">Ed & Son</a>
-            <a href="tel:4132833431" class="btn grey-btn">Noonan Energy</a>
+            <a href="tel:4134367485" class="btn grey-btn">Ed & Son</a>
+            <a href="tel:4132891777" class="btn grey-btn">Noonan Energy</a>
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
-    <div id="roster" class="hidden sub-menu">
-        <h3>BFD Personnel Directory</h3>
-        <div style="overflow-x:auto;">
-            <table>
-                <tr><th>ID</th><th>Rank</th><th>Name</th><th>Call</th></tr>
-                <tr><td>Chief 31</td><td>Chief</td><td>Mike Germaine</td><td><a href="tel:4135392144">📞</a></td></tr>
-                <tr><td>Chief 32</td><td>Asst. Chief</td><td>Brian Benoit</td><td><a href="tel:4136872929">📞</a></td></tr>
-                <tr><td>Chief 33</td><td>Dep. Chief</td><td>Andrew Golas</td><td><a href="tel:4136685864">📞</a></td></tr>
-                <tr><td>C31</td><td>Captain</td><td>Kevin Sullivan</td><td><a href="tel:3157082913">📞</a></td></tr>
-                <tr><td>C32</td><td>Captain</td><td>Mike DuBois</td><td><a href="tel:4136688577">📞</a></td></tr>
-                <tr><td>3F1</td><td>FF</td><td>Matthew Lemieux</td><td><a href="tel:4138862591">📞</a></td></tr>
-                <tr><td>3F4</td><td>FF</td><td>Brian Sullivan</td><td><a href="tel:4138005785">📞</a></td></tr>
-                <tr><td>3F5</td><td>FF</td><td>Nick Mainville</td><td><a href="tel:4135440329">📞</a></td></tr>
-                <tr><td>3F7</td><td>FF</td><td>McKinley Chase</td><td><a href="tel:4134395179">📞</a></td></tr>
-                <tr><td>3F8</td><td>FF</td><td>Nathaniel Haley</td><td><a href="tel:4132047294">📞</a></td></tr>
-                <tr><td>3F13</td><td>FF</td><td>Shane Chase</td><td><a href="tel:4133305156">📞</a></td></tr>
-                <tr><td>3F14</td><td>FF</td><td>Jonah Bachand</td><td><a href="tel:4136400193">📞</a></td></tr>
-                <tr><td colspan="4" class="cat-head">Probationary</td></tr>
-                <tr><td>3F2</td><td>Prob. FF</td><td>Gabriella Potenti</td><td><a href="tel:7745026543">📞</a></td></tr>
-                <tr><td>3F3</td><td>Prob. FF</td><td>Patrick Wilbur</td><td><a href="tel:7742625962">📞</a></td></tr>
-                <tr><td>3F9</td><td>Prob. FF</td><td>Nicolas Boulrice</td><td><a href="tel:4135071170">📞</a></td></tr>
-            </table>
-        </div>
+    <div id="fees" class="hidden sub-menu">
+        <h3>Inspection Fees</h3>
+        <table>
+            <tr><th class="cat-head">Service</th><th class="cat-head">Fee</th></tr>
+            <tr><td>Smoke/CO (1-Family)</td><td>$50</td></tr>
+            <tr><td>Smoke/CO (2-Family)</td><td>$100</td></tr>
+            <tr><td>Oil Burner Permit</td><td>$50</td></tr>
+            <tr><td>Propane Tank Install</td><td>$50</td></tr>
+            <tr><td>Tank Removal</td><td>$100</td></tr>
+        </table>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="education" class="hidden sub-menu">
-        <h3>Training & Certification</h3>
+        <h3>Training Portal</h3>
         <div class="btn-grid">
-            <a href="https://www.mass.gov/orgs/massachusetts-firefighting-academy" class="btn grey-btn">MFA Portal</a>
-            <a href="https://training.fema.gov/" class="btn grey-btn">FEMA / NFA</a>
-            <a href="https://training.fema.gov/is/nims.aspx" class="btn grey-btn">FEMA NIMS</a>
-            <a href="https://training.fema.gov/emi.aspx" class="btn grey-btn">FEMA EMI</a>
-            <a href="https://elearning.heart.org/" class="btn grey-btn">AHA Training</a>
-            <a href="https://alerrt.org/" class="btn grey-btn">ALERRT</a>
-            <a href="https://www.iaff.org/" class="btn grey-btn">IAFF Main</a>
-        </div>
-        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-    </div>
-
-    <div id="scratchpad" class="hidden sub-menu">
-        <h3>Patient Assessment</h3>
-        <div style="text-align:left;"><label>Mental Status</label><textarea id="m" rows="2"></textarea></div>
-        <div style="text-align:left; margin-bottom:5px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-                <label>Vitals - Set 1</label>
-                <button class="time-btn" onclick="stampTime('v1')">🕒 Time Stamp</button>
-            </div>
-            <textarea id="v1" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
-        </div>
-        <div style="text-align:left; margin-bottom:5px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-                <label>Vitals - Set 2</label>
-                <button class="time-btn" onclick="stampTime('v2')">🕒 Time Stamp</button>
-            </div>
-            <textarea id="v2" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
-        </div>
-        <div style="text-align:left; margin-bottom:5px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-                <label>Vitals - Set 3</label>
-                <button class="time-btn" onclick="stampTime('v3')">🕒 Time Stamp</button>
-            </div>
-            <textarea id="v3" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
-        </div>
-        <div style="text-align:left;"><label>Physical Exam</label><textarea id="p" rows="3"></textarea></div>
-        <div style="text-align:left;"><label>Meds / Allergies</label><textarea id="ma" rows="2"></textarea></div>
-        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-        <button class="nav-btn" style="background:#8b0000" onclick="clearAll()">Clear Notes</button>
-    </div>
-
-    <div id="emergency-list" class="hidden sub-menu">
-        <h3>Emergency Call List</h3>
-        <div style="overflow-x:auto;">
-            <table>
-                <tr><th colspan="2" class="cat-head">Police Departments</th></tr>
-                <tr><td>Palmer PD (Recorded)</td><td><a href="tel:4132838792">413-283-8792</a></td></tr>
-                <tr><td>Palmer PD (Admin)</td><td><a href="tel:4132891196">413-289-1196</a></td></tr>
-                <tr><td>MSP Belchertown (B-3)</td><td><a href="tel:4133237561">413-323-7561</a></td></tr>
-                <tr><td>Belchertown PD</td><td><a href="tel:4133236655">413-323-6655</a></td></tr>
-                <tr><td>Monson PD</td><td><a href="tel:4132674128">413-267-4128</a></td></tr>
-                <tr><td>Ware PD</td><td><a href="tel:4139673571">413-967-3571</a></td></tr>
-                <tr><td>Ludlow PD</td><td><a href="tel:4135838305">413-583-8305</a></td></tr>
-                <tr><td>Warren PD</td><td><a href="tel:4134369595">413-436-9595</a></td></tr>
-                <tr><th colspan="2" class="cat-head">Fire Emergency #'s</th></tr>
-                <tr><td>B'town/Amherst Disp</td><td><a href="tel:4132564899">413-256-4899</a></td></tr>
-                <tr><td>Brimfield Emergency</td><td><a href="tel:8008896323">800-889-6323</a></td></tr>
-                <tr><td>Monson Emergency</td><td><a href="tel:4132674081">413-267-4081</a></td></tr>
-                <tr><td>Ware Emergency</td><td><a href="tel:4139675901">413-967-5901</a></td></tr>
-                <tr><td>Warren Emergency</td><td><a href="tel:4134365050">413-436-5050</a></td></tr>
-                <tr><th colspan="2" class="cat-head">Fire Stations</th></tr>
-                <tr><td>Bondsville Station</td><td><a href="tel:4132839036">413-283-9036</a></td></tr>
-                <tr><td>Belchertown Station</td><td><a href="tel:4133237571">413-323-7571</a></td></tr>
-                <tr><td>Brimfield Station</td><td><a href="tel:4132457334">413-245-7334</a></td></tr>
-                <tr><td>Ludlow Station</td><td><a href="tel:4135838332">413-583-8332</a></td></tr>
-                <tr><td>Monson Station</td><td><a href="tel:4132673132">413-267-3132</a></td></tr>
-                <tr><td>Palmer Chief</td><td><a href="tel:4132839718">413-283-9718</a></td></tr>
-                <tr><td>Palmer Station</td><td><a href="tel:4132833861">413-283-3861</a></td></tr>
-                <tr><td>Three Rivers Chief</td><td><a href="tel:4132832269">413-283-2269</a></td></tr>
-                <tr><td>Three Rivers Station</td><td><a href="tel:4132837161">413-283-7161</a></td></tr>
-                <tr><td>Ware Station</td><td><a href="tel:4139675901">413-967-5901</a></td></tr>
-                <tr><td>Warren Station</td><td><a href="tel:4134365050">413-436-5050</a></td></tr>
-            </table>
+            <a href="https://hraccess-us.technomedia.com/mfa/index.cfm" target="_blank" class="btn grey-btn">MFA Portal</a>
+            <a href="https://training.fema.gov/" target="_blank" class="btn grey-btn">FEMA Training</a>
+            <a href="https://elearning.heart.org/" target="_blank" class="btn grey-btn">AHA Training</a>
+            <a href="https://alerrt.org/" target="_blank" class="btn grey-btn">ALERRT</a>
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
 <script>
-    let fallbackTimer;
-    function smartLink(appUrl, webUrl) {
-        let clickedAt = Date.now();
-        window.location.href = appUrl;
-        const clearTimer = () => {
-            clearTimeout(fallbackTimer);
-            window.removeEventListener('blur', clearTimer);
-            document.removeEventListener('visibilitychange', clearTimer);
-        };
-        window.addEventListener('blur', clearTimer);
-        document.addEventListener('visibilitychange', clearTimer);
-        fallbackTimer = setTimeout(() => {
-            if (Date.now() - clickedAt < 3000 && document.visibilityState === 'visible') {
-                window.location.href = webUrl;
-            }
-        }, 2500);
+    // FIREBASE SETUP
+    const firebaseConfig = {
+        apiKey: "AIzaSyA6WXoG46CNznnS21Q6fannxDo9kn8l4iY",
+        authDomain: "ops-hub-burnlog.firebaseapp.com",
+        databaseURL: "https://ops-hub-burnlog-default-rtdb.firebaseio.com",
+        projectId: "ops-hub-burnlog",
+        storageBucket: "ops-hub-burnlog.firebasestorage.app",
+        messagingSenderId: "922294998280",
+        appId: "1:922294998280:web:29401e54dd8921cd4208bd"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const dbBurn = firebase.database().ref('burnLog');
+    const dbRoster = firebase.database().ref('roster');
+    const dbCalls = firebase.database().ref('calls'); 
+    const dbScratchpad = firebase.database().ref('scratchpad');
+
+    // ADMIN AUTH
+    function openAdmin() { if (prompt("Enter Admin Password:") === "BFD30") toggleView('admin-view'); else alert("Unauthorized."); }
+
+    // ROSTER LOGIC
+    function saveMember() {
+        const id=document.getElementById('admID').value, r=document.getElementById('admRank').value, n=document.getElementById('admName').value, p=document.getElementById('admPhone').value, k=document.getElementById('editKey').value;
+        if(n && p) { if(k) dbRoster.child(k).update({id:id, rank:r, name:n, phone:p}); else dbRoster.push({id:id, rank:r, name:n, phone:p}); cancelEdit(); } else alert("Required fields missing.");
     }
-    function toggleView(v) {
-        ['main-view', 'education', 'scratchpad', 'utilities', 'roster', 'hospitals', 'emergency-list', 'fees'].forEach(id => {
-            const el = document.getElementById(id);
-            if(el) el.classList.add('hidden');
-        });
-        document.getElementById(v).classList.remove('hidden');
-        window.scrollTo(0,0);
-    }
-    const ids = ['m', 'v1', 'v2', 'v3', 'p', 'ma'];
-    ids.forEach(id => {
-        const el = document.getElementById(id);
-        if(el) {
-            el.value = localStorage.getItem(id) || '';
-            el.addEventListener('input', () => localStorage.setItem(id, el.value));
+    function cancelEdit() { ['admID','admRank','admName','admPhone','editKey'].forEach(i => document.getElementById(i).value=''); document.getElementById('saveBtn').innerText='Add New Member'; document.getElementById('cancelBtn').classList.add('hidden'); }
+    dbRoster.on('value', (snap) => {
+        const rb = document.getElementById('rosterBody'), af = document.getElementById('adminRosterFeed'); 
+        rb.innerHTML=''; af.innerHTML=''; const data = snap.val(); 
+        for (let k in data) { 
+            const m = data[k];
+            rb.innerHTML += `<tr><td>${m.id||''}</td><td>${m.rank||''}</td><td>${m.name}</td><td><a href="tel:${m.phone.replace(/[^0-9]/g, '')}">📞</a></td></tr>`;
+            af.innerHTML += `<div class="admin-item"><strong>${m.name}</strong> (${m.id})<div class="admin-controls"><button class="small-btn" style="background:#1e3a8a;" onclick="editMember('${k}','${m.id}','${m.rank}','${m.name}','${m.phone}')">Edit</button><button class="small-btn" style="background:#8b0000;" onclick="deleteMember('${k}')">Delete</button></div></div>`;
         }
     });
-    function stampTime(boxId) {
-        const now = new Date();
-        let hours = now.getHours();
-        let minutes = now.getMinutes();
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        const timeStr = hours + ':' + minutes + ' - ';
-        const box = document.getElementById(boxId);
-        box.value = timeStr + box.value;
-        localStorage.setItem(boxId, box.value);
+    function editMember(k,id,r,n,p) { document.getElementById('editKey').value=k; document.getElementById('admID').value=id; document.getElementById('admRank').value=r; document.getElementById('admName').value=n; document.getElementById('admPhone').value=p; document.getElementById('saveBtn').innerText='Update Member'; document.getElementById('cancelBtn').classList.remove('hidden'); window.scrollTo(0,0); }
+    function deleteMember(k) { if(confirm("Delete member?")) dbRoster.child(k).remove(); }
+
+    // CALL LIST LOGIC
+    function saveCall() {
+        const c=document.getElementById('admCallCat').value, n=document.getElementById('admCallName').value, p=document.getElementById('admCallPhone').value, k=document.getElementById('editCallKey').value;
+        if(c && n && p) { if(k) dbCalls.child(k).update({cat:c, name:n, phone:p}); else dbCalls.push({cat:c, name:n, phone:p}); cancelCallEdit(); } else alert("Required fields missing.");
     }
-    function clearAll() { if (confirm("Clear notes?")) { ids.forEach(id => { document.getElementById(id).value = ''; localStorage.removeItem(id); }); } }
+    function cancelCallEdit() { ['admCallCat','admCallName','admCallPhone','editCallKey'].forEach(i => document.getElementById(i).value=''); document.getElementById('saveCallBtn').innerText='Add Contact'; document.getElementById('cancelCallBtn').classList.add('hidden'); }
+    dbCalls.on('value', (snap) => {
+        const cb = document.getElementById('callListTable'), acf = document.getElementById('adminCallFeed'); 
+        cb.innerHTML=''; acf.innerHTML=''; const data = snap.val(); if(!data) return;
+        const grouped = {};
+        for (let k in data) {
+            const c = data[k]; if(!grouped[c.cat]) grouped[c.cat] = []; grouped[c.cat].push(c);
+            acf.innerHTML += `<div class="admin-item"><strong>${c.name}</strong><br><span style="color:#aaa; font-size:0.8em;">${c.cat} | ${c.phone}</span><div class="admin-controls"><button class="small-btn" style="background:#1e3a8a;" onclick="editCall('${k}','${c.cat}','${c.name}','${c.phone}')">Edit</button><button class="small-btn" style="background:#8b0000;" onclick="deleteCall('${k}')">Delete</button></div></div>`;
+        }
+        for(let cat in grouped) {
+            cb.innerHTML += `<tr><th colspan="2" class="cat-head">${cat}</th></tr>`;
+            grouped[cat].forEach(c => cb.innerHTML += `<tr><td>${c.name}</td><td><a href="tel:${c.phone.replace(/[^0-9]/g, '')}">${c.phone}</a></td></tr>`);
+        }
+    });
+    function editCall(k,c,n,p) { document.getElementById('editCallKey').value=k; document.getElementById('admCallCat').value=c; document.getElementById('admCallName').value=n; document.getElementById('admCallPhone').value=p; document.getElementById('saveCallBtn').innerText='Update Contact'; document.getElementById('cancelCallBtn').classList.remove('hidden'); window.scrollTo(0,0); }
+    function deleteCall(k) { if(confirm("Delete contact?")) dbCalls.child(k).remove(); }
+
+    // BURN LOG LOGIC
+    function stampToday() { const d = new Date(); document.getElementById('burnDate').value = (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear(); }
+    function submitBurn() { 
+        const d=document.getElementById('burnDate').value, n=document.getElementById('burnName').value, a=document.getElementById('burnAddr').value, p=document.getElementById('burnPhone').value, pr=document.getElementById('burnPermit').value; 
+        if(n && a) { dbBurn.push({date:d, name:n, addr:a, phone:p, permit:pr}); ['burnDate','burnName','burnAddr','burnPhone','burnPermit'].forEach(i=>document.getElementById(i).value=''); } else alert("Required fields missing.");
+    }
+    dbBurn.on('value', (snap) => { 
+        const de = document.getElementById('sharedEntries'); de.innerHTML=''; const data = snap.val(); 
+        for (let k in data) { const e = data[k]; de.innerHTML = `<div class="burn-entry"><p style="color:#d32f2f; font-weight:bold; font-size:0.75em;">${e.date||''}</p><p><strong>${e.name}</strong> (Permit: ${e.permit || 'N/A'})</p><p>${e.addr}</p><p style="color:#aaa; font-size:0.85em;">${e.phone || ''}</p></div>` + de.innerHTML; } 
+    });
+    function clearBurnLog() { if(confirm("Wipe Burn Log?")) dbBurn.set(null); }
+
+    // SCRATCHPAD LOGIC (DATE & TIME AUTO-ADDED)
+    function submitScratchpad() {
+        const id=document.getElementById('padId').value, m=document.getElementById('padMental').value, v1=document.getElementById('padVitals1').value, v2=document.getElementById('padVitals2').value, v3=document.getElementById('padVitals3').value;
+        const now = new Date();
+        const dateStr = (now.getMonth()+1)+"/"+now.getDate()+"/"+now.getFullYear();
+        const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        const fullStamp = dateStr + " @ " + timeStr;
+
+        if(id || m || v1) { 
+            dbScratchpad.push({stamp: fullStamp, id: id, mental: m, vitals1: v1, vitals2: v2, vitals3: v3}); 
+            ['padId','padMental','padVitals1','padVitals2','padVitals3'].forEach(i=>document.getElementById(i).value=''); 
+        } else alert("Required fields missing.");
+    }
+    dbScratchpad.on('value', (snap) => {
+        const se = document.getElementById('scratchpadEntries'); se.innerHTML = ''; const data = snap.val();
+        for (let k in data) {
+            const e = data[k];
+            se.innerHTML = `<div class="burn-entry" style="border-left: 5px solid #ff9800;"><p style="color:#ff9800; font-weight:bold; font-size:0.75em;">${e.stamp}</p><p><strong>${e.id || 'No Identifier'}</strong></p><p style="font-size: 0.85em; color: #ccc;">Status: ${e.mental || 'N/A'}</p><p style="font-size: 0.85em; color: #eee; margin-top:5px;">V1: ${e.vitals1 || 'N/A'}</p><p style="font-size: 0.85em; color: #eee;">V2: ${e.vitals2 || 'N/A'}</p><p style="font-size: 0.85em; color: #eee;">V3: ${e.vitals3 || 'N/A'}</p></div>` + se.innerHTML;
+        }
+    });
+    function clearScratchpad() { if(confirm("Wipe Notes?")) dbScratchpad.set(null); }
+
+    // NAV
+    function toggleView(v) { document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); document.getElementById(v).classList.remove('hidden'); window.scrollTo(0,0); }
+    function smartLink(appUrl, webUrl) { window.location.href=appUrl; setTimeout(()=> { if(!document.hidden) window.location.href=webUrl; }, 2500); }
 </script>
 </body>
 </html>
