@@ -11,14 +11,12 @@
         body { font-family: -apple-system, system-ui; background: #000 url('flag.jpg') no-repeat center center fixed; background-size: cover; color: white; text-align: center; margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; }
         .container { max-width: 500px; margin: auto; }
         
-        /* HEADER */
         .header { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; }
         .title-container { display: flex; flex-direction: column; align-items: center; }
         .header h1 { margin: 0; font-size: 1.8em; letter-spacing: 1px; }
         .motto { color: rgba(255,255,255,0.7); font-family: 'Snell Roundhand', cursive, Georgia; font-size: 0.85em; margin-top: -2px; }
         .header img { width: 45px; height: 45px; object-fit: contain; }
         
-        /* GRID & BUTTONS */
         h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { color: white; padding: 18px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.85em; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
@@ -27,7 +25,6 @@
         .full-width { grid-column: span 2; } .hidden { display: none !important; }
         .big-icon { width: 60px !important; height: 60px !important; }
 
-        /* SUB-MENUS */
         .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; }
         .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
         
@@ -37,10 +34,8 @@
         tr:nth-child(even) { background: rgba(255,255,255,0.05); }
         .cat-head { background: #444; color: #fff; font-weight: bold; padding: 5px; text-align: center; }
 
-        /* FIREBASE TOOLS */
         .burn-entry { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; margin-bottom: 10px; text-align: left; border-left: 5px solid #d32f2f; }
         .admin-item { background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 10px; border-radius: 8px; margin-bottom: 8px; text-align: left; }
-        .small-btn { padding: 6px 12px; border-radius: 4px; border: none; color: white; font-size: 0.7em; font-weight: bold; cursor: pointer; flex: 1; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -88,7 +83,7 @@
             <a href="tel:4132838792" class="btn blue-btn"><img src="disp.png"> Dispatch</a>
             <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn"><img src="zello.png">Zello Radio</a>
             <a href="https://hosting.tighebond.com/palmerma_Public/" target="_blank" class="btn blue-btn"><img src="gis.png">Palmer GIS</a>
-            <a href="https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/ERG2024-Eng-Web-a.pdf" target="_blank" class="btn blue-btn"><img src="erg.png">ERG 2024</a>
+            <a onclick="smartLink('cargoer://', 'https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/ERG2024-Eng-Web-a.pdf')" class="btn blue-btn"><img src="erg.png">ERG 2024</a>
             <a onclick="toggleView('utilities')" class="btn blue-btn"><img src="utilities.png"> Utilities</a>
             <a href="tel:8883041133" class="btn blue-btn"><img src="hazmatresponse.png" class="big-icon">Hazmat Activation</a>
             <a onclick="smartLink('weather://', 'https://weather.com/')" class="btn blue-btn"><img src="weather.png">Weather</a>
@@ -149,13 +144,6 @@
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
-    <div id="admin-view" class="hidden sub-menu">
-        <h3>Admin Portal</h3>
-        <input type="text" id="admName" placeholder="Add/Update Item Name">
-        <button class="nav-btn" style="background:#2e7d32;" onclick="alert('Admin Active')">Update System</button>
-        <button class="nav-btn" onclick="toggleView('main-view')">Exit Admin</button>
-    </div>
-
     <div id="emergency-list" class="hidden sub-menu">
         <h3>Emergency Call List</h3>
         <div style="overflow-x:auto;">
@@ -164,11 +152,12 @@
                 <tr><td>Palmer PD (Recorded)</td><td><a href="tel:4132838792">413-283-8792</a></td></tr>
                 <tr><td>Palmer PD (Admin)</td><td><a href="tel:4132891196">413-289-1196</a></td></tr>
                 <tr><td>MSP Belchertown (B-3)</td><td><a href="tel:4133237561">413-323-7561</a></td></tr>
+                <tr><td>Belchertown PD</td><td><a href="tel:4133236655">413-323-6655</a></td></tr>
                 <tr><td>Ware PD</td><td><a href="tel:4139673571">413-967-3571</a></td></tr>
                 <tr><th colspan="2" class="cat-head">Fire Stations</th></tr>
                 <tr><td>Bondsville Station</td><td><a href="tel:4132839036">413-283-9036</a></td></tr>
                 <tr><td>Palmer Station</td><td><a href="tel:4132833861">413-283-3861</a></td></tr>
-                <tr><td>Three Rivers Station</td><td><a href="tel:4132837161">413-283-7161</a></td></tr>
+                <tr><td>Three Rivers Station</td><td><a href="tel:4132837161">283-7161</a></td></tr>
             </table>
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
@@ -202,18 +191,21 @@
 
     <div id="fees" class="hidden sub-menu">
         <h3>Inspection Fees</h3>
-        <table>
-            <tr><th class="cat-head">Service</th><th class="cat-head">Fee</th></tr>
-            <tr><td>Smoke/CO (1-Family)</td><td>$50</td></tr>
-            <tr><td>Smoke/CO (2-Family)</td><td>$100</td></tr>
-        </table>
+        <table><tr><td>Smoke (1-Family)</td><td>$50</td></tr><tr><td>Smoke (2-Family)</td><td>$100</td></tr><tr><td>Oil Burner</td><td>$50</td></tr></table>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
+    <div id="admin-view" class="hidden sub-menu">
+        <h3>Admin Portal</h3>
+        <p style="font-size:0.8em; color: #aaa;">Authorized personnel only.</p>
+        <button class="nav-btn" onclick="alert('Admin Online')">Check System Status</button>
+        <button class="nav-btn" onclick="toggleView('main-view')">Exit Admin</button>
     </div>
 
     <div id="scratchpad" class="hidden sub-menu">
         <h3>Patient Scratchpad</h3>
         <textarea id="m" rows="2" placeholder="Mental Status"></textarea>
-        <textarea id="v1" rows="2" placeholder="Vitals: BP | HR | RR | SpO2"></textarea>
+        <textarea id="v1" rows="2" placeholder="BP | HR | RR | SpO2"></textarea>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
         <button class="nav-btn" style="background:#8b0000" onclick="clearAll()">Clear Notes</button>
     </div>
@@ -245,13 +237,14 @@
     }
     dbBurn.on('value', (snap) => {
         const de = document.getElementById('sharedEntries'); de.innerHTML='';
-        const data = snap.val(); for (let k in data) { const e = data[k]; de.innerHTML = `<div class="burn-entry"><p class="date-stamp">${e.date||''}</p><p><strong>${e.name}</strong> (Permit: ${e.permit || 'N/A'})</p><p>${e.addr}</p></div>` + de.innerHTML; }
+        const data = snap.val(); for (let k in data) { const e = data[k]; de.innerHTML = `<div class="burn-entry"><p style="color:#d32f2f; font-weight:bold; font-size:0.75em;">${e.date||''}</p><p><strong>${e.name}</strong></p><p>${e.addr}</p></div>` + de.innerHTML; }
     });
     function clearBurnLog() { if(confirm("Wipe Shared Log?")) dbBurn.set(null); }
 
-    // CORE LOGIC
+    // CORE APP LOGIC
     function toggleView(v) { document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); document.getElementById(v).classList.remove('hidden'); window.scrollTo(0,0); }
     function smartLink(a,w) { window.location.href=a; setTimeout(()=> { if(!document.hidden) window.location.href=w; }, 2500); }
+    
     const ids=['m','v1']; ids.forEach(id => { const el=document.getElementById(id); if(el) { el.value=localStorage.getItem(id)||''; el.addEventListener('input',()=>localStorage.setItem(id,el.value)); } });
     function clearAll() { if(confirm("Clear Notes?")) ids.forEach(id => { document.getElementById(id).value=''; localStorage.removeItem(id); }); }
 </script>
