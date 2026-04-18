@@ -59,7 +59,7 @@
         <div class="btn-grid">
             <a onclick="smartLink('iar://', 'https://www.iarservices.com/')" class="btn red-btn"><img src="IAR.png">IaR App</a>
             <a href="googlechromes://app.emergencynetworking.com/login" class="btn red-btn"><img src="EN.png">Emerg Network</a>
-            <a onclick="toggleView('burn-view')" class="btn red-btn full-width"><span>🔥</span> Shared Burn Log</a>
+            <a onclick="toggleView('burn-view')" class="btn red-btn full-width"><span>🔥</span> Burn Log</a>
         </div>
 
         <h4>Medical Tools</h4>
@@ -112,7 +112,7 @@
     </div>
 
     <div id="burn-view" class="hidden sub-menu">
-        <h3>Shared Burn Log</h3>
+        <h3>Burn Log</h3>
         <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
             <input type="text" id="burnDate" placeholder="Date (MM/DD/YYYY)">
             <button class="nav-btn" style="margin-top:0; margin-bottom:10px; background:#1e3a8a; padding: 8px;" onclick="stampToday()">📅 Auto-Fill Today</button>
@@ -120,29 +120,30 @@
             <input type="text" id="burnAddr" placeholder="Address">
             <input type="text" id="burnPhone" placeholder="Phone Number">
             <input type="text" id="burnPermit" placeholder="Permit #">
-            <button class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="submitBurn()">Post to Shared Log</button>
+            <button class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="submitBurn()">Post to Burn Log</button>
         </div>
         <div id="sharedEntries"></div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-        <button class="nav-btn" style="background:#8b0000; font-size:0.7em;" onclick="clearBurnLog()">Wipe All Shared Entries</button>
+        <button class="nav-btn" style="background:#8b0000; font-size:0.7em;" onclick="clearBurnLog()">Wipe All Entries</button>
     </div>
 
     <div id="scratchpad" class="hidden sub-menu">
-        <h3 style="color: #d32f2f;">Shared Scratchpad</h3>
-        <p style="font-size:0.75em; color:#ff9800; margin-top:-10px;">⚠️ HIPAA WARNING: DO NOT enter names or DOBs. Use Run # or "Patient A". Notes are visible to all units.</p>
+        <h3 style="color: #d32f2f;">Patient Scratchpad</h3>
         
         <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
-            <input type="text" id="padId" placeholder="Run # or Identifier (e.g., Pt 1)">
+            <input type="text" id="padId" placeholder="Run # or Identifier (e.g., Pt A)">
             <input type="text" id="padMental" placeholder="Mental Status (e.g., A&O x4)">
-            <input type="text" id="padVitals" placeholder="BP | HR | RR | SpO2">
-            <button class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="submitScratchpad()">Post to Shared Board</button>
+            <input type="text" id="padVitals1" placeholder="Initial Vitals: BP | HR | RR | SpO2">
+            <input type="text" id="padVitals2" placeholder="Second Vitals: BP | HR | RR | SpO2">
+            <input type="text" id="padVitals3" placeholder="Third Vitals: BP | HR | RR | SpO2">
+            <button class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="submitScratchpad()">Post to Scratchpad</button>
         </div>
         
-        <h4 style="border-bottom: 1px solid #444; padding-bottom: 5px;">Active Notes</h4>
+        <h4 style="border-bottom: 1px solid #444; padding-bottom: 5px;">Active Patient Notes</h4>
         <div id="scratchpadEntries"></div>
         
         <button class="nav-btn" style="margin-top: 30px;" onclick="toggleView('main-view')">Back</button>
-        <button class="nav-btn" style="background:#8b0000; font-size:0.7em;" onclick="clearScratchpad()">Wipe All Active Notes</button>
+        <button class="nav-btn" style="background:#8b0000; font-size:0.7em;" onclick="clearScratchpad()">Wipe All Notes</button>
     </div>
 
     <div id="roster-view" class="hidden sub-menu">
@@ -156,8 +157,7 @@
     <div id="emergency-list" class="hidden sub-menu">
         <h3>Emergency Call List</h3>
         <div style="overflow-x:auto;">
-            <table id="callListTable">
-                </table>
+            <table id="callListTable"></table>
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
@@ -169,28 +169,24 @@
         <h3 style="margin-top: 30px; border-top: 1px solid #444; padding-top: 20px;">Roster Management</h3>
         <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
             <input type="hidden" id="editKey">
-            <label style="color:#ccc; font-size:0.8em; text-align:left; display:block;">Personnel Info:</label>
             <input type="text" id="admID" placeholder="ID (e.g., Chief 31, 3F5)">
             <input type="text" id="admRank" placeholder="Rank (e.g., Captain, FF)">
             <input type="text" id="admName" placeholder="Full Name">
-            <input type="text" id="admPhone" placeholder="Phone (e.g., 413-555-1234)">
+            <input type="text" id="admPhone" placeholder="Phone">
             <button id="saveBtn" class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="saveMember()">Add New Member</button>
             <button id="cancelBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelEdit()">Cancel Edit</button>
         </div>
-        <h4 style="border-bottom: 1px solid #444; padding-bottom: 5px;">Current Roster</h4>
         <div id="adminRosterFeed"></div>
 
         <h3 style="margin-top: 40px; border-top: 1px solid #444; padding-top: 20px;">Call List Management</h3>
         <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
             <input type="hidden" id="editCallKey">
-            <label style="color:#ccc; font-size:0.8em; text-align:left; display:block;">Contact Info:</label>
             <input type="text" id="admCallCat" placeholder="Category (e.g., Police, Fire Stations)">
             <input type="text" id="admCallName" placeholder="Agency Name">
-            <input type="text" id="admCallPhone" placeholder="Phone (e.g., 413-555-1234)">
+            <input type="text" id="admCallPhone" placeholder="Phone">
             <button id="saveCallBtn" class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="saveCall()">Add Contact</button>
             <button id="cancelCallBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelCallEdit()">Cancel Edit</button>
         </div>
-        <h4 style="border-bottom: 1px solid #444; padding-bottom: 5px;">Current Call List</h4>
         <div id="adminCallFeed"></div>
         
         <button class="nav-btn" style="margin-top: 40px;" onclick="toggleView('main-view')">Exit Admin</button>
@@ -253,7 +249,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
 <script>
-    // 1. FIREBASE CONFIGURATION
+    // FIREBASE SETUP
     const firebaseConfig = {
         apiKey: "AIzaSyA6WXoG46CNznnS21Q6fannxDo9kn8l4iY",
         authDomain: "ops-hub-burnlog.firebaseapp.com",
@@ -267,272 +263,81 @@
     const dbBurn = firebase.database().ref('burnLog');
     const dbRoster = firebase.database().ref('roster');
     const dbCalls = firebase.database().ref('calls'); 
-    const dbScratchpad = firebase.database().ref('scratchpad'); // NEW REFERENCE
+    const dbScratchpad = firebase.database().ref('scratchpad');
 
-    // 2. AUTO-SEED INITIAL ROSTER & CALLS
-    dbRoster.once('value', (snapshot) => {
-        if (!snapshot.exists()) {
-            const initialRoster = [
-                {id: "Chief 31", rank: "Chief", name: "Mike Germaine", phone: "4135392144"},
-                {id: "Chief 32", rank: "Asst. Chief", name: "Brian Benoit", phone: "4136872929"},
-                {id: "Chief 33", rank: "Dep. Chief", name: "Andrew Golas", phone: "4136685864"},
-                {id: "C31", rank: "Captain", name: "Kevin Sullivan", phone: "3157082913"},
-                {id: "C32", rank: "Captain", name: "Mike DuBois", phone: "4136688577"},
-                {id: "3F1", rank: "FF", name: "Matthew Lemieux", phone: "4138862591"},
-                {id: "3F4", rank: "FF", name: "Brian Sullivan", phone: "4138005785"},
-                {id: "3F5", rank: "FF", name: "Nick Mainville", phone: "4135440329"},
-                {id: "3F7", rank: "FF", name: "McKinley Chase", phone: "4134395179"},
-                {id: "3F8", rank: "FF", name: "Nathaniel Haley", phone: "4132047294"},
-                {id: "3F13", rank: "FF", name: "Shane Chase", phone: "4133305156"},
-                {id: "3F14", rank: "FF", name: "Jonah Bachand", phone: "4136400193"},
-                {id: "3F2", rank: "Prob. FF", name: "Gabriella Potenti", phone: "7745026543"},
-                {id: "3F3", rank: "Prob. FF", name: "Patrick Wilbur", phone: "7742625962"},
-                {id: "3F9", rank: "Prob. FF", name: "Nicolas Boulrice", phone: "4135071170"}
-            ];
-            initialRoster.forEach(member => dbRoster.push(member));
-        }
-    });
+    // ADMIN AUTH
+    function openAdmin() { if (prompt("Enter Admin Password:") === "BFD30") toggleView('admin-view'); else alert("Unauthorized."); }
 
-    dbCalls.once('value', (snapshot) => {
-        if (!snapshot.exists()) {
-            const initialCalls = [
-                {cat: "Police Departments", name: "Palmer PD (Recorded)", phone: "413-283-8792"},
-                {cat: "Police Departments", name: "Palmer PD (Admin)", phone: "413-289-1196"},
-                {cat: "Police Departments", name: "MSP Belchertown (B-3)", phone: "413-323-7561"},
-                {cat: "Police Departments", name: "Belchertown PD", phone: "413-323-6655"},
-                {cat: "Police Departments", name: "Monson PD", phone: "413-267-4128"},
-                {cat: "Police Departments", name: "Ware PD", phone: "413-967-3571"},
-                {cat: "Police Departments", name: "Ludlow PD", phone: "413-583-8305"},
-                {cat: "Police Departments", name: "Warren PD", phone: "413-436-9595"},
-                {cat: "Fire Emergency", name: "B'town/Amherst Disp", phone: "413-256-4899"},
-                {cat: "Fire Emergency", name: "Brimfield Emergency", phone: "800-889-6323"},
-                {cat: "Fire Emergency", name: "Monson Emergency", phone: "413-267-4081"},
-                {cat: "Fire Emergency", name: "Ware Emergency", phone: "413-967-5901"},
-                {cat: "Fire Emergency", name: "Warren Emergency", phone: "413-436-5050"},
-                {cat: "Fire Stations", name: "Bondsville Station", phone: "413-283-9036"},
-                {cat: "Fire Stations", name: "Belchertown Station", phone: "413-323-7571"},
-                {cat: "Fire Stations", name: "Brimfield Station", phone: "413-245-7334"},
-                {cat: "Fire Stations", name: "Ludlow Station", phone: "413-583-8332"},
-                {cat: "Fire Stations", name: "Monson Station", phone: "413-267-3132"},
-                {cat: "Fire Stations", name: "Palmer Chief", phone: "413-283-9718"},
-                {cat: "Fire Stations", name: "Palmer Station", phone: "413-283-3861"},
-                {cat: "Fire Stations", name: "Three Rivers Chief", phone: "413-283-2269"},
-                {cat: "Fire Stations", name: "Three Rivers Station", phone: "413-283-7161"},
-                {cat: "Fire Stations", name: "Ware Station", phone: "413-967-5901"},
-                {cat: "Fire Stations", name: "Warren Station", phone: "413-436-5050"}
-            ];
-            initialCalls.forEach(call => dbCalls.push(call));
-        }
-    });
-
-    // 3. ADMIN SECURITY
-    function openAdmin() { 
-        if (prompt("Enter Admin Password:") === "BFD30") {
-            toggleView('admin-view'); 
-        } else {
-            alert("Unauthorized."); 
-        }
-    }
-
-    // 4. ROSTER MANAGEMENT LOGIC
+    // ROSTER LOGIC
     function saveMember() {
-        const id = document.getElementById('admID').value;
-        const r = document.getElementById('admRank').value;
-        const n = document.getElementById('admName').value;
-        const p = document.getElementById('admPhone').value;
-        const k = document.getElementById('editKey').value;
-        
-        if(n && p) { 
-            if(k) dbRoster.child(k).update({id:id, rank:r, name:n, phone:p}); 
-            else dbRoster.push({id:id, rank:r, name:n, phone:p});
-            cancelEdit();
-        } else { alert("Name and Phone are required."); }
+        const id=document.getElementById('admID').value, r=document.getElementById('admRank').value, n=document.getElementById('admName').value, p=document.getElementById('admPhone').value, k=document.getElementById('editKey').value;
+        if(n && p) { if(k) dbRoster.child(k).update({id:id, rank:r, name:n, phone:p}); else dbRoster.push({id:id, rank:r, name:n, phone:p}); cancelEdit(); } else alert("Required fields missing.");
     }
-
-    function cancelEdit() {
-        ['admID','admRank','admName','admPhone','editKey'].forEach(i => document.getElementById(i).value=''); 
-        document.getElementById('saveBtn').innerText='Add New Member'; 
-        document.getElementById('cancelBtn').classList.add('hidden');
-    }
-
+    function cancelEdit() { ['admID','admRank','admName','admPhone','editKey'].forEach(i => document.getElementById(i).value=''); document.getElementById('saveBtn').innerText='Add New Member'; document.getElementById('cancelBtn').classList.add('hidden'); }
     dbRoster.on('value', (snap) => {
-        const rb = document.getElementById('rosterBody');
-        const af = document.getElementById('adminRosterFeed'); 
-        rb.innerHTML=''; af.innerHTML='';
-        const data = snap.val(); 
+        const rb = document.getElementById('rosterBody'), af = document.getElementById('adminRosterFeed'); 
+        rb.innerHTML=''; af.innerHTML=''; const data = snap.val(); 
         for (let k in data) { 
             const m = data[k];
             rb.innerHTML += `<tr><td>${m.id||''}</td><td>${m.rank||''}</td><td>${m.name}</td><td><a href="tel:${m.phone.replace(/[^0-9]/g, '')}">📞</a></td></tr>`;
-            af.innerHTML += `
-                <div class="admin-item">
-                    <strong>${m.name}</strong> (${m.id || 'No ID'})<br>
-                    <span style="color:#aaa; font-size:0.8em;">${m.rank || 'No Rank'} | ${m.phone}</span>
-                    <div class="admin-controls">
-                        <button class="small-btn" style="background:#1e3a8a;" onclick="editMember('${k}','${m.id}','${m.rank}','${m.name}','${m.phone}')">Edit</button> 
-                        <button class="small-btn" style="background:#8b0000;" onclick="deleteMember('${k}')">Delete</button>
-                    </div>
-                </div>`;
+            af.innerHTML += `<div class="admin-item"><strong>${m.name}</strong> (${m.id})<div class="admin-controls"><button class="small-btn" style="background:#1e3a8a;" onclick="editMember('${k}','${m.id}','${m.rank}','${m.name}','${m.phone}')">Edit</button><button class="small-btn" style="background:#8b0000;" onclick="deleteMember('${k}')">Delete</button></div></div>`;
         }
     });
+    function editMember(k,id,r,n,p) { document.getElementById('editKey').value=k; document.getElementById('admID').value=id; document.getElementById('admRank').value=r; document.getElementById('admName').value=n; document.getElementById('admPhone').value=p; document.getElementById('saveBtn').innerText='Update Member'; document.getElementById('cancelBtn').classList.remove('hidden'); window.scrollTo(0,0); }
+    function deleteMember(k) { if(confirm("Delete member?")) dbRoster.child(k).remove(); }
 
-    function editMember(k,id,r,n,p) { 
-        document.getElementById('editKey').value=k; 
-        document.getElementById('admID').value=id !== 'undefined' ? id : ''; 
-        document.getElementById('admRank').value=r !== 'undefined' ? r : ''; 
-        document.getElementById('admName').value=n; 
-        document.getElementById('admPhone').value=p; 
-        document.getElementById('saveBtn').innerText='Update Member Info'; 
-        document.getElementById('cancelBtn').classList.remove('hidden');
-        window.scrollTo(0,0); 
-    }
-
-    function deleteMember(k) { if(confirm("Are you sure you want to delete this member?")) dbRoster.child(k).remove(); }
-
-    // 5. CALL LIST MANAGEMENT LOGIC
+    // CALL LIST LOGIC
     function saveCall() {
-        const c = document.getElementById('admCallCat').value;
-        const n = document.getElementById('admCallName').value;
-        const p = document.getElementById('admCallPhone').value;
-        const k = document.getElementById('editCallKey').value;
-        
-        if(c && n && p) { 
-            if(k) dbCalls.child(k).update({cat:c, name:n, phone:p}); 
-            else dbCalls.push({cat:c, name:n, phone:p});
-            cancelCallEdit();
-        } else { alert("Category, Name, and Phone are required."); }
+        const c=document.getElementById('admCallCat').value, n=document.getElementById('admCallName').value, p=document.getElementById('admCallPhone').value, k=document.getElementById('editCallKey').value;
+        if(c && n && p) { if(k) dbCalls.child(k).update({cat:c, name:n, phone:p}); else dbCalls.push({cat:c, name:n, phone:p}); cancelCallEdit(); } else alert("Required fields missing.");
     }
-
-    function cancelCallEdit() {
-        ['admCallCat','admCallName','admCallPhone','editCallKey'].forEach(i => document.getElementById(i).value=''); 
-        document.getElementById('saveCallBtn').innerText='Add Contact'; 
-        document.getElementById('cancelCallBtn').classList.add('hidden');
-    }
-
+    function cancelCallEdit() { ['admCallCat','admCallName','admCallPhone','editCallKey'].forEach(i => document.getElementById(i).value=''); document.getElementById('saveCallBtn').innerText='Add Contact'; document.getElementById('cancelCallBtn').classList.add('hidden'); }
     dbCalls.on('value', (snap) => {
-        const cb = document.getElementById('callListTable');
-        const acf = document.getElementById('adminCallFeed'); 
-        cb.innerHTML=''; acf.innerHTML='';
-        const data = snap.val(); 
-        if(!data) return;
-
+        const cb = document.getElementById('callListTable'), acf = document.getElementById('adminCallFeed'); 
+        cb.innerHTML=''; acf.innerHTML=''; const data = snap.val(); if(!data) return;
         const grouped = {};
         for (let k in data) {
-            const c = data[k];
-            if(!grouped[c.cat]) grouped[c.cat] = [];
-            grouped[c.cat].push(c);
-
-            acf.innerHTML += `
-                <div class="admin-item">
-                    <strong>${c.name}</strong><br>
-                    <span style="color:#aaa; font-size:0.8em;">${c.cat} | ${c.phone}</span>
-                    <div class="admin-controls">
-                        <button class="small-btn" style="background:#1e3a8a;" onclick="editCall('${k}','${c.cat}','${c.name}','${c.phone}')">Edit</button> 
-                        <button class="small-btn" style="background:#8b0000;" onclick="deleteCall('${k}')">Delete</button>
-                    </div>
-                </div>`;
+            const c = data[k]; if(!grouped[c.cat]) grouped[c.cat] = []; grouped[c.cat].push(c);
+            acf.innerHTML += `<div class="admin-item"><strong>${c.name}</strong><br><span style="color:#aaa; font-size:0.8em;">${c.cat} | ${c.phone}</span><div class="admin-controls"><button class="small-btn" style="background:#1e3a8a;" onclick="editCall('${k}','${c.cat}','${c.name}','${c.phone}')">Edit</button><button class="small-btn" style="background:#8b0000;" onclick="deleteCall('${k}')">Delete</button></div></div>`;
         }
-
         for(let cat in grouped) {
             cb.innerHTML += `<tr><th colspan="2" class="cat-head">${cat}</th></tr>`;
-            grouped[cat].forEach(c => {
-                const cleanPhone = c.phone.replace(/[^0-9]/g, '');
-                cb.innerHTML += `<tr><td>${c.name}</td><td><a href="tel:${cleanPhone}">${c.phone}</a></td></tr>`;
-            });
+            grouped[cat].forEach(c => cb.innerHTML += `<tr><td>${c.name}</td><td><a href="tel:${c.phone.replace(/[^0-9]/g, '')}">${c.phone}</a></td></tr>`);
         }
     });
+    function editCall(k,c,n,p) { document.getElementById('editCallKey').value=k; document.getElementById('admCallCat').value=c; document.getElementById('admCallName').value=n; document.getElementById('admCallPhone').value=p; document.getElementById('saveCallBtn').innerText='Update Contact'; document.getElementById('cancelCallBtn').classList.remove('hidden'); window.scrollTo(0,0); }
+    function deleteCall(k) { if(confirm("Delete contact?")) dbCalls.child(k).remove(); }
 
-    function editCall(k,c,n,p) { 
-        document.getElementById('editCallKey').value=k; 
-        document.getElementById('admCallCat').value=c; 
-        document.getElementById('admCallName').value=n; 
-        document.getElementById('admCallPhone').value=p; 
-        document.getElementById('saveCallBtn').innerText='Update Contact'; 
-        document.getElementById('cancelCallBtn').classList.remove('hidden');
-        window.scrollTo(0,0); 
-    }
-
-    function deleteCall(k) { if(confirm("Are you sure you want to delete this contact?")) dbCalls.child(k).remove(); }
-
-    // 6. SHARED BURN LOG LOGIC
-    function stampToday() { 
-        const d = new Date(); 
-        document.getElementById('burnDate').value = (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear(); 
-    }
-    
+    // BURN LOG LOGIC
+    function stampToday() { const d = new Date(); document.getElementById('burnDate').value = (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear(); }
     function submitBurn() { 
         const d=document.getElementById('burnDate').value, n=document.getElementById('burnName').value, a=document.getElementById('burnAddr').value, p=document.getElementById('burnPhone').value, pr=document.getElementById('burnPermit').value; 
-        if(n && a) { 
-            dbBurn.push({date:d, name:n, addr:a, phone:p, permit:pr}); 
-            ['burnDate','burnName','burnAddr','burnPhone','burnPermit'].forEach(i=>document.getElementById(i).value=''); 
-        } else { alert("Name and Address are required."); }
+        if(n && a) { dbBurn.push({date:d, name:n, addr:a, phone:p, permit:pr}); ['burnDate','burnName','burnAddr','burnPhone','burnPermit'].forEach(i=>document.getElementById(i).value=''); } else alert("Required fields missing.");
     }
-    
     dbBurn.on('value', (snap) => { 
-        const de = document.getElementById('sharedEntries'); 
-        de.innerHTML=''; 
-        const data = snap.val(); 
-        for (let k in data) { 
-            const e = data[k]; 
-            de.innerHTML = `
-                <div class="burn-entry">
-                    <p style="color:#d32f2f; font-weight:bold; font-size:0.75em;">${e.date||''}</p>
-                    <p><strong>${e.name}</strong> (Permit: ${e.permit || 'N/A'})</p>
-                    <p>${e.addr}</p>
-                    <p style="color:#aaa; font-size:0.85em;">${e.phone || ''}</p>
-                </div>` + de.innerHTML; 
-        } 
+        const de = document.getElementById('sharedEntries'); de.innerHTML=''; const data = snap.val(); 
+        for (let k in data) { const e = data[k]; de.innerHTML = `<div class="burn-entry"><p style="color:#d32f2f; font-weight:bold; font-size:0.75em;">${e.date||''}</p><p><strong>${e.name}</strong> (Permit: ${e.permit || 'N/A'})</p><p>${e.addr}</p><p style="color:#aaa; font-size:0.85em;">${e.phone || ''}</p></div>` + de.innerHTML; } 
     });
-    
-    function clearBurnLog() { if(confirm("Are you sure you want to wipe the Shared Burn Log?")) dbBurn.set(null); }
+    function clearBurnLog() { if(confirm("Wipe Burn Log?")) dbBurn.set(null); }
 
-    // 7. PATIENT SCRATCHPAD LOGIC (FIREBASE SYNC)
+    // SCRATCHPAD LOGIC (3 VITALS)
     function submitScratchpad() {
-        const id = document.getElementById('padId').value;
-        const m = document.getElementById('padMental').value;
-        const v = document.getElementById('padVitals').value;
-        
-        // Stamps the exact time the note was written
+        const id=document.getElementById('padId').value, m=document.getElementById('padMental').value, v1=document.getElementById('padVitals1').value, v2=document.getElementById('padVitals2').value, v3=document.getElementById('padVitals3').value;
         const d = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-
-        if(id || m || v) {
-            dbScratchpad.push({time: d, id: id, mental: m, vitals: v});
-            ['padId','padMental','padVitals'].forEach(i=>document.getElementById(i).value='');
-        } else {
-            alert("Enter some patient info first.");
-        }
+        if(id || m || v1) { dbScratchpad.push({time: d, id: id, mental: m, vitals1: v1, vitals2: v2, vitals3: v3}); ['padId','padMental','padVitals1','padVitals2','padVitals3'].forEach(i=>document.getElementById(i).value=''); } else alert("Required fields missing.");
     }
-
     dbScratchpad.on('value', (snap) => {
-        const se = document.getElementById('scratchpadEntries');
-        se.innerHTML = '';
-        const data = snap.val();
+        const se = document.getElementById('scratchpadEntries'); se.innerHTML = ''; const data = snap.val();
         for (let k in data) {
             const e = data[k];
-            se.innerHTML = `
-                <div class="burn-entry" style="border-left: 5px solid #ff9800;">
-                    <p style="color:#ff9800; font-weight:bold; font-size:0.75em;">${e.time || ''}</p>
-                    <p><strong>${e.id || 'No Identifier'}</strong></p>
-                    <p style="font-size: 0.9em; color: #ccc;">Status: ${e.mental || 'N/A'}</p>
-                    <p style="font-size: 0.9em; color: #ccc;">Vitals: ${e.vitals || 'N/A'}</p>
-                </div>` + se.innerHTML;
+            se.innerHTML = `<div class="burn-entry" style="border-left: 5px solid #ff9800;"><p style="color:#ff9800; font-weight:bold; font-size:0.75em;">${e.time}</p><p><strong>${e.id || 'No Identifier'}</strong></p><p style="font-size: 0.85em; color: #ccc;">Status: ${e.mental || 'N/A'}</p><p style="font-size: 0.85em; color: #eee; margin-top:5px;">V1: ${e.vitals1 || 'N/A'}</p><p style="font-size: 0.85em; color: #eee;">V2: ${e.vitals2 || 'N/A'}</p><p style="font-size: 0.85em; color: #eee;">V3: ${e.vitals3 || 'N/A'}</p></div>` + se.innerHTML;
         }
     });
+    function clearScratchpad() { if(confirm("Wipe Notes?")) dbScratchpad.set(null); }
 
-    function clearScratchpad() {
-        if(confirm("Are you sure you want to wipe all shared medical notes?")) dbScratchpad.set(null);
-    }
-
-    // 8. CORE APP LOGIC
-    function toggleView(v) { 
-        document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); 
-        document.getElementById(v).classList.remove('hidden'); 
-        window.scrollTo(0,0); 
-    }
-    
-    function smartLink(appUrl, webUrl) { 
-        window.location.href=appUrl; 
-        setTimeout(()=> { if(!document.hidden) window.location.href=webUrl; }, 2500); 
-    }
+    // NAV
+    function toggleView(v) { document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); document.getElementById(v).classList.remove('hidden'); window.scrollTo(0,0); }
+    function smartLink(appUrl, webUrl) { window.location.href=appUrl; setTimeout(()=> { if(!document.hidden) window.location.href=webUrl; }, 2500); }
 </script>
 </body>
 </html>
