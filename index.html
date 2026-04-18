@@ -45,7 +45,19 @@
         .burn-entry { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; margin-bottom: 10px; text-align: left; border-left: 5px solid #d32f2f; }
         .admin-item { background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 12px; border-radius: 8px; margin-bottom: 8px; text-align: left; }
         .admin-controls { display: flex; gap: 8px; margin-top: 10px; }
-        .small-btn { padding: 8px 12px; border-radius: 6px; border: none; color: white; font-size: 0.8em; font-weight: bold; cursor: pointer; flex: 1; }
+        .small-btn { padding: 8px 12px; border-radius: 6px; border: none; color: white; font-size: 0.8em; font-weight: bold; cursor: pointer; flex: 1; margin-top: 8px;}
+
+        /* PRINT STYLES - Turns app into clean white document */
+        @media print {
+            body { background: white !important; color: black !important; padding: 0 !important; font-family: Arial, sans-serif; }
+            .container { max-width: 100%; }
+            .btn-grid, .header, h4, input, button, .nav-btn, .small-btn, #roster-view, #utilities, #fees, #emergency-list, #education, #hospitals { display: none !important; }
+            .sub-menu { background: white !important; border: none !important; color: black !important; padding: 0 !important; }
+            .burn-entry { background: white !important; color: black !important; border: 1px solid #ccc !important; break-inside: avoid; border-left: 5px solid #333 !important; }
+            * { text-shadow: none !important; }
+            h3 { color: black !important; font-size: 24px; text-transform: uppercase; border-bottom: 2px solid black; padding-bottom: 10px; }
+            .print-hide { display: none !important; }
+        }
     </style>
 </head>
 <body>
@@ -112,6 +124,8 @@
             <a onclick="toggleView('education')" class="btn grey-btn"><img src="learning.png">Training Portal</a>
             <a onclick="openAdmin()" class="btn grey-btn"><img src="admin.png"> ADMIN PORTAL</a>
         </div>
+
+        <div style="text-align: center; margin-top: 40px; font-size: 10px; color: #444; letter-spacing: 1px;">APP VERSION: V7</div>
     </div>
 
     <div id="admin-view" class="hidden sub-menu">
@@ -128,7 +142,7 @@
 
     <div id="admin-roster" class="hidden sub-menu">
         <h3 style="color: #d32f2f;">Roster Management</h3>
-        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+        <div class="print-hide" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
             <input type="hidden" id="editKey">
             <input type="text" id="admID" placeholder="ID (e.g., Chief 31, 3F5)">
             <input type="text" id="admRank" placeholder="Rank (e.g., Captain, FF)">
@@ -138,12 +152,12 @@
             <button id="cancelBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelEdit()">Cancel Edit</button>
         </div>
         <div id="adminRosterFeed"></div>
-        <button class="nav-btn" onclick="toggleView('admin-view')">Back to Admin</button>
+        <button class="nav-btn print-hide" onclick="toggleView('admin-view')">Back to Admin</button>
     </div>
 
     <div id="admin-calls" class="hidden sub-menu">
         <h3 style="color: #d32f2f;">Call List Management</h3>
-        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+        <div class="print-hide" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
             <input type="hidden" id="editCallKey">
             <input type="text" id="admCallCat" placeholder="Category (e.g., Police, Fire Stations)">
             <input type="text" id="admCallName" placeholder="Agency Name">
@@ -152,12 +166,14 @@
             <button id="cancelCallBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelCallEdit()">Cancel Edit</button>
         </div>
         <div id="adminCallFeed"></div>
-        <button class="nav-btn" onclick="toggleView('admin-view')">Back to Admin</button>
+        <button class="nav-btn print-hide" onclick="toggleView('admin-view')">Back to Admin</button>
     </div>
 
     <div id="burn-view" class="hidden sub-menu">
-        <h3>Burn Log</h3>
-        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+        <h3>BFD Burn Log</h3>
+        <button class="nav-btn print-hide" style="background:#444; margin-top: 0; margin-bottom: 15px; padding: 10px;" onclick="window.print()">🖨️ Print or Save as PDF</button>
+        
+        <div class="print-hide" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
             <input type="text" id="burnDate" placeholder="Date (MM/DD/YYYY)">
             <button class="nav-btn" style="margin-top:0; margin-bottom:10px; background:#1e3a8a; padding: 8px;" onclick="stampToday()">📅 Auto-Fill Today</button>
             <input type="text" id="burnName" placeholder="Resident Name">
@@ -167,13 +183,15 @@
             <button class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="submitBurn()">Post to Burn Log</button>
         </div>
         <div id="sharedEntries"></div>
-        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-        <button class="nav-btn" style="background:#8b0000; font-size:0.7em;" onclick="clearBurnLog()">Wipe All Entries</button>
+        <button class="nav-btn print-hide" onclick="toggleView('main-view')">Back</button>
+        <button class="nav-btn print-hide" style="background:#8b0000; font-size:0.7em;" onclick="clearBurnLog()">Wipe All Entries</button>
     </div>
 
     <div id="scratchpad" class="hidden sub-menu">
         <h3 style="color: #d32f2f;">Patient Scratchpad</h3>
-        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+        <button class="nav-btn print-hide" style="background:#444; margin-top: 0; margin-bottom: 15px; padding: 10px;" onclick="window.print()">🖨️ Print or Save as PDF</button>
+
+        <div class="print-hide" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
             <input type="text" id="padId" placeholder="Run # or Identifier (e.g., Pt A)">
             <input type="text" id="padMental" placeholder="Mental Status (e.g., A&O x4)">
             <input type="text" id="padVitals1" placeholder="Initial Vitals: BP | HR | RR | SpO2">
@@ -181,10 +199,10 @@
             <input type="text" id="padVitals3" placeholder="Third Vitals: BP | HR | RR | SpO2">
             <button class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="submitScratchpad()">Post to Scratchpad</button>
         </div>
-        <h4 style="border-bottom: 1px solid #444; padding-bottom: 5px;">Active Patient Notes</h4>
+        <h4 class="print-hide" style="border-bottom: 1px solid #444; padding-bottom: 5px;">Active Patient Notes</h4>
         <div id="scratchpadEntries"></div>
-        <button class="nav-btn" style="margin-top: 30px;" onclick="toggleView('main-view')">Back</button>
-        <button class="nav-btn" style="background:#8b0000; font-size:0.7em;" onclick="clearScratchpad()">Wipe All Notes</button>
+        <button class="nav-btn print-hide" style="margin-top: 30px;" onclick="toggleView('main-view')">Back</button>
+        <button class="nav-btn print-hide" style="background:#8b0000; font-size:0.7em;" onclick="clearScratchpad()">Wipe All Notes</button>
     </div>
 
     <div id="roster-view" class="hidden sub-menu">
@@ -276,6 +294,16 @@
     const dbCalls = firebase.database().ref('calls'); 
     const dbScratchpad = firebase.database().ref('scratchpad');
 
+    // SHARE FUNCTION (Native Mobile Share)
+    function shareData(title, text) {
+        if (navigator.share) {
+            navigator.share({ title: title, text: text }).catch(console.error);
+        } else {
+            navigator.clipboard.writeText(title + "\n\n" + text);
+            alert("Copied to clipboard!");
+        }
+    }
+
     // LIVE TIME
     function updateTime() {
         const now = new Date();
@@ -283,25 +311,21 @@
         let minutes = now.getMinutes();
         const ampm = hours >= 12 ? 'PM' : 'AM';
         hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
+        hours = hours ? hours : 12; 
         minutes = minutes < 10 ? '0' + minutes : minutes;
         document.getElementById('liveTime').innerText = hours + ':' + minutes + ' ' + ampm;
     }
-    updateTime(); // Run immediately
-    setInterval(updateTime, 1000); // Update every second
+    updateTime(); setInterval(updateTime, 1000); 
 
-    // LIVE WEATHER (Palmer, MA)
+    // LIVE WEATHER 
     async function getLiveWeather() {
         try {
             const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=42.1584&longitude=-72.3287&current=temperature_2m&temperature_unit=fahrenheit');
             const data = await response.json();
             document.getElementById('liveWx').innerText = Math.round(data.current.temperature_2m) + "°F";
-        } catch(e) {
-            document.getElementById('liveWx').innerText = "WXR --";
-        }
+        } catch(e) { document.getElementById('liveWx').innerText = "WXR --"; }
     }
-    getLiveWeather();
-    setInterval(getLiveWeather, 1800000); // Refreshes every 30 minutes
+    getLiveWeather(); setInterval(getLiveWeather, 1800000); 
 
     // ADMIN AUTH
     function openAdmin() { if (prompt("Enter Admin Password:") === "BFD30") toggleView('admin-view'); else alert("Unauthorized."); }
@@ -354,7 +378,12 @@
     }
     dbBurn.on('value', (snap) => { 
         const de = document.getElementById('sharedEntries'); de.innerHTML=''; const data = snap.val(); 
-        for (let k in data) { const e = data[k]; de.innerHTML = `<div class="burn-entry"><p style="color:#d32f2f; font-weight:bold; font-size:0.75em;">${e.date||''}</p><p><strong>${e.name}</strong> (Permit: ${e.permit || 'N/A'})</p><p>${e.addr}</p><p style="color:#aaa; font-size:0.85em;">${e.phone || ''}</p></div>` + de.innerHTML; } 
+        for (let k in data) { 
+            const e = data[k]; 
+            const safeTitle = ('Burn Log: ' + (e.addr || '')).replace(/'/g, '');
+            const safeText = ('Date: ' + (e.date||'') + ' | Name: ' + (e.name||'') + ' | Addr: ' + (e.addr||'') + ' | Permit: ' + (e.permit||'N/A')).replace(/'/g, '');
+            de.innerHTML = `<div class="burn-entry"><p style="color:#d32f2f; font-weight:bold; font-size:0.75em;">${e.date||''}</p><p><strong>${e.name}</strong> (Permit: ${e.permit || 'N/A'})</p><p>${e.addr}</p><p style="color:#aaa; font-size:0.85em;">${e.phone || ''}</p><button class="small-btn print-hide" style="background:rgba(255,255,255,0.2); margin-top:12px; width:100%; border:1px solid #444;" onclick="shareData('${safeTitle}', '${safeText}')">📤 Share Log</button></div>` + de.innerHTML; 
+        } 
     });
     function clearBurnLog() { if(confirm("Wipe Burn Log?")) dbBurn.set(null); }
 
@@ -373,7 +402,9 @@
         const se = document.getElementById('scratchpadEntries'); se.innerHTML = ''; const data = snap.val();
         for (let k in data) {
             const e = data[k];
-            se.innerHTML = `<div class="burn-entry" style="border-left: 5px solid #ff9800;"><p style="color:#ff9800; font-weight:bold; font-size:0.75em;">${e.stamp}</p><p><strong>${e.id || 'No Identifier'}</strong></p><p style="font-size: 0.85em; color: #ccc;">Status: ${e.mental || 'N/A'}</p><p style="font-size: 0.85em; color: #eee; margin-top:5px;">V1: ${e.vitals1 || 'N/A'}</p><p style="font-size: 0.85em; color: #eee;">V2: ${e.vitals2 || 'N/A'}</p><p style="font-size: 0.85em; color: #eee;">V3: ${e.vitals3 || 'N/A'}</p></div>` + se.innerHTML;
+            const safeTitle = ('Patient Report: ' + (e.id || '')).replace(/'/g, '');
+            const safeText = ('ID: ' + (e.id||'') + ' | Status: ' + (e.mental||'') + ' | V1: ' + (e.vitals1||'') + ' | V2: ' + (e.vitals2||'')).replace(/'/g, '');
+            se.innerHTML = `<div class="burn-entry" style="border-left: 5px solid #ff9800;"><p style="color:#ff9800; font-weight:bold; font-size:0.75em;">${e.stamp}</p><p><strong>${e.id || 'No Identifier'}</strong></p><p style="font-size: 0.85em; color: #ccc;">Status: ${e.mental || 'N/A'}</p><p style="font-size: 0.85em; color: #eee; margin-top:5px;">V1: ${e.vitals1 || 'N/A'}</p><p style="font-size: 0.85em; color: #eee;">V2: ${e.vitals2 || 'N/A'}</p><p style="font-size: 0.85em; color: #eee;">V3: ${e.vitals3 || 'N/A'}</p><button class="small-btn print-hide" style="background:rgba(255,255,255,0.2); margin-top:12px; width:100%; border:1px solid #444;" onclick="shareData('${safeTitle}', '${safeText}')">📤 Share Pt Report</button></div>` + se.innerHTML;
         }
     });
     function clearScratchpad() { if(confirm("Wipe Notes?")) dbScratchpad.set(null); }
