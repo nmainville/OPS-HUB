@@ -127,6 +127,24 @@
         <button class="nav-btn" style="background:#8b0000; font-size:0.7em;" onclick="clearBurnLog()">Wipe All Shared Entries</button>
     </div>
 
+    <div id="scratchpad" class="hidden sub-menu">
+        <h3 style="color: #d32f2f;">Shared Scratchpad</h3>
+        <p style="font-size:0.75em; color:#ff9800; margin-top:-10px;">⚠️ HIPAA WARNING: DO NOT enter names or DOBs. Use Run # or "Patient A". Notes are visible to all units.</p>
+        
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+            <input type="text" id="padId" placeholder="Run # or Identifier (e.g., Pt 1)">
+            <input type="text" id="padMental" placeholder="Mental Status (e.g., A&O x4)">
+            <input type="text" id="padVitals" placeholder="BP | HR | RR | SpO2">
+            <button class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="submitScratchpad()">Post to Shared Board</button>
+        </div>
+        
+        <h4 style="border-bottom: 1px solid #444; padding-bottom: 5px;">Active Notes</h4>
+        <div id="scratchpadEntries"></div>
+        
+        <button class="nav-btn" style="margin-top: 30px;" onclick="toggleView('main-view')">Back</button>
+        <button class="nav-btn" style="background:#8b0000; font-size:0.7em;" onclick="clearScratchpad()">Wipe All Active Notes</button>
+    </div>
+
     <div id="roster-view" class="hidden sub-menu">
         <h3>BFD Personnel Directory</h3>
         <div style="overflow-x:auto;">
@@ -222,20 +240,12 @@
     <div id="education" class="hidden sub-menu">
         <h3>Training Portal</h3>
         <div class="btn-grid">
-            <a href="https://hraccess-us.technomedia.com/mfa/index.cfm" target="_blank" class="btn grey-btn">MFA Portal</a>         
+            <a href="https://hraccess-us.technomedia.com/mfa/index.cfm" target="_blank" class="btn grey-btn">MFA Portal</a>
             <a href="https://training.fema.gov/" target="_blank" class="btn grey-btn">FEMA Training</a>
             <a href="https://elearning.heart.org/" target="_blank" class="btn grey-btn">AHA Training</a>
             <a href="https://alerrt.org/" target="_blank" class="btn grey-btn">ALERRT</a>
         </div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-    </div>
-
-    <div id="scratchpad" class="hidden sub-menu">
-        <h3>Patient Scratchpad</h3>
-        <textarea id="m" rows="2" placeholder="Mental Status"></textarea>
-        <textarea id="v1" rows="2" placeholder="Vitals: BP | HR | RR | SpO2"></textarea>
-        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-        <button class="nav-btn" style="background:#8b0000" onclick="clearAll()">Clear Notes</button>
     </div>
 </div>
 
@@ -256,7 +266,8 @@
     firebase.initializeApp(firebaseConfig);
     const dbBurn = firebase.database().ref('burnLog');
     const dbRoster = firebase.database().ref('roster');
-    const dbCalls = firebase.database().ref('calls'); // <-- NEW DATABASE REFERENCE
+    const dbCalls = firebase.database().ref('calls'); 
+    const dbScratchpad = firebase.database().ref('scratchpad'); // NEW REFERENCE
 
     // 2. AUTO-SEED INITIAL ROSTER & CALLS
     dbRoster.once('value', (snapshot) => {
@@ -404,14 +415,12 @@
         const data = snap.val(); 
         if(!data) return;
 
-        // Group data by Category for the public view
         const grouped = {};
         for (let k in data) {
             const c = data[k];
             if(!grouped[c.cat]) grouped[c.cat] = [];
             grouped[c.cat].push(c);
 
-            // Populate the Admin Feed
             acf.innerHTML += `
                 <div class="admin-item">
                     <strong>${c.name}</strong><br>
@@ -423,11 +432,10 @@
                 </div>`;
         }
 
-        // Populate the Public Call List
         for(let cat in grouped) {
             cb.innerHTML += `<tr><th colspan="2" class="cat-head">${cat}</th></tr>`;
             grouped[cat].forEach(c => {
-                const cleanPhone = c.phone.replace(/[^0-9]/g, ''); // Removes dashes so phone dials correctly
+                const cleanPhone = c.phone.replace(/[^0-9]/g, '');
                 cb.innerHTML += `<tr><td>${c.name}</td><td><a href="tel:${cleanPhone}">${c.phone}</a></td></tr>`;
             });
         }
@@ -477,7 +485,44 @@
     
     function clearBurnLog() { if(confirm("Are you sure you want to wipe the Shared Burn Log?")) dbBurn.set(null); }
 
-    // 7. CORE APP LOGIC
+    // 7. PATIENT SCRATCHPAD LOGIC (FIREBASE SYNC)
+    function submitScratchpad() {
+        const id = document.getElementById('padId').value;
+        const m = document.getElementById('padMental').value;
+        const v = document.getElementById('padVitals').value;
+        
+        // Stamps the exact time the note was written
+        const d = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+        if(id || m || v) {
+            dbScratchpad.push({time: d, id: id, mental: m, vitals: v});
+            ['padId','padMental','padVitals'].forEach(i=>document.getElementById(i).value='');
+        } else {
+            alert("Enter some patient info first.");
+        }
+    }
+
+    dbScratchpad.on('value', (snap) => {
+        const se = document.getElementById('scratchpadEntries');
+        se.innerHTML = '';
+        const data = snap.val();
+        for (let k in data) {
+            const e = data[k];
+            se.innerHTML = `
+                <div class="burn-entry" style="border-left: 5px solid #ff9800;">
+                    <p style="color:#ff9800; font-weight:bold; font-size:0.75em;">${e.time || ''}</p>
+                    <p><strong>${e.id || 'No Identifier'}</strong></p>
+                    <p style="font-size: 0.9em; color: #ccc;">Status: ${e.mental || 'N/A'}</p>
+                    <p style="font-size: 0.9em; color: #ccc;">Vitals: ${e.vitals || 'N/A'}</p>
+                </div>` + se.innerHTML;
+        }
+    });
+
+    function clearScratchpad() {
+        if(confirm("Are you sure you want to wipe all shared medical notes?")) dbScratchpad.set(null);
+    }
+
+    // 8. CORE APP LOGIC
     function toggleView(v) { 
         document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); 
         document.getElementById(v).classList.remove('hidden'); 
@@ -488,14 +533,6 @@
         window.location.href=appUrl; 
         setTimeout(()=> { if(!document.hidden) window.location.href=webUrl; }, 2500); 
     }
-    
-    const ids=['m','v1']; 
-    ids.forEach(id => { 
-        const el=document.getElementById(id); 
-        if(el) { el.value=localStorage.getItem(id)||''; el.addEventListener('input',()=>localStorage.setItem(id,el.value)); } 
-    });
-    
-    function clearAll() { if(confirm("Clear Notes?")) ids.forEach(id => { document.getElementById(id).value=''; localStorage.removeItem(id); }); }
 </script>
 </body>
 </html>
