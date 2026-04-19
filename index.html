@@ -37,26 +37,13 @@
         table { width: 100%; color: white; font-size: 0.75em; border-collapse: collapse; margin-top: 10px; }
         td, th { border: 1px solid #444; padding: 8px; text-align: left; }
         .cat-head { background: #444; color: #fff; font-weight: bold; text-align: center; }
+        .entry-card { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; margin-bottom: 10px; text-align: left; border-left: 5px solid #d32f2f; font-size: 0.85em; }
 
-        /* CARDS & TABS */
-        .burn-entry { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; margin-bottom: 10px; text-align: left; border-left: 5px solid #d32f2f; }
-        .small-btn { padding: 10px; border-radius: 6px; border: none; color: white; font-size: 0.8em; font-weight: bold; cursor: pointer; margin-top: 8px; width: 100%; background: #333; }
+        /* TABS */
         .tab-btn { background: #333; color: white; border: none; padding: 12px; border-radius: 8px 8px 0 0; cursor: pointer; flex: 1; font-weight: bold; }
         .tab-btn.active { background: #d32f2f; }
         .tab-content { display: none; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 0 8px 8px 8px; margin-bottom: 20px; }
         .tab-content.active { display: block; }
-
-        /* OFFICIAL FORM PDF (PRINT ONLY) */
-        .print-only-doc { display: none; }
-        @media print {
-            body * { visibility: hidden; }
-            body { background: white !important; }
-            .print-only-doc, .print-only-doc * { visibility: visible !important; }
-            .print-only-doc { display: block !important; position: absolute; left: 0; top: 0; width: 100%; padding: 40px; color: black; font-family: 'Times New Roman', serif; text-align: left; box-sizing: border-box; }
-            .doc-header { text-align: center; border-bottom: 3px solid black; padding-bottom: 15px; margin-bottom: 25px; }
-            .doc-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 19px; }
-            .doc-line { border-bottom: 1px solid black; display: inline-block; padding: 0 8px; min-width: 180px; font-family: monospace; font-weight: bold; }
-        }
     </style>
 </head>
 <body>
@@ -85,13 +72,6 @@
             <a onclick="toggleView('hospitals')" class="btn red-btn"><img src="hospital.png">Hospital Lines</a>
         </div>
 
-        <h4>Inspections</h4>
-        <div class="btn-grid">
-            <a onclick="toggleView('fees')" class="btn red-btn">Fees</a>
-            <a onclick="toggleView('smoke-cert-view')" class="btn red-btn">Smoke Cert</a>
-            <a href="https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter148" target="_blank" class="btn red-btn full-width">MGL Ch. 148</a>
-        </div>
-
         <h4>Resources</h4>
         <div class="btn-grid">
             <a onclick="toggleView('roster-view')" class="btn grey-btn">Roster</a>
@@ -100,39 +80,7 @@
             <a onclick="toggleView('gear-view')" class="btn grey-btn">Gear Portal</a>
         </div>
 
-        <div id="versionStamp" style="text-align: center; margin-top: 40px; font-size: 10px; color: #444;">APP VERSION: LOADING...</div>
-    </div>
-
-    <div id="smoke-cert-view" class="hidden sub-menu">
-        <h3 style="color:#d32f2f;">Smoke / CO Certificate</h3>
-        <div class="print-hide">
-            <input type="text" id="certCity" placeholder="City or Town">
-            <input type="text" id="certDate" placeholder="Date">
-            <input type="text" id="certLoc" placeholder="Location">
-            <input type="text" id="certOwner" placeholder="Owner">
-            <div class="input-grid"><input type="text" id="certUnits" placeholder="Units"><input type="text" id="certFee" placeholder="Fee ($)"></div>
-            <input type="text" id="certApplicant" placeholder="Applicant Sign">
-            <div class="input-grid"><input type="text" id="certInspDate" placeholder="Insp Date"><input type="text" id="certInspector" placeholder="Inspector"></div>
-            <div class="input-grid"><input type="text" id="certTitle" placeholder="Title/Rank"><input type="text" id="certIssueDate" placeholder="Issue Date"></div>
-            <button class="nav-btn" style="background:#2e7d32;" onclick="submitSmokeCert()">Add to Log</button>
-        </div>
-        <div class="print-only-doc">
-            <div class="doc-header"><h2>The Commonwealth of Massachusetts</h2><h3>Application for Certificate of Compliance</h3></div>
-            <div id="cert-top-doc">
-                <div class="doc-row"><span>City: <span class="doc-line" id="ptCity"></span></span><span>Date: <span class="doc-line" id="ptDate"></span></span></div>
-                <div class="doc-row"><span>Location: <span class="doc-line" id="ptLoc" style="width:400px;"></span></span></div>
-                <div class="doc-row"><span>Owner: <span class="doc-line" id="ptOwner" style="width:450px;"></span></span></div>
-                <div class="doc-row"><span>Units: <span class="doc-line" id="ptUnits"></span></span><span>Fee Paid: <span class="doc-line" id="ptFee"></span></span></div>
-                <div class="doc-row"><span>Applicant: <span class="doc-line" id="ptApp" style="width:350px;"></span></span></div>
-            </div>
-            <div id="cert-bottom-doc" style="margin-top:60px; border-top:3px dashed black; padding-top:40px;">
-                <h2 style="text-align:center;">CERTIFICATE OF COMPLIANCE</h2>
-                <div class="doc-row"><span>Insp Date: <span class="doc-line" id="ptInspDate"></span></span><span>Inspector: <span class="doc-line" id="ptInspector"></span></span></div>
-                <div class="doc-row"><span>Title: <span class="doc-line" id="ptTitle"></span></span><span>Issue Date: <span class="doc-line" id="ptIssueDate"></span></span></div>
-            </div>
-        </div>
-        <div id="smokeCertEntries"></div>
-        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+        <div id="versionStamp" style="text-align: center; margin-top: 40px; font-size: 10px; color: #444;">APP VERSION: REVERTED</div>
     </div>
 
     <div id="burn-view" class="hidden sub-menu">
@@ -156,7 +104,7 @@
         <input type="text" id="padV2" placeholder="Vitals 2: BP | HR | RR | O2">
         <input type="text" id="padV3" placeholder="Vitals 3: BP | HR | RR | O2">
         <button class="nav-btn" style="background:#2e7d32;" onclick="submitScratchpad()">Save Entry</button>
-        <div id="scratchpadEntries"></div>
+        <div id="scratchpadEntries" style="margin-top:15px;"></div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
@@ -166,11 +114,11 @@
         <div id="tab1" class="tab-content active">
             <input type="text" id="gName1" placeholder="Personnel Name">
             <h5 style="color:#aaa; text-align:left; margin:10px 0;">STRUCTURAL GEAR</h5>
-            <div class="input-grid"><input type="text" id="sHelm" placeholder="Helm S/N & Date"><input type="text" id="sJack" placeholder="Jacket S/N & Date"></div>
-            <div class="input-grid"><input type="text" id="sPant" placeholder="Pant S/N & Date"><input type="text" id="sBoot" placeholder="Boot S/N & Date"></div>
+            <div class="input-grid"><input type="text" id="sHelm" placeholder="Helm S/N"><input type="text" id="sJack" placeholder="Jacket S/N"></div>
+            <div class="input-grid"><input type="text" id="sPant" placeholder="Pant S/N"><input type="text" id="sBoot" placeholder="Boot S/N"></div>
             <h5 style="color:#aaa; text-align:left; margin:10px 0;">BRUSH GEAR</h5>
             <div class="input-grid"><input type="text" id="bHelm" placeholder="Helm S/N"><input type="text" id="bJack" placeholder="Jacket S/N"></div>
-            <button class="nav-btn" style="background:#2e7d32;" onclick="submitGearTab1()">Log Assignment</button>
+            <button class="nav-btn" style="background:#2e7d32;" onclick="submitGearTab1()">Log Gear</button>
         </div>
         <div id="tab2" class="tab-content">
             <textarea id="gMiscNotes" placeholder="Misc gear notes..."></textarea>
@@ -184,7 +132,6 @@
     <div id="emergency-list" class="hidden sub-menu"><h3>Call List</h3><table id="callListTable"></table><button class="nav-btn" onclick="toggleView('main-view')">Back</button></div>
     <div id="hospitals" class="hidden sub-menu"><h3>Medical</h3><div class="btn-grid"><a href="tel:4132833611" class="btn red-btn">Wing Memorial</a><a href="tel:4137940000" class="btn red-btn">Baystate Med</a><a href="tel:4137489000" class="btn red-btn">Mercy Med</a></div><button class="nav-btn" onclick="toggleView('main-view')">Back</button></div>
     <div id="utilities" class="hidden sub-menu"><h3>Utilities</h3><div class="btn-grid"><a href="tel:8772473602" class="btn blue-btn">NatGrid</a><a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a></div><button class="nav-btn" onclick="toggleView('main-view')">Back</button></div>
-    <div id="fees" class="hidden sub-menu"><h3>Fees</h3><table><tr><th>Service</th><th>Fee</th></tr><tr><td>Smoke (1-Fam)</td><td>$50</td></tr><tr><td>Smoke (2-Fam)</td><td>$100</td></tr></table><button class="nav-btn" onclick="toggleView('main-view')">Back</button></div>
 
 </div>
 
@@ -203,32 +150,22 @@
     setInterval(updateTime, 1000); updateTime();
     async function getWx() { try { const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=42.1584&longitude=-72.3287&current=temperature_2m&temperature_unit=fahrenheit'); const d = await r.json(); document.getElementById('liveWx').innerText = Math.round(d.current.temperature_2m) + "°F"; } catch(e) {} } getWx();
 
-    // SMOKE CERT (LOCKED V24)
-    function printSmokeCert(s, data) {
-        document.getElementById('ptCity').innerText = data.city||""; document.getElementById('ptDate').innerText = data.date||""; document.getElementById('ptLoc').innerText = data.loc||""; document.getElementById('ptOwner').innerText = data.owner||""; document.getElementById('ptUnits').innerText = data.units||""; document.getElementById('ptFee').innerText = data.fee||""; document.getElementById('ptApp').innerText = data.app||""; document.getElementById('ptInspDate').innerText = data.inspDate||""; document.getElementById('ptInspector').innerText = data.inspector||""; document.getElementById('ptTitle').innerText = data.title||""; document.getElementById('ptIssueDate').innerText = data.issueDate||"";
-        setTimeout(() => { window.print(); }, 500);
-    }
-    function submitSmokeCert() { db.ref('smokeCert').push({ city: document.getElementById('certCity').value, date: document.getElementById('certDate').value, loc: document.getElementById('certLoc').value, owner: document.getElementById('certOwner').value, units: document.getElementById('certUnits').value, fee: document.getElementById('certFee').value, app: document.getElementById('certApplicant').value, inspDate: document.getElementById('certInspDate').value, inspector: document.getElementById('certInspector').value, title: document.getElementById('certTitle').value, issueDate: document.getElementById('certIssueDate').value }); }
-    db.ref('smokeCert').on('value', s => { const ce = document.getElementById('smokeCertEntries'); ce.innerHTML = ''; const d = s.val(); for (let k in d) { const e = d[k]; ce.innerHTML = `<div class="burn-entry"><strong>${e.loc}</strong><br><button class="small-btn" onclick='printSmokeCert("bottom", ${JSON.stringify(e)})'>📄 Share Official PDF</button></div>` + ce.innerHTML; } });
-
-    // BURN LOG (LOCKED V24)
+    // BURN LOG
     function submitBurn() { db.ref('burnLog').push({ date:document.getElementById('burnDate').value, name:document.getElementById('burnName').value, addr:document.getElementById('burnAddr').value, phone:document.getElementById('burnPhone').value, permit:document.getElementById('burnPermit').value }); }
-    db.ref('burnLog').on('value', s => { const de = document.getElementById('sharedEntries'); de.innerHTML = ''; const d = s.val(); for (let k in d) { const e = d[k]; de.innerHTML = `<div class="burn-entry"><strong>${e.name}</strong><br>${e.addr}<br>Phone: ${e.phone || 'N/A'} | Permit: ${e.permit || 'N/A'}</div>` + de.innerHTML; } });
+    db.ref('burnLog').on('value', s => { const de = document.getElementById('sharedEntries'); de.innerHTML = ''; const d = s.val(); for (let k in d) { const e = d[k]; de.innerHTML = `<div class="entry-card"><strong>${e.name}</strong><br>${e.addr}<br>Phone: ${e.phone} | Permit: ${e.permit}</div>` + de.innerHTML; } });
 
-    // SCRATCHPAD (LOCKED V24)
+    // SCRATCHPAD
     function submitScratchpad() { db.ref('scratchpad').push({ id:document.getElementById('padId').value, mental:document.getElementById('padMental').value, complaint:document.getElementById('padComplaint').value, v1:document.getElementById('padV1').value, v2:document.getElementById('padV2').value, v3:document.getElementById('padV3').value }); }
-    db.ref('scratchpad').on('value', s => { const se = document.getElementById('scratchpadEntries'); se.innerHTML = ''; const d = s.val(); for (let k in d) { const e = d[k]; se.innerHTML = `<div class="burn-entry"><strong>ID: ${e.id}</strong><br>Vitals: ${e.v1} | ${e.v2} | ${e.v3}</div>` + se.innerHTML; } });
+    db.ref('scratchpad').on('value', s => { const se = document.getElementById('scratchpadEntries'); se.innerHTML = ''; const d = s.val(); for (let k in d) { const e = d[k]; se.innerHTML = `<div class="entry-card"><strong>ID: ${e.id}</strong><br>Vitals: ${e.v1} | ${e.v2} | ${e.v3}</div>` + se.innerHTML; } });
 
-    // ROSTER & CALLS (LOCKED V24)
+    // ROSTER & CALLS
     db.ref('roster').on('value', s => { const rb = document.getElementById('rosterBody'); rb.innerHTML=''; const d = s.val(); for (let k in d) { const m = d[k]; rb.innerHTML += `<tr><td>${m.id||''}</td><td>${m.rank||''}</td><td>${m.name}</td><td><a href="tel:${m.phone}">📞</a></td></tr>`; } });
     db.ref('calls').on('value', s => { const cb = document.getElementById('callListTable'); cb.innerHTML=''; const d = s.val(); const g = {}; for (let k in d) { const c = d[k]; if(!g[c.cat]) g[c.cat] = []; g[c.cat].push(c); } for(let c in g) { cb.innerHTML += `<tr><th colspan="2" class="cat-head">${c}</th></tr>`; g[c].forEach(x => cb.innerHTML += `<tr><td>${x.name}</td><td><a href="tel:${x.phone}">${x.phone}</a></td></tr>`); } });
 
-    // GEAR PORTAL (LOCKED V24)
-    function submitGearTab1() { db.ref('gearTracking').push({ type:"ASSIGN", name:document.getElementById('gName1').value, sHelm:document.getElementById('sHelm').value, sJack:document.getElementById('sJack').value, sPant:document.getElementById('sPant').value, sBoot:document.getElementById('sBoot').value, bHelm:document.getElementById('bHelm').value, bJack:document.getElementById('bJack').value }); }
+    // GEAR
+    function submitGearTab1() { db.ref('gearTracking').push({ type:"ASSIGN", name:document.getElementById('gName1').value, sJack:document.getElementById('sJack').value, sPant:document.getElementById('sPant').value, sBoot:document.getElementById('sBoot').value }); }
     function submitGearTab2() { db.ref('gearTracking').push({ type:"NOTE", notes:document.getElementById('gMiscNotes').value }); }
-    db.ref('gearTracking').on('value', s => { const ge = document.getElementById('gearEntries'); ge.innerHTML=''; const d = s.val(); for (let k in d) { const e = d[k]; ge.innerHTML = `<div class="burn-entry">${e.type}: ${e.name || e.notes}</div>` + ge.innerHTML; } });
-
-    async function syncVersion() { try { const r = await fetch('/sw.js?cb=' + Date.now()); const t = await r.text(); const m = t.match(/'ops-hub-(v\d+)'/); if (m) document.getElementById('versionStamp').innerText = "APP VERSION: " + m[1].toUpperCase(); } catch(e) {} } syncVersion();
+    db.ref('gearTracking').on('value', s => { const ge = document.getElementById('gearEntries'); ge.innerHTML=''; const d = s.val(); for (let k in d) { const e = d[k]; ge.innerHTML = `<div class="entry-card">${e.type}: ${e.name || e.notes}</div>` + ge.innerHTML; } });
 </script>
 </body>
 </html>
