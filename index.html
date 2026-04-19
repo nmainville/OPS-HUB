@@ -54,20 +54,38 @@
         .admin-controls { display: flex; gap: 8px; margin-top: 10px; }
         .small-btn { padding: 8px 12px; border-radius: 6px; border: none; color: white; font-size: 0.8em; font-weight: bold; cursor: pointer; flex: 1; margin-top: 8px;}
 
-        /* PRINT STYLES - WITH NEW SECTION LOGIC */
+        /* DOCUMENT CLONE (Hidden on Screen, Shows on Print) */
+        .print-only-doc { display: none; }
+
+        /* PRINT STYLES - ENGINEERED FOR PERFECT DOCUMENTS */
         @media print {
-            body { background: white !important; color: black !important; padding: 0 !important; font-family: Arial, sans-serif; }
-            .container { max-width: 100%; }
-            .btn-grid, .header, h4, input, button, textarea, .nav-btn, .small-btn, .tab-btn, #roster-view, #utilities, #fees, #emergency-list, #education, #hospitals { display: none !important; }
-            .sub-menu { background: white !important; border: none !important; color: black !important; padding: 0 !important; }
-            .burn-entry { background: white !important; color: black !important; border: 1px solid #ccc !important; break-inside: avoid; border-left: 5px solid #333 !important; }
-            * { text-shadow: none !important; }
-            h3 { color: black !important; font-size: 24px; text-transform: uppercase; border-bottom: 2px solid black; padding-bottom: 10px; }
-            .print-hide { display: none !important; }
+            body { background: white !important; color: black !important; padding: 0 !important; font-family: 'Times New Roman', serif; }
+            .container { max-width: 100%; margin: 0; padding: 0; }
             
-            /* Section Hiding Logic */
-            body.print-top-only #cert-bottom-section { display: none !important; }
-            body.print-bottom-only #cert-top-section { display: none !important; }
+            /* Hide the entire mobile app UI */
+            .header, h4, .btn-grid, .nav-btn, .print-hide, .sub-menu { display: none !important; }
+            
+            /* Explicitly show the Burn Log/Scratchpad entries ONLY if they are active, hide otherwise */
+            #smoke-cert-view.hidden, #scratchpad.hidden, #burn-view.hidden { display: none !important; }
+            
+            /* If we are in the Smoke Cert View, trigger the Document Clone */
+            #smoke-cert-view:not(.hidden) .print-only-doc { 
+                display: block !important; 
+                color: black; 
+                background: white; 
+                padding: 40px; 
+                text-align: left; 
+                line-height: 1.6;
+            }
+
+            .doc-header { text-align: center; border-bottom: 2px solid black; padding-bottom: 20px; margin-bottom: 30px; }
+            .doc-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 18px; }
+            .doc-line { border-bottom: 1px solid black; display: inline-block; padding: 0 10px; min-width: 200px; font-family: monospace; }
+            
+            /* Split Printing Logic */
+            body.print-top-only #cert-bottom-doc { display: none !important; }
+            body.print-bottom-only #cert-top-doc { display: none !important; }
+            body.print-bottom-only .doc-header { display: none !important; }
         }
     </style>
 </head>
@@ -142,7 +160,7 @@
     </div>
 
     <div id="smoke-cert-view" class="hidden sub-menu">
-        <h3 style="color: #d32f2f;">Smoke / CO Certificate</h3>
+        <h3 class="print-hide" style="color: #d32f2f;">Smoke / CO Certificate</h3>
         
         <div class="btn-grid print-hide" style="margin-bottom: 15px;">
             <button class="nav-btn full-width" style="background:#444; margin-top:0; padding:10px;" onclick="printSmokeCert('full')">🖨️ Print Full Form</button>
@@ -152,35 +170,68 @@
 
         <div class="print-hide" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
             
-            <div id="cert-top-section">
-                <h5 style="color: #ccc; text-align: left; border-bottom: 1px solid #444; padding-bottom: 5px;">- APPLICATION (FD USE) -</h5>
-                <input type="text" id="certCity" placeholder="City or Town">
-                <input type="text" id="certDate" placeholder="Date (MM/DD/YYYY)">
-                <button class="nav-btn" style="margin-top:0; margin-bottom:10px; background:#1e3a8a; padding: 8px;" onclick="stampCertToday()">📅 Auto-Fill Today</button>
-                
-                <input type="text" id="certLoc" placeholder="Location of Property">
-                <input type="text" id="certOwner" placeholder="Owner of Property">
-                
-                <div class="input-grid">
-                    <input type="text" id="certUnits" placeholder="# Dwelling Units">
-                    <input type="text" id="certFee" placeholder="Fee Paid ($)">
-                </div>
-                <input type="text" id="certApplicant" placeholder="Signature of Applicant">
+            <h5 style="color: #ccc; text-align: left; border-bottom: 1px solid #444; padding-bottom: 5px;">- APPLICATION (FD USE) -</h5>
+            <input type="text" id="certCity" placeholder="City or Town">
+            <input type="text" id="certDate" placeholder="Date (MM/DD/YYYY)">
+            <button class="nav-btn" style="margin-top:0; margin-bottom:10px; background:#1e3a8a; padding: 8px;" onclick="stampCertToday()">📅 Auto-Fill Today</button>
+            <input type="text" id="certLoc" placeholder="Location of Property">
+            <input type="text" id="certOwner" placeholder="Owner of Property">
+            
+            <div class="input-grid">
+                <input type="text" id="certUnits" placeholder="# Dwelling Units">
+                <input type="text" id="certFee" placeholder="Fee Paid ($)">
             </div>
+            <input type="text" id="certApplicant" placeholder="Signature of Applicant">
 
-            <div id="cert-bottom-section" style="margin-top: 25px;">
-                <h5 style="color: #ccc; text-align: left; border-bottom: 1px solid #444; padding-bottom: 5px;">- CERTIFICATE (BUYER/SELLER) -</h5>
-                <div class="input-grid">
-                    <input type="text" id="certInspDate" placeholder="Inspection Date">
-                    <input type="text" id="certInspector" placeholder="Inspector Name">
-                </div>
+            <h5 style="color: #ccc; text-align: left; border-bottom: 1px solid #444; padding-bottom: 5px; margin-top:25px;">- CERTIFICATE (BUYER/SELLER) -</h5>
+            <div class="input-grid">
+                <input type="text" id="certInspDate" placeholder="Inspection Date">
+                <input type="text" id="certInspector" placeholder="Inspector Name">
             </div>
             
             <button class="nav-btn" style="background:#2e7d32; margin-top:20px;" onclick="submitSmokeCert()">Add to Log</button>
         </div>
-        
+
+        <div class="print-only-doc">
+            <div class="doc-header">
+                <h2>The Commonwealth of Massachusetts</h2>
+                <h3>Application for Certificate of Compliance</h3>
+                <p>M.G.L. Chapter 148, Sections 26F, 26F1/2</p>
+            </div>
+            
+            <div id="cert-top-doc">
+                <div class="doc-row">
+                    <span><strong>City or Town:</strong> <span class="doc-line" id="ptCity"></span></span>
+                    <span><strong>Date:</strong> <span class="doc-line" id="ptDate"></span></span>
+                </div>
+                <div class="doc-row">
+                    <span><strong>Location of Property:</strong> <span class="doc-line" id="ptLoc" style="width: 400px;"></span></span>
+                </div>
+                <div class="doc-row">
+                    <span><strong>Name of Owner:</strong> <span class="doc-line" id="ptOwner" style="width: 450px;"></span></span>
+                </div>
+                <div class="doc-row">
+                    <span><strong>Number of Dwelling Units:</strong> <span class="doc-line" id="ptUnits"></span></span>
+                    <span><strong>Fee:</strong> <span class="doc-line" id="ptFee"></span></span>
+                </div>
+                <div class="doc-row" style="margin-top: 30px;">
+                    <span><strong>Signature of Applicant:</strong> <span class="doc-line" id="ptApp" style="width: 350px;"></span></span>
+                </div>
+            </div>
+
+            <div id="cert-bottom-doc" style="margin-top: 60px; border-top: 3px dashed black; padding-top: 40px;">
+                <h2 style="text-align: center; margin-bottom: 30px;">CERTIFICATE OF COMPLIANCE</h2>
+                <p style="font-size: 18px; margin-bottom: 30px;">
+                    This certifies that the property at the location designated above has been inspected and found to be in compliance with M.G.L. Chapter 148.
+                </p>
+                <div class="doc-row">
+                    <span><strong>Date of Inspection:</strong> <span class="doc-line" id="ptInspDate"></span></span>
+                    <span><strong>Inspector:</strong> <span class="doc-line" id="ptInspector"></span></span>
+                </div>
+            </div>
+        </div>
         <h4 class="print-hide" style="border-bottom: 1px solid #444; padding-bottom: 5px;">Logged Certificates</h4>
-        <div id="smokeCertEntries"></div>
+        <div id="smokeCertEntries" class="print-hide"></div>
         
         <button class="nav-btn print-hide" style="margin-top: 30px;" onclick="toggleView('main-view')">Back</button>
         <button class="nav-btn print-hide" style="background:#8b0000; font-size:0.7em;" onclick="clearSmokeCerts()">Wipe All Entries</button>
@@ -238,7 +289,7 @@
             <input type="text" id="burnPermit" placeholder="Permit #">
             <button class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="submitBurn()">Post to Burn Log</button>
         </div>
-        <div id="sharedEntries"></div>
+        <div id="sharedEntries" class="print-hide"></div>
         <button class="nav-btn print-hide" onclick="toggleView('main-view')">Back</button>
         <button class="nav-btn print-hide" style="background:#8b0000; font-size:0.7em;" onclick="clearBurnLog()">Wipe All Entries</button>
     </div>
@@ -258,7 +309,7 @@
         </div>
         
         <h4 class="print-hide" style="border-bottom: 1px solid #444; padding-bottom: 5px;">Active Patient Notes</h4>
-        <div id="scratchpadEntries"></div>
+        <div id="scratchpadEntries" class="print-hide"></div>
         
         <button class="nav-btn print-hide" style="margin-top: 30px;" onclick="toggleView('main-view')">Back</button>
         <button class="nav-btn print-hide" style="background:#8b0000; font-size:0.7em;" onclick="clearScratchpad()">Wipe All Notes</button>
@@ -393,7 +444,7 @@
         </div>
 
         <h4 class="print-hide" style="border-bottom: 1px solid #444; padding-bottom: 5px;">Active Gear Log</h4>
-        <div id="gearEntries"></div>
+        <div id="gearEntries" class="print-hide"></div>
 
         <button class="nav-btn print-hide" style="margin-top: 30px;" onclick="toggleView('main-view')">Back</button>
         <button class="nav-btn print-hide" style="background:#8b0000; font-size:0.7em;" onclick="clearGearLog()">Wipe All Entries</button>
@@ -448,12 +499,25 @@
     function openAdmin() { if (prompt("Enter Admin Password:") === "BFD30") toggleView('admin-view'); else alert("Unauthorized."); }
 
     // ==============================================
-    // SMOKE CO CERT LOGIC (SPLIT SECTION)
+    // SMOKE CO CERT LOGIC (WITH DOCUMENT CLONE)
     // ==============================================
     function printSmokeCert(section) {
+        // Map user inputs to the Official Document Clone
+        document.getElementById('ptCity').innerText = document.getElementById('certCity').value || " ";
+        document.getElementById('ptDate').innerText = document.getElementById('certDate').value || " ";
+        document.getElementById('ptLoc').innerText = document.getElementById('certLoc').value || " ";
+        document.getElementById('ptOwner').innerText = document.getElementById('certOwner').value || " ";
+        document.getElementById('ptUnits').innerText = document.getElementById('certUnits').value || " ";
+        document.getElementById('ptFee').innerText = document.getElementById('certFee').value || " ";
+        document.getElementById('ptApp').innerText = document.getElementById('certApplicant').value || " ";
+        document.getElementById('ptInspDate').innerText = document.getElementById('certInspDate').value || " ";
+        document.getElementById('ptInspector').innerText = document.getElementById('certInspector').value || " ";
+
         if (section === 'top') document.body.classList.add('print-top-only');
         if (section === 'bottom') document.body.classList.add('print-bottom-only');
+        
         window.print();
+        
         document.body.classList.remove('print-top-only', 'print-bottom-only');
     }
 
