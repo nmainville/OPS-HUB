@@ -54,7 +54,7 @@
         .admin-controls { display: flex; gap: 8px; margin-top: 10px; }
         .small-btn { padding: 8px 12px; border-radius: 6px; border: none; color: white; font-size: 0.8em; font-weight: bold; cursor: pointer; flex: 1; margin-top: 8px;}
 
-        /* PRINT STYLES */
+        /* PRINT STYLES - WITH NEW SECTION LOGIC */
         @media print {
             body { background: white !important; color: black !important; padding: 0 !important; font-family: Arial, sans-serif; }
             .container { max-width: 100%; }
@@ -64,6 +64,10 @@
             * { text-shadow: none !important; }
             h3 { color: black !important; font-size: 24px; text-transform: uppercase; border-bottom: 2px solid black; padding-bottom: 10px; }
             .print-hide { display: none !important; }
+            
+            /* Section Hiding Logic */
+            body.print-top-only #cert-bottom-section { display: none !important; }
+            body.print-bottom-only #cert-top-section { display: none !important; }
         }
     </style>
 </head>
@@ -97,6 +101,7 @@
         <div class="btn-grid">
             <a href="Smoke_Requirements.pdf" target="_blank" class="btn red-btn"><img src="smoke.png">Smoke Specs</a>
             <a onclick="toggleView('fees')" class="btn red-btn"><img src="fee.png">Inspection Fees</a>
+            <a onclick="toggleView('smoke-cert-view')" class="btn red-btn full-width"><img src="smoke.png">Fillable Cert (FP-007-C)</a>
             <a href="https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter148" target="_blank" class="btn red-btn full-width"><span>⚖️</span> MGL Ch. 148</a>
         </div>
 
@@ -134,6 +139,51 @@
         </div>
 
        <div id="versionStamp" style="text-align: center; margin-top: 40px; font-size: 10px; color: #444; letter-spacing: 1px;">APP VERSION: LOADING...</div>
+    </div>
+
+    <div id="smoke-cert-view" class="hidden sub-menu">
+        <h3 style="color: #d32f2f;">Smoke / CO Certificate</h3>
+        
+        <div class="btn-grid print-hide" style="margin-bottom: 15px;">
+            <button class="nav-btn full-width" style="background:#444; margin-top:0; padding:10px;" onclick="printSmokeCert('full')">🖨️ Print Full Form</button>
+            <button class="nav-btn" style="background:#444; margin-top:0; padding:10px;" onclick="printSmokeCert('top')">🖨️ Print App (Top)</button>
+            <button class="nav-btn" style="background:#444; margin-top:0; padding:10px;" onclick="printSmokeCert('bottom')">🖨️ Print Cert (Bottom)</button>
+        </div>
+
+        <div class="print-hide" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+            
+            <div id="cert-top-section">
+                <h5 style="color: #ccc; text-align: left; border-bottom: 1px solid #444; padding-bottom: 5px;">- APPLICATION (FD USE) -</h5>
+                <input type="text" id="certCity" placeholder="City or Town">
+                <input type="text" id="certDate" placeholder="Date (MM/DD/YYYY)">
+                <button class="nav-btn" style="margin-top:0; margin-bottom:10px; background:#1e3a8a; padding: 8px;" onclick="stampCertToday()">📅 Auto-Fill Today</button>
+                
+                <input type="text" id="certLoc" placeholder="Location of Property">
+                <input type="text" id="certOwner" placeholder="Owner of Property">
+                
+                <div class="input-grid">
+                    <input type="text" id="certUnits" placeholder="# Dwelling Units">
+                    <input type="text" id="certFee" placeholder="Fee Paid ($)">
+                </div>
+                <input type="text" id="certApplicant" placeholder="Signature of Applicant">
+            </div>
+
+            <div id="cert-bottom-section" style="margin-top: 25px;">
+                <h5 style="color: #ccc; text-align: left; border-bottom: 1px solid #444; padding-bottom: 5px;">- CERTIFICATE (BUYER/SELLER) -</h5>
+                <div class="input-grid">
+                    <input type="text" id="certInspDate" placeholder="Inspection Date">
+                    <input type="text" id="certInspector" placeholder="Inspector Name">
+                </div>
+            </div>
+            
+            <button class="nav-btn" style="background:#2e7d32; margin-top:20px;" onclick="submitSmokeCert()">Add to Log</button>
+        </div>
+        
+        <h4 class="print-hide" style="border-bottom: 1px solid #444; padding-bottom: 5px;">Logged Certificates</h4>
+        <div id="smokeCertEntries"></div>
+        
+        <button class="nav-btn print-hide" style="margin-top: 30px;" onclick="toggleView('main-view')">Back</button>
+        <button class="nav-btn print-hide" style="background:#8b0000; font-size:0.7em;" onclick="clearSmokeCerts()">Wipe All Entries</button>
     </div>
 
     <div id="admin-view" class="hidden sub-menu">
@@ -200,9 +250,7 @@
         <div class="print-hide" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
             <input type="text" id="padId" placeholder="Run # or Identifier">
             <input type="text" id="padMental" placeholder="Mental Status (e.g., A&O x4)">
-            
             <input type="text" id="padComplaint" placeholder="Chief Complaint / Narrative">
-            
             <input type="text" id="padVitals1" placeholder="Initial Vitals: BP | HR | RR | SpO2">
             <input type="text" id="padVitals2" placeholder="Second Vitals: BP | HR | RR | SpO2">
             <input type="text" id="padVitals3" placeholder="Third Vitals: BP | HR | RR | SpO2">
@@ -373,6 +421,7 @@
     const dbCalls = firebase.database().ref('calls'); 
     const dbScratchpad = firebase.database().ref('scratchpad');
     const dbGear = firebase.database().ref('gearTracking');
+    const dbSmokeCert = firebase.database().ref('smokeCert');
 
     function shareData(title, text) {
         if (navigator.share) { navigator.share({ title: title, text: text }).catch(console.error); } 
@@ -396,9 +445,55 @@
 
     function toggleView(v) { document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); document.getElementById(v).classList.remove('hidden'); window.scrollTo(0,0); }
     function smartLink(appUrl, webUrl) { window.location.href=appUrl; setTimeout(()=> { if(!document.hidden) window.location.href=webUrl; }, 2500); }
-
-    // ADMIN AUTH
     function openAdmin() { if (prompt("Enter Admin Password:") === "BFD30") toggleView('admin-view'); else alert("Unauthorized."); }
+
+    // ==============================================
+    // SMOKE CO CERT LOGIC (SPLIT SECTION)
+    // ==============================================
+    function printSmokeCert(section) {
+        if (section === 'top') document.body.classList.add('print-top-only');
+        if (section === 'bottom') document.body.classList.add('print-bottom-only');
+        window.print();
+        document.body.classList.remove('print-top-only', 'print-bottom-only');
+    }
+
+    function stampCertToday() { const d = new Date(); document.getElementById('certDate').value = (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear(); }
+    
+    function submitSmokeCert() {
+        const city=document.getElementById('certCity').value, date=document.getElementById('certDate').value, loc=document.getElementById('certLoc').value, owner=document.getElementById('certOwner').value, units=document.getElementById('certUnits').value, app=document.getElementById('certApplicant').value, inspDate=document.getElementById('certInspDate').value, fee=document.getElementById('certFee').value, inspector=document.getElementById('certInspector').value;
+        
+        if(loc && owner) { 
+            dbSmokeCert.push({ city, date, loc, owner, units, app, inspDate, fee, inspector, stamp: new Date().toLocaleString() }); 
+            ['certCity','certDate','certLoc','certOwner','certUnits','certApplicant','certInspDate','certFee','certInspector'].forEach(i=>document.getElementById(i).value=''); 
+        } else alert("Required fields missing (Location & Owner).");
+    }
+
+    dbSmokeCert.on('value', (snap) => {
+        const ce = document.getElementById('smokeCertEntries'); ce.innerHTML = '';
+        const data = snap.val();
+        for (let k in data) {
+            const e = data[k];
+            const safeTop = ('APPLICATION\\nLocation: ' + (e.loc||'') + '\\nOwner: ' + (e.owner||'') + '\\nCity: ' + (e.city||'') + '\\nDate: ' + (e.date||'') + '\\nUnits: ' + (e.units||'') + '\\nFee: ' + (e.fee||'') + '\\nApplicant: ' + (e.app||'')).replace(/'/g, '');
+            const safeBottom = ('CERTIFICATE\\nLocation: ' + (e.loc||'') + '\\nInsp Date: ' + (e.inspDate||'') + '\\nInspector: ' + (e.inspector||'')).replace(/'/g, '');
+            const safeFull = safeTop + '\\n\\n' + safeBottom;
+            
+            ce.innerHTML = `<div class="burn-entry" style="border-left: 5px solid #d32f2f;">
+                <p style="color:#d32f2f; font-weight:bold; font-size:0.75em;">${e.date || e.stamp}</p>
+                <p><strong>${e.loc || 'N/A'}</strong></p>
+                <div style="font-size: 0.8em; color: #ccc; margin-top:5px; display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+                    <div><b>Owner:</b> ${e.owner || 'N/A'}</div><div><b>City:</b> ${e.city || 'N/A'}</div>
+                    <div><b>Units:</b> ${e.units || 'N/A'}</div><div><b>Fee:</b> ${e.fee || 'N/A'}</div>
+                    <div><b>Insp Date:</b> ${e.inspDate || 'N/A'}</div><div><b>Inspector:</b> ${e.inspector || 'N/A'}</div>
+                </div>
+                <div style="display:flex; gap:5px; margin-top:10px;">
+                    <button class="small-btn print-hide" style="background:rgba(255,255,255,0.2); font-size:0.7em;" onclick="shareData('Smoke App (Top)', \`${safeTop}\`)">📤 Share Top</button>
+                    <button class="small-btn print-hide" style="background:rgba(255,255,255,0.2); font-size:0.7em;" onclick="shareData('Smoke Cert (Bottom)', \`${safeBottom}\`)">📤 Share Bottom</button>
+                    <button class="small-btn print-hide" style="background:rgba(255,255,255,0.2); font-size:0.7em;" onclick="shareData('Smoke Full Form', \`${safeFull}\`)">📤 Share Full</button>
+                </div>
+            </div>` + ce.innerHTML;
+        }
+    });
+    function clearSmokeCerts() { if(confirm("Wipe all Smoke Certs?")) dbSmokeCert.set(null); }
 
     // ==============================================
     // ROSTER & ADMIN LOGIC
