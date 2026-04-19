@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ops-hub-v100';
+const CACHE_NAME = 'ops-hub-v104';
 
 // INSTALL: Force the new worker to take over immediately (No waiting!)
 self.addEventListener('install', (event) => {
