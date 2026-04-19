@@ -415,7 +415,7 @@
 // SMART VERSION SYNC (Reads from sw.js)
     async function syncVersion() {
         try {
-            const response = await fetch('/sw.js');
+            const response = await fetch('/sw.js?cachebuster=' + new Date().getTime());
             const text = await response.text();
             const match = text.match(/'ops-hub-(v\d+)'/);
             if (match) document.getElementById('versionStamp').innerText = "APP VERSION: " + match[1].toUpperCase();
