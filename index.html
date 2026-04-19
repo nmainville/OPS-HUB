@@ -29,22 +29,18 @@
         .red-btn { background: #d32f2f !important; } .blue-btn { background: #1e3a8a !important; } .grey-btn { background: #262626 !important; }
         .full-width { grid-column: span 2; } .hidden { display: none !important; }
 
-        /* SUB-MENUS */
+        /* UI ELEMENTS */
         .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; }
         .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
-        
-        /* INPUTS & TABLES */
         textarea, input { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         table { width: 100%; color: white; font-size: 0.75em; border-collapse: collapse; margin-top: 10px; }
         td, th { border: 1px solid #444; padding: 8px; text-align: left; }
         .cat-head { background: #444; color: #fff; font-weight: bold; text-align: center; }
 
-        /* CARDS */
+        /* CARDS & TABS */
         .burn-entry { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; margin-bottom: 10px; text-align: left; border-left: 5px solid #d32f2f; }
         .small-btn { padding: 10px; border-radius: 6px; border: none; color: white; font-size: 0.8em; font-weight: bold; cursor: pointer; margin-top: 8px; width: 100%; background: #333; }
-
-        /* TABS */
         .tab-btn { background: #333; color: white; border: none; padding: 12px; border-radius: 8px 8px 0 0; cursor: pointer; flex: 1; font-weight: bold; }
         .tab-btn.active { background: #d32f2f; }
         .tab-content { display: none; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 0 8px 8px 8px; margin-bottom: 20px; }
@@ -104,10 +100,6 @@
             <a onclick="toggleView('gear-view')" class="btn grey-btn">Gear Portal</a>
         </div>
 
-        <div class="btn-grid" style="margin-top:20px;">
-            <a onclick="openAdmin()" class="btn grey-btn full-width">ADMIN PORTAL</a>
-        </div>
-        
         <div id="versionStamp" style="text-align: center; margin-top: 40px; font-size: 10px; color: #444;">APP VERSION: LOADING...</div>
     </div>
 
@@ -116,9 +108,9 @@
         <div class="print-hide">
             <input type="text" id="certCity" placeholder="City or Town">
             <input type="text" id="certDate" placeholder="Date">
-            <input type="text" id="certLoc" placeholder="Property Location">
-            <input type="text" id="certOwner" placeholder="Property Owner">
-            <div class="input-grid"><input type="text" id="certUnits" placeholder="# Units"><input type="text" id="certFee" placeholder="Fee ($)"></div>
+            <input type="text" id="certLoc" placeholder="Location">
+            <input type="text" id="certOwner" placeholder="Owner">
+            <div class="input-grid"><input type="text" id="certUnits" placeholder="Units"><input type="text" id="certFee" placeholder="Fee ($)"></div>
             <input type="text" id="certApplicant" placeholder="Applicant Sign">
             <div class="input-grid"><input type="text" id="certInspDate" placeholder="Insp Date"><input type="text" id="certInspector" placeholder="Inspector"></div>
             <div class="input-grid"><input type="text" id="certTitle" placeholder="Title/Rank"><input type="text" id="certIssueDate" placeholder="Issue Date"></div>
@@ -181,7 +173,7 @@
             <button class="nav-btn" style="background:#2e7d32;" onclick="submitGearTab1()">Log Assignment</button>
         </div>
         <div id="tab2" class="tab-content">
-            <textarea id="gMiscNotes" placeholder="Misc gear notes / missing equipment..."></textarea>
+            <textarea id="gMiscNotes" placeholder="Misc gear notes..."></textarea>
             <button class="nav-btn" style="background:#2e7d32;" onclick="submitGearTab2()">Save Note</button>
         </div>
         <div id="gearEntries"></div>
@@ -190,9 +182,9 @@
 
     <div id="roster-view" class="hidden sub-menu"><h3>Personnel Roster</h3><table><thead><tr><th>ID</th><th>Rank</th><th>Name</th><th>Call</th></tr></thead><tbody id="rosterBody"></tbody></table><button class="nav-btn" onclick="toggleView('main-view')">Back</button></div>
     <div id="emergency-list" class="hidden sub-menu"><h3>Call List</h3><table id="callListTable"></table><button class="nav-btn" onclick="toggleView('main-view')">Back</button></div>
-    <div id="hospitals" class="hidden sub-menu"><h3>Medical Facilities</h3><div class="btn-grid"><a href="tel:4132833611" class="btn red-btn">Wing Memorial</a><a href="tel:4137940000" class="btn red-btn">Baystate Med</a><a href="tel:4137489000" class="btn red-btn">Mercy Med</a></div><button class="nav-btn" onclick="toggleView('main-view')">Back</button></div>
-    <div id="utilities" class="hidden sub-menu"><h3>Utilities</h3><div class="btn-grid"><a href="tel:8772473602" class="btn blue-btn">NatGrid</a><a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a><a href="tel:4132837674" class="btn grey-btn">AmeriGas</a></div><button class="nav-btn" onclick="toggleView('main-view')">Back</button></div>
-    <div id="fees" class="hidden sub-menu"><h3>Inspection Fees</h3><table><tr><th>Service</th><th>Fee</th></tr><tr><td>Smoke (1-Fam)</td><td>$50</td></tr><tr><td>Smoke (2-Fam)</td><td>$100</td></tr><tr><td>Oil Burner</td><td>$50</td></tr></table><button class="nav-btn" onclick="toggleView('main-view')">Back</button></div>
+    <div id="hospitals" class="hidden sub-menu"><h3>Medical</h3><div class="btn-grid"><a href="tel:4132833611" class="btn red-btn">Wing Memorial</a><a href="tel:4137940000" class="btn red-btn">Baystate Med</a><a href="tel:4137489000" class="btn red-btn">Mercy Med</a></div><button class="nav-btn" onclick="toggleView('main-view')">Back</button></div>
+    <div id="utilities" class="hidden sub-menu"><h3>Utilities</h3><div class="btn-grid"><a href="tel:8772473602" class="btn blue-btn">NatGrid</a><a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a></div><button class="nav-btn" onclick="toggleView('main-view')">Back</button></div>
+    <div id="fees" class="hidden sub-menu"><h3>Fees</h3><table><tr><th>Service</th><th>Fee</th></tr><tr><td>Smoke (1-Fam)</td><td>$50</td></tr><tr><td>Smoke (2-Fam)</td><td>$100</td></tr></table><button class="nav-btn" onclick="toggleView('main-view')">Back</button></div>
 
 </div>
 
@@ -210,9 +202,8 @@
     function updateTime() { document.getElementById('liveTime').innerText = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); }
     setInterval(updateTime, 1000); updateTime();
     async function getWx() { try { const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=42.1584&longitude=-72.3287&current=temperature_2m&temperature_unit=fahrenheit'); const d = await r.json(); document.getElementById('liveWx').innerText = Math.round(d.current.temperature_2m) + "°F"; } catch(e) {} } getWx();
-    function openAdmin() { if (prompt("Enter Admin Password:") === "BFD30") alert("Password correct. Please use GitHub to edit data."); else alert("Unauthorized."); }
 
-    // SMOKE CERT LOGIC
+    // SMOKE CERT (LOCKED V24)
     function printSmokeCert(s, data) {
         document.getElementById('ptCity').innerText = data.city||""; document.getElementById('ptDate').innerText = data.date||""; document.getElementById('ptLoc').innerText = data.loc||""; document.getElementById('ptOwner').innerText = data.owner||""; document.getElementById('ptUnits').innerText = data.units||""; document.getElementById('ptFee').innerText = data.fee||""; document.getElementById('ptApp').innerText = data.app||""; document.getElementById('ptInspDate').innerText = data.inspDate||""; document.getElementById('ptInspector').innerText = data.inspector||""; document.getElementById('ptTitle').innerText = data.title||""; document.getElementById('ptIssueDate').innerText = data.issueDate||"";
         setTimeout(() => { window.print(); }, 500);
@@ -220,19 +211,19 @@
     function submitSmokeCert() { db.ref('smokeCert').push({ city: document.getElementById('certCity').value, date: document.getElementById('certDate').value, loc: document.getElementById('certLoc').value, owner: document.getElementById('certOwner').value, units: document.getElementById('certUnits').value, fee: document.getElementById('certFee').value, app: document.getElementById('certApplicant').value, inspDate: document.getElementById('certInspDate').value, inspector: document.getElementById('certInspector').value, title: document.getElementById('certTitle').value, issueDate: document.getElementById('certIssueDate').value }); }
     db.ref('smokeCert').on('value', s => { const ce = document.getElementById('smokeCertEntries'); ce.innerHTML = ''; const d = s.val(); for (let k in d) { const e = d[k]; ce.innerHTML = `<div class="burn-entry"><strong>${e.loc}</strong><br><button class="small-btn" onclick='printSmokeCert("bottom", ${JSON.stringify(e)})'>📄 Share Official PDF</button></div>` + ce.innerHTML; } });
 
-    // BURN LOG LOGIC
+    // BURN LOG (LOCKED V24)
     function submitBurn() { db.ref('burnLog').push({ date:document.getElementById('burnDate').value, name:document.getElementById('burnName').value, addr:document.getElementById('burnAddr').value, phone:document.getElementById('burnPhone').value, permit:document.getElementById('burnPermit').value }); }
     db.ref('burnLog').on('value', s => { const de = document.getElementById('sharedEntries'); de.innerHTML = ''; const d = s.val(); for (let k in d) { const e = d[k]; de.innerHTML = `<div class="burn-entry"><strong>${e.name}</strong><br>${e.addr}<br>Phone: ${e.phone || 'N/A'} | Permit: ${e.permit || 'N/A'}</div>` + de.innerHTML; } });
 
-    // SCRATCHPAD LOGIC
+    // SCRATCHPAD (LOCKED V24)
     function submitScratchpad() { db.ref('scratchpad').push({ id:document.getElementById('padId').value, mental:document.getElementById('padMental').value, complaint:document.getElementById('padComplaint').value, v1:document.getElementById('padV1').value, v2:document.getElementById('padV2').value, v3:document.getElementById('padV3').value }); }
     db.ref('scratchpad').on('value', s => { const se = document.getElementById('scratchpadEntries'); se.innerHTML = ''; const d = s.val(); for (let k in d) { const e = d[k]; se.innerHTML = `<div class="burn-entry"><strong>ID: ${e.id}</strong><br>Vitals: ${e.v1} | ${e.v2} | ${e.v3}</div>` + se.innerHTML; } });
 
-    // ROSTER & CALLS LOGIC
+    // ROSTER & CALLS (LOCKED V24)
     db.ref('roster').on('value', s => { const rb = document.getElementById('rosterBody'); rb.innerHTML=''; const d = s.val(); for (let k in d) { const m = d[k]; rb.innerHTML += `<tr><td>${m.id||''}</td><td>${m.rank||''}</td><td>${m.name}</td><td><a href="tel:${m.phone}">📞</a></td></tr>`; } });
     db.ref('calls').on('value', s => { const cb = document.getElementById('callListTable'); cb.innerHTML=''; const d = s.val(); const g = {}; for (let k in d) { const c = d[k]; if(!g[c.cat]) g[c.cat] = []; g[c.cat].push(c); } for(let c in g) { cb.innerHTML += `<tr><th colspan="2" class="cat-head">${c}</th></tr>`; g[c].forEach(x => cb.innerHTML += `<tr><td>${x.name}</td><td><a href="tel:${x.phone}">${x.phone}</a></td></tr>`); } });
 
-    // GEAR PORTAL LOGIC
+    // GEAR PORTAL (LOCKED V24)
     function submitGearTab1() { db.ref('gearTracking').push({ type:"ASSIGN", name:document.getElementById('gName1').value, sHelm:document.getElementById('sHelm').value, sJack:document.getElementById('sJack').value, sPant:document.getElementById('sPant').value, sBoot:document.getElementById('sBoot').value, bHelm:document.getElementById('bHelm').value, bJack:document.getElementById('bJack').value }); }
     function submitGearTab2() { db.ref('gearTracking').push({ type:"NOTE", notes:document.getElementById('gMiscNotes').value }); }
     db.ref('gearTracking').on('value', s => { const ge = document.getElementById('gearEntries'); ge.innerHTML=''; const d = s.val(); for (let k in d) { const e = d[k]; ge.innerHTML = `<div class="burn-entry">${e.type}: ${e.name || e.notes}</div>` + ge.innerHTML; } });
