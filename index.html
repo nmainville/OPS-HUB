@@ -11,8 +11,6 @@
     <style>
         body { font-family: -apple-system, system-ui; background: #000 url('flag.jpg') no-repeat center center fixed; background-size: cover; color: white; text-align: center; margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; }
         .container { max-width: 500px; margin: auto; }
-        
-        /* HEADER */
         .header { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; position: relative; }
         .title-container { display: flex; flex-direction: column; align-items: center; }
         .header h1 { margin: 0; font-size: 1.8em; letter-spacing: 1px; }
@@ -20,37 +18,19 @@
         .header img { width: 45px; height: 45px; object-fit: contain; }
         .live-weather { position: absolute; bottom: 8px; right: 15px; color: #d32f2f; font-size: 0.75em; font-weight: bold; letter-spacing: 1px; }
         .live-time { position: absolute; bottom: 8px; left: 15px; color: #d32f2f; font-size: 0.75em; font-weight: bold; letter-spacing: 1px; }
-        
-        /* BUTTONS & GRID */
         h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { color: white; padding: 18px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.85em; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
         .btn img { width: 38px; height: 38px; margin-bottom: 8px; border-radius: 5px; object-fit: contain; }
         .red-btn { background: #d32f2f !important; } .blue-btn { background: #1e3a8a !important; } .grey-btn { background: #262626 !important; }
         .full-width { grid-column: span 2; } .hidden { display: none !important; }
-        .big-icon { width: 60px !important; height: 60px !important; }
-
-        /* SUB-MENUS */
         .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; }
         .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
-        
-        /* INPUTS & TABLES */
         textarea, input { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
         table { width: 100%; color: white; font-size: 0.72em; border-collapse: collapse; margin-top: 10px; }
         td, th { border: 1px solid #444; padding: 10px 4px; text-align: left; }
-        tr:nth-child(even) { background: rgba(255,255,255,0.05); }
-        .cat-head { background: #444; color: #fff; font-weight: bold; padding: 5px; text-align: center; }
-
-        .tab-btn { background: #333; color: white; border: none; padding: 12px; border-radius: 8px 8px 0 0; cursor: pointer; flex: 1; margin-right: 2px; font-weight: bold; }
-        .tab-btn.active { background: #d32f2f; }
-        .tab-content { display: none; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 0 8px 8px 8px; margin-bottom: 20px; }
-        .tab-content.active { display: block; }
-        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-
         .burn-entry { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; margin-bottom: 10px; text-align: left; border-left: 5px solid #d32f2f; }
         .small-btn { padding: 8px 12px; border-radius: 6px; border: none; color: white; font-size: 0.8em; font-weight: bold; cursor: pointer; flex: 1; margin-top: 8px;}
-
-        /* PRINT STYLES */
         .print-only-doc { display: none; }
         @media print {
             body * { visibility: hidden; }
@@ -60,14 +40,10 @@
             .doc-header { text-align: center; border-bottom: 2px solid black; padding-bottom: 20px; margin-bottom: 30px; }
             .doc-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 18px; }
             .doc-line { border-bottom: 1px solid black; display: inline-block; padding: 0 10px; min-width: 200px; font-family: monospace; }
-            body.print-top-only #cert-bottom-doc { display: none !important; }
-            body.print-bottom-only #cert-top-doc { display: none !important; }
-            body.print-bottom-only .doc-header { display: none !important; }
         }
     </style>
 </head>
 <body>
-
 <div class="container">
     <div id="main-view">
         <div class="header">
@@ -77,165 +53,91 @@
             <img src="redblueflag.png" alt="Flag">
             <div class="live-weather" id="liveWx">--°F</div>
         </div>
-
         <h4>Active Response</h4>
         <div class="btn-grid">
             <a onclick="smartLink('iar://', 'https://www.iarservices.com/')" class="btn red-btn"><img src="IAR.png">IaR App</a>
             <a href="googlechromes://app.emergencynetworking.com/login" class="btn red-btn"><img src="EN.png">Emerg Network</a>
             <a onclick="toggleView('burn-view')" class="btn red-btn full-width"><img src="flame.png"> Burn Log</a>
         </div>
-
         <h4>Medical Tools</h4>
         <div class="btn-grid">
             <a onclick="toggleView('scratchpad')" class="btn red-btn full-width"><img src="tacmed.png">Patient Scratchpad</a>
-            <a href="https://www.mass.gov/lists/emergency-medical-services-statewide-treatment-protocols" target="_blank" class="btn red-btn"><img src="tacmed.png">MA Protocols</a>
-            <a onclick="toggleView('hospitals')" class="btn red-btn"><img src="hospital.png">Hospital Lines</a>
+            <a onclick="toggleView('hospitals')" class="btn red-btn full-width"><img src="hospital.png">Hospital Lines</a>
         </div>
-
-        <h4>Fire Prevention & Inspections</h4>
+        <h4>Fire Prevention</h4>
         <div class="btn-grid">
-            <a href="Smoke_Requirements.pdf" target="_blank" class="btn red-btn"><img src="smoke.png">Smoke Specs</a>
-            <a onclick="toggleView('fees')" class="btn red-btn"><img src="fee.png">Inspection Fees</a>
             <a onclick="toggleView('smoke-cert-view')" class="btn red-btn full-width"><img src="smoke.png">Fillable Cert (FP-007-C)</a>
-            <a href="https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter148" target="_blank" class="btn red-btn full-width"><span>⚖️</span> MGL Ch. 148</a>
         </div>
-
         <h4>Local Departments</h4>
         <div class="btn-grid">
-            <a href="https://www.townofpalmer.com/palmerfire" target="_blank" class="btn grey-btn"><img src="palmer.png">Palmer FD</a>
-            <a href="https://www.townofpalmer.com/bondsvillefire" target="_blank" class="btn grey-btn"><img src="bondsville.png">Bondsville FD</a>
-            <a href="https://www.townofpalmer.com/?SEC=98D8F89E-9FF3-49B5-9C65-AEDF8D0F88FA" target="_blank" class="btn grey-btn"><img src="threeriverspatch.png">Three Rivers FD</a>
-            <a onclick="toggleView('roster-view')" class="btn grey-btn"><img src="bondsville.png">BFD ROSTER</a>
+            <a onclick="toggleView('roster-view')" class="btn grey-btn full-width"><img src="bondsville.png">BFD ROSTER</a>
         </div>
-
-        <h4>Field Resources</h4>
-        <div class="btn-grid">
-            <a onclick="toggleView('emergency-list')" class="btn blue-btn"><img src="contacs.png">Call List</a>
-            <a href="tel:4132838792" class="btn blue-btn"><img src="disp.png"> Dispatch</a>
-            <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn"><img src="zello.png">Zello Radio</a>
-            <a href="https://hosting.tighebond.com/palmerma_Public/" target="_blank" class="btn blue-btn"><img src="gis.png">Palmer GIS</a>
-            <a onclick="smartLink('shortcuts://run-shortcut?name=OpenERG', 'https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/ERG2024-Eng-Web-a.pdf')" class="btn blue-btn"><img src="erg.png">ERG 2024</a>
-            <a onclick="toggleView('utilities')" class="btn blue-btn"><img src="utilities.png"> Utilities</a>
-            <a href="tel:8883041133" class="btn blue-btn"><img src="hazmatresponse.png" class="big-icon">Hazmat Activation</a>
-            <a onclick="smartLink('weather://', 'https://weather.com/')" class="btn blue-btn"><img src="weather.png">Weather</a>
-        </div>
-
-        <h4>Wellness & Peer Support</h4>
-        <div class="btn-grid">
-            <a href="https://www.iaffrecoverycenter.com/" target="_blank" class="btn red-btn"><img src="iaff.png">IAFF Wellness</a>
-            <a href="https://www.nvfc.org/programs/share-the-load-program/" target="_blank" class="btn red-btn"><img src="sharetheload.png">Share The Load</a>
-        </div>
-
         <h4>Logistics & Admin</h4>
         <div class="btn-grid">
-            <a onclick="toggleView('education')" class="btn grey-btn"><img src="learning.png">Training Portal</a>
-            <a onclick="openAdmin()" class="btn grey-btn"><img src="admin.png"> ADMIN PORTAL</a>
             <a onclick="toggleView('gear-view')" class="btn grey-btn full-width"><img src="firegear.png">Gear Portal</a>
+            <a onclick="openAdmin()" class="btn grey-btn full-width">ADMIN PORTAL</a>
         </div>
-
         <div id="versionStamp" style="text-align: center; margin-top: 40px; font-size: 10px; color: #444;">APP VERSION: LOADING...</div>
     </div>
 
     <div id="smoke-cert-view" class="hidden sub-menu">
-        <h3 class="print-hide" style="color: #d32f2f;">Smoke / CO Certificate</h3>
-        <div class="btn-grid print-hide" style="margin-bottom: 15px;">
-            <button class="nav-btn full-width" style="background:#444;" onclick="printSmokeCert('full')">🖨️ PDF Full Form</button>
-            <button class="nav-btn" style="background:#444;" onclick="printSmokeCert('top')">🖨️ PDF App (Top)</button>
-            <button class="nav-btn" style="background:#444;" onclick="printSmokeCert('bottom')">🖨️ PDF Cert (Bottom)</button>
-        </div>
-        <div class="print-hide">
-            <input type="text" id="certCity" placeholder="City or Town">
-            <input type="text" id="certDate" placeholder="Date">
-            <button class="nav-btn" style="margin-top:0; margin-bottom:10px; background:#1e3a8a; padding: 8px;" onclick="stampCertToday()">📅 Auto-Fill Today</button>
-            <input type="text" id="certLoc" placeholder="Location">
-            <input type="text" id="certOwner" placeholder="Owner">
-            <div class="input-grid"><input type="text" id="certUnits" placeholder="Units"><input type="text" id="certFee" placeholder="Fee"></div>
-            <input type="text" id="certApplicant" placeholder="Applicant Sign">
-            <div class="input-grid"><input type="text" id="certInspDate" placeholder="Insp. Date"><input type="text" id="certInspector" placeholder="Inspector"></div>
-            <div class="input-grid"><input type="text" id="certTitle" placeholder="Title/Rank"><input type="text" id="certIssueDate" placeholder="Issue Date"></div>
-            <button class="nav-btn" style="background:#2e7d32;" onclick="submitSmokeCert()">Add to Log</button>
-        </div>
-        <div class="print-only-doc">
-            <div class="doc-header"><h2>Commonwealth of Massachusetts</h2><h3>Certificate of Compliance</h3></div>
-            <div id="cert-top-doc">
-                <div class="doc-row"><span>City: <span class="doc-line" id="ptCity"></span></span><span>Date: <span class="doc-line" id="ptDate"></span></span></div>
-                <div class="doc-row"><span>Location: <span class="doc-line" id="ptLoc" style="width:300px;"></span></span></div>
-                <div class="doc-row"><span>Owner: <span class="doc-line" id="ptOwner"></span></span></div>
-            </div>
-            <div id="cert-bottom-doc" style="margin-top:40px; border-top:2px dashed #000; padding-top:20px;">
-                <h3 style="text-align:center;">OFFICIAL CERTIFICATE</h3>
-                <div class="doc-row"><span>Inspector: <span class="doc-line" id="ptInspector"></span></span><span>Rank: <span class="doc-line" id="ptTitle"></span></span></div>
-            </div>
-        </div>
-        <div id="smokeCertEntries" class="print-hide"></div>
-        <button class="nav-btn print-hide" onclick="toggleView('main-view')">Back</button>
+        <h3>Smoke / CO Certificate</h3>
+        <input type="text" id="certLoc" placeholder="Location"><input type="text" id="certInspector" placeholder="Inspector">
+        <button class="nav-btn" style="background:#2e7d32;" onclick="submitSmokeCert()">Post to Log</button>
+        <div id="smokeCertEntries"></div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="burn-view" class="hidden sub-menu">
         <h3>BFD Burn Log</h3>
-        <input type="text" id="burnName" placeholder="Resident Name">
-        <input type="text" id="burnAddr" placeholder="Address">
-        <input type="text" id="burnPhone" placeholder="Phone">
-        <button class="nav-btn" onclick="submitBurn()">Post to Log</button>
+        <input type="text" id="burnName" placeholder="Name"><input type="text" id="burnAddr" placeholder="Address">
+        <button class="nav-btn" onclick="submitBurn()">Post</button>
         <div id="sharedEntries"></div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="scratchpad" class="hidden sub-menu">
         <h3>Patient Scratchpad</h3>
-        <input type="text" id="padId" placeholder="Run #">
-        <textarea id="padComplaint" placeholder="Chief Complaint / Narrative"></textarea>
-        <input type="text" id="padVitals" placeholder="Vitals: BP | HR | RR | O2">
-        <button class="nav-btn" onclick="submitScratchpad()">Save Patient Data</button>
+        <input type="text" id="padId" placeholder="Run #"><textarea id="padComplaint" placeholder="Complaint"></textarea>
+        <button class="nav-btn" onclick="submitScratchpad()">Save</button>
         <div id="scratchpadEntries"></div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="roster-view" class="hidden sub-menu">
-        <h3>Personnel Directory</h3>
-        <table id="rosterTable"><thead><tr><th>Rank</th><th>Name</th><th>Call</th></tr></thead><tbody id="rosterBody"></tbody></table>
-        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-    </div>
-
-    <div id="emergency-list" class="hidden sub-menu">
-        <h3>Emergency Call List</h3>
-        <table id="callListTable"></table>
-        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-    </div>
-
-    <div id="utilities" class="hidden sub-menu">
-        <h3>Emergency Utilities</h3>
-        <div class="btn-grid">
-            <a href="tel:8772473602" class="btn blue-btn">NatGrid P1</a>
-            <a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a>
-        </div>
+        <h3>BFD Roster</h3>
+        <table><thead><tr><th>Rank</th><th>Name</th></tr></thead><tbody id="rosterBody"></tbody></table>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="hospitals" class="hidden sub-menu">
-        <h3>Medical Facilities</h3>
-        <div class="btn-grid">
-            <a href="tel:4132833611" class="btn red-btn">Wing Memorial</a>
-            <a href="tel:4137940000" class="btn red-btn">Baystate Med</a>
-        </div>
+        <h3>Hospitals</h3>
+        <div class="btn-grid"><a href="tel:4132833611" class="btn red-btn">Wing</a><a href="tel:4137940000" class="btn red-btn">Baystate</a></div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="gear-view" class="hidden sub-menu">
-        <h3>Gear Tracking Portal</h3>
-        <input type="text" id="gearName" placeholder="Name">
-        <input type="text" id="gearItem" placeholder="Item/SN">
-        <button class="nav-btn" onclick="submitGear()">Log Assignment</button>
+        <h3>Gear Portal</h3>
+        <input type="text" id="gearName" placeholder="Name"><input type="text" id="gearItem" placeholder="Item/SN">
+        <button class="nav-btn" onclick="submitGear()">Log</button>
         <div id="gearEntries"></div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="admin-view" class="hidden sub-menu">
-        <h3>Admin Controls</h3>
+        <h3>Admin Portal</h3>
         <p>Manage Database content here.</p>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
+    <div class="print-only-doc">
+        <div class="doc-header"><h2>Commonwealth of Massachusetts</h2><h3>Certificate of Compliance</h3></div>
+        <div id="cert-top-doc"><div class="doc-row"><span>Location: <span class="doc-line" id="ptLoc"></span></span></div></div>
+        <div id="cert-bottom-doc" style="margin-top:40px; border-top:2px dashed #000; padding-top:20px;">
+            <h3 style="text-align:center;">OFFICIAL CERTIFICATE</h3>
+            <div class="doc-row"><span>Inspector: <span class="doc-line" id="ptInspector"></span></span></div>
+        </div>
+    </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
@@ -243,55 +145,42 @@
 <script>
     const firebaseConfig = { apiKey: "AIzaSyA6WXoG46CNznnS21Q6fannxDo9kn8l4iY", authDomain: "ops-hub-burnlog.firebaseapp.com", databaseURL: "https://ops-hub-burnlog-default-rtdb.firebaseio.com", projectId: "ops-hub-burnlog", storageBucket: "ops-hub-burnlog.firebasestorage.app", messagingSenderId: "922294998280", appId: "1:922294998280:web:29401e54dd8921cd4208bd" };
     firebase.initializeApp(firebaseConfig);
-    const dbSmokeCert = firebase.database().ref('smokeCert'), dbBurn = firebase.database().ref('burnLog'), dbScratchpad = firebase.database().ref('scratchpad'), dbRoster = firebase.database().ref('roster'), dbCalls = firebase.database().ref('calls'), dbGear = firebase.database().ref('gearTracking');
+    const db = firebase.database();
 
     function updateTime() { document.querySelectorAll('#liveTime').forEach(el => el.innerText = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})); }
     setInterval(updateTime, 1000); updateTime();
-
-    async function getWx() {
-        try {
-            const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=42.1584&longitude=-72.3287&current=temperature_2m&temperature_unit=fahrenheit');
-            const d = await r.json(); 
-            document.querySelectorAll('#liveWx').forEach(el => el.innerText = Math.round(d.current.temperature_2m) + "°F");
-        } catch(e) { document.querySelectorAll('#liveWx').forEach(el => el.innerText = "WXR --"); }
-    }
+    
+    async function getWx() { try { const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=42.1584&longitude=-72.3287&current=temperature_2m&temperature_unit=fahrenheit'); const d = await r.json(); document.querySelectorAll('#liveWx').forEach(el => el.innerText = Math.round(d.current.temperature_2m) + "°F"); } catch(e) {} }
     getWx(); setInterval(getWx, 1800000);
 
-    function toggleView(v) { document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); document.getElementById(v).classList.remove('hidden'); window.scrollTo(0,0); }
+    function toggleView(v) { document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); document.getElementById(v).classList.remove('hidden'); }
     function smartLink(a, w) { window.location.href=a; setTimeout(()=> { if(!document.hidden) window.location.href=w; }, 2500); }
     function openAdmin() { if (prompt("Admin Password:") === "BFD30") toggleView('admin-view'); else alert("Unauthorized."); }
-    function stampCertToday() { const d = new Date(); document.getElementById('certDate').value = (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear(); }
 
     function printSmokeCert(s, data = null) {
-        if (!data) data = { city: document.getElementById('certCity').value, date: document.getElementById('certDate').value, loc: document.getElementById('certLoc').value, inspector: document.getElementById('certInspector').value, title: document.getElementById('certTitle').value };
-        document.getElementById('ptCity').innerText = data.city || "";
-        document.getElementById('ptDate').innerText = data.date || "";
+        if (!data) data = { loc: document.getElementById('certLoc').value, inspector: document.getElementById('certInspector').value };
         document.getElementById('ptLoc').innerText = data.loc || "";
         document.getElementById('ptInspector').innerText = data.inspector || "";
-        document.getElementById('ptTitle').innerText = data.title || "";
-        if (s === 'top') document.body.classList.add('print-top-only');
         if (s === 'bottom') document.body.classList.add('print-bottom-only');
-        setTimeout(() => { window.print(); document.body.classList.remove('print-top-only', 'print-bottom-only'); }, 500);
+        setTimeout(() => { window.print(); document.body.classList.remove('print-bottom-only'); }, 500);
     }
 
-    function submitSmokeCert() { const d = { loc:document.getElementById('certLoc').value, owner:document.getElementById('certOwner').value }; if(d.loc) dbSmokeCert.push(d); }
-    dbSmokeCert.on('value', (s) => { const ce = document.getElementById('smokeCertEntries'); ce.innerHTML = ''; const data = s.val(); for (let k in data) { const e = data[k]; ce.innerHTML = `<div class="burn-entry"><strong>${e.loc}</strong><br><button class="small-btn" onclick='printSmokeCert("bottom", ${JSON.stringify(e)})'>📄 Share PDF</button></div>` + ce.innerHTML; } });
+    function submitSmokeCert() { const d = { loc:document.getElementById('certLoc').value, inspector:document.getElementById('certInspector').value }; if(d.loc) db.ref('smokeCert').push(d); }
+    db.ref('smokeCert').on('value', (s) => { const ce = document.getElementById('smokeCertEntries'); ce.innerHTML = ''; const data = s.val(); for (let k in data) { const e = data[k]; ce.innerHTML = `<div class="burn-entry"><strong>${e.loc}</strong><br><button class="small-btn" onclick='printSmokeCert("bottom", ${JSON.stringify(e)})'>📄 Share PDF</button></div>` + ce.innerHTML; } });
 
-    function submitBurn() { const d = { name:document.getElementById('burnName').value, addr:document.getElementById('burnAddr').value }; if(d.addr) dbBurn.push(d); }
-    dbBurn.on('value', (s) => { const de = document.getElementById('sharedEntries'); de.innerHTML = ''; const data = s.val(); for (let k in data) { const e = data[k]; de.innerHTML = `<div class="burn-entry"><strong>${e.name}</strong><br>${e.addr}</div>` + de.innerHTML; } });
+    function submitBurn() { const d = { name:document.getElementById('burnName').value, addr:document.getElementById('burnAddr').value }; if(d.addr) db.ref('burnLog').push(d); }
+    db.ref('burnLog').on('value', (s) => { const de = document.getElementById('sharedEntries'); de.innerHTML = ''; const data = s.val(); for (let k in data) { const e = data[k]; de.innerHTML = `<div class="burn-entry"><strong>${e.name}</strong><br>${e.addr}</div>` + de.innerHTML; } });
 
-    function submitScratchpad() { const d = { id:document.getElementById('padId').value, complaint:document.getElementById('padComplaint').value }; if(d.id) dbScratchpad.push(d); }
-    dbScratchpad.on('value', (s) => { const se = document.getElementById('scratchpadEntries'); se.innerHTML = ''; const data = s.val(); for (let k in data) { const e = data[k]; se.innerHTML = `<div class="burn-entry"><strong>ID: ${e.id}</strong><br>${e.complaint}</div>` + se.innerHTML; } });
+    function submitScratchpad() { const d = { id:document.getElementById('padId').value, complaint:document.getElementById('padComplaint').value }; if(d.id) db.ref('scratchpad').push(d); }
+    db.ref('scratchpad').on('value', (s) => { const se = document.getElementById('scratchpadEntries'); se.innerHTML = ''; const data = s.val(); for (let k in data) { const e = data[k]; se.innerHTML = `<div class="burn-entry"><strong>ID: ${e.id}</strong><br>${e.complaint}</div>` + se.innerHTML; } });
 
-    dbRoster.on('value', (s) => { const rb = document.getElementById('rosterBody'); rb.innerHTML=''; const data = s.val(); for (let k in data) { const m = data[k]; rb.innerHTML += `<tr><td>${m.rank||''}</td><td>${m.name}</td><td><a href="tel:${m.phone}">📞</a></td></tr>`; } });
-    dbCalls.on('value', (s) => { const cb = document.getElementById('callListTable'); cb.innerHTML=''; const data = s.val(); for (let k in data) { const c = data[k]; cb.innerHTML += `<tr><td>${c.name}</td><td><a href="tel:${c.phone}">${c.phone}</a></td></tr>`; } });
-    
-    function submitGear() { const d = { name:document.getElementById('gearName').value, item:document.getElementById('gearItem').value }; if(d.name) dbGear.push(d); }
-    dbGear.on('value', (s) => { const ge = document.getElementById('gearEntries'); ge.innerHTML = ''; const data = s.val(); for (let k in data) { const e = data[k]; ge.innerHTML = `<div class="burn-entry"><strong>${e.name}</strong>: ${e.item}</div>` + ge.innerHTML; } });
+    db.ref('roster').on('value', (s) => { const rb = document.getElementById('rosterBody'); rb.innerHTML=''; const data = s.val(); for (let k in data) { const m = data[k]; rb.innerHTML += `<tr><td>${m.rank||''}</td><td>${m.name}</td></tr>`; } });
+
+    function submitGear() { const d = { name:document.getElementById('gearName').value, item:document.getElementById('gearItem').value }; if(d.name) db.ref('gearTracking').push(d); }
+    db.ref('gearTracking').on('value', (s) => { const ge = document.getElementById('gearEntries'); ge.innerHTML = ''; const data = s.val(); for (let k in data) { const e = data[k]; ge.innerHTML = `<div class="burn-entry"><strong>${e.name}</strong>: ${e.item}</div>` + ge.innerHTML; } });
 
     async function syncVersion() { try { const r = await fetch('/sw.js?cb=' + Date.now()); const t = await r.text(); const m = t.match(/'ops-hub-(v\d+)'/); if (m) document.getElementById('versionStamp').innerText = "APP VERSION: " + m[1].toUpperCase(); } catch(e) {} }
     syncVersion();
-    if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js'); }); }
 </script>
 </body>
 </html>
