@@ -54,28 +54,32 @@
         .admin-controls { display: flex; gap: 8px; margin-top: 10px; }
         .small-btn { padding: 8px 12px; border-radius: 6px; border: none; color: white; font-size: 0.8em; font-weight: bold; cursor: pointer; flex: 1; margin-top: 8px;}
 
-        /* DOCUMENT CLONE (Hidden on Screen, Shows on Print) */
+        /* DOCUMENT CLONE (Hidden on Screen) */
         .print-only-doc { display: none; }
 
-        /* PRINT STYLES - ENGINEERED FOR PERFECT DOCUMENTS */
+        /* IOS GOLD STANDARD PRINT FIX */
         @media print {
-            body { background: white !important; color: black !important; padding: 0 !important; font-family: 'Times New Roman', serif; }
-            .container { max-width: 100%; margin: 0; padding: 0; }
+            /* Hide absolutely everything in the app */
+            body * { visibility: hidden; }
             
-            /* Hide the entire mobile app UI */
-            .header, h4, .btn-grid, .nav-btn, .print-hide, .sub-menu { display: none !important; }
+            /* Remove background graphics */
+            body { background: white !important; padding: 0 !important; margin: 0 !important; }
             
-            /* Explicitly show the Burn Log/Scratchpad entries ONLY if they are active, hide otherwise */
-            #smoke-cert-view.hidden, #scratchpad.hidden, #burn-view.hidden { display: none !important; }
+            /* Un-hide the document and its contents */
+            .print-only-doc, .print-only-doc * { visibility: visible; }
             
-            /* If we are in the Smoke Cert View, trigger the Document Clone */
-            #smoke-cert-view:not(.hidden) .print-only-doc { 
+            /* Pin the document to the very top left of the page */
+            .print-only-doc { 
                 display: block !important; 
+                position: absolute; 
+                left: 0; 
+                top: 0; 
+                width: 100%; 
+                padding: 20px; 
                 color: black; 
                 background: white; 
-                padding: 40px; 
-                text-align: left; 
-                line-height: 1.6;
+                font-family: 'Times New Roman', serif; 
+                box-sizing: border-box;
             }
 
             .doc-header { text-align: center; border-bottom: 2px solid black; padding-bottom: 20px; margin-bottom: 30px; }
@@ -510,9 +514,10 @@
     function openAdmin() { if (prompt("Enter Admin Password:") === "BFD30") toggleView('admin-view'); else alert("Unauthorized."); }
 
     // ==============================================
-    // SMOKE CO CERT LOGIC (FULLY MAPPED)
+    // SMOKE CO CERT LOGIC (TIMED PRINT FIX FOR IOS)
     // ==============================================
     function printSmokeCert(section) {
+        // Map user inputs to the Official Document Clone
         document.getElementById('ptCity').innerText = document.getElementById('certCity').value || " ";
         document.getElementById('ptDate').innerText = document.getElementById('certDate').value || " ";
         document.getElementById('ptLoc').innerText = document.getElementById('certLoc').value || " ";
@@ -525,12 +530,19 @@
         document.getElementById('ptTitle').innerText = document.getElementById('certTitle').value || " ";
         document.getElementById('ptIssueDate').innerText = document.getElementById('certIssueDate').value || " ";
 
+        // Set up the sections
         if (section === 'top') document.body.classList.add('print-top-only');
         if (section === 'bottom') document.body.classList.add('print-bottom-only');
         
-        window.print();
-        
-        document.body.classList.remove('print-top-only', 'print-bottom-only');
+        // GIVE IOS 0.5 SECONDS TO DRAW THE DOM BEFORE PRINTING
+        setTimeout(() => {
+            window.print();
+            
+            // Clean up classes after print menu closes
+            setTimeout(() => {
+                document.body.classList.remove('print-top-only', 'print-bottom-only');
+            }, 1000);
+        }, 500);
     }
 
     function stampCertToday() { const d = new Date(); document.getElementById('certDate').value = (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear(); }
