@@ -27,6 +27,8 @@
         .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; }
         .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
         textarea, input { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
+        table { width: 100%; color: white; font-size: 0.72em; border-collapse: collapse; margin-top: 10px; }
+        td, th { border: 1px solid #444; padding: 10px 4px; text-align: left; }
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .burn-entry { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; margin-bottom: 10px; text-align: left; border-left: 5px solid #d32f2f; }
         .small-btn { padding: 8px 12px; border-radius: 6px; border: none; color: white; font-size: 0.8em; font-weight: bold; cursor: pointer; flex: 1; margin-top: 8px;}
@@ -55,16 +57,56 @@
             <img src="redblueflag.png" alt="Flag">
             <div class="live-weather" id="liveWx">--°F</div>
         </div>
+
         <h4>Active Response</h4>
         <div class="btn-grid">
             <a onclick="smartLink('iar://', 'https://www.iarservices.com/')" class="btn red-btn"><img src="IAR.png">IaR App</a>
             <a href="googlechromes://app.emergencynetworking.com/login" class="btn red-btn"><img src="EN.png">Emerg Network</a>
             <a onclick="toggleView('burn-view')" class="btn red-btn full-width"><img src="flame.png"> Burn Log</a>
         </div>
-        <h4>Fire Prevention</h4>
+
+        <h4>Medical Tools</h4>
         <div class="btn-grid">
-            <a onclick="toggleView('smoke-cert-view')" class="btn red-btn full-width"><img src="smoke.png">Fillable Cert (FP-007-C)</a>
+            <a onclick="toggleView('scratchpad')" class="btn red-btn full-width"><img src="tacmed.png">Patient Scratchpad</a>
+            <a href="https://www.mass.gov/lists/emergency-medical-services-statewide-treatment-protocols" target="_blank" class="btn red-btn"><img src="tacmed.png">MA Protocols</a>
+            <a onclick="toggleView('hospitals')" class="btn red-btn"><img src="hospital.png">Hospital Lines</a>
         </div>
+
+        <h4>Fire Prevention & Inspections</h4>
+        <div class="btn-grid">
+            <a href="Smoke_Requirements.pdf" target="_blank" class="btn red-btn"><img src="smoke.png">Smoke Specs</a>
+            <a onclick="toggleView('fees')" class="btn red-btn"><img src="fee.png">Inspection Fees</a>
+            <a onclick="toggleView('smoke-cert-view')" class="btn red-btn full-width"><img src="smoke.png">Fillable Cert (FP-007-C)</a>
+            <a href="https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter148" target="_blank" class="btn red-btn full-width"><span>⚖️</span> MGL Ch. 148</a>
+        </div>
+
+        <h4>Local Departments</h4>
+        <div class="btn-grid">
+            <a href="https://www.townofpalmer.com/palmerfire" target="_blank" class="btn grey-btn"><img src="palmer.png">Palmer FD</a>
+            <a href="https://www.townofpalmer.com/bondsvillefire" target="_blank" class="btn grey-btn"><img src="bondsville.png">Bondsville FD</a>
+            <a href="https://www.townofpalmer.com/?SEC=98D8F89E-9FF3-49B5-9C65-AEDF8D0F88FA" target="_blank" class="btn grey-btn"><img src="threeriverspatch.png">Three Rivers FD</a>
+            <a onclick="toggleView('roster-view')" class="btn grey-btn"><img src="bondsville.png">BFD ROSTER</a>
+        </div>
+
+        <h4>Field Resources</h4>
+        <div class="btn-grid">
+            <a onclick="toggleView('emergency-list')" class="btn blue-btn"><img src="contacs.png">Call List</a>
+            <a href="tel:4132838792" class="btn blue-btn"><img src="disp.png"> Dispatch</a>
+            <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn"><img src="zello.png">Zello Radio</a>
+            <a href="https://hosting.tighebond.com/palmerma_Public/" target="_blank" class="btn blue-btn"><img src="gis.png">Palmer GIS</a>
+            <a onclick="smartLink('shortcuts://run-shortcut?name=OpenERG', 'https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/ERG2024-Eng-Web-a.pdf')" class="btn blue-btn"><img src="erg.png">ERG 2024</a>
+            <a onclick="toggleView('utilities')" class="btn blue-btn"><img src="utilities.png"> Utilities</a>
+            <a href="tel:8883041133" class="btn blue-btn"><img src="hazmatresponse.png" class="big-icon">Hazmat Activation</a>
+            <a onclick="smartLink('weather://', 'https://weather.com/')" class="btn blue-btn"><img src="weather.png">Weather</a>
+        </div>
+
+        <h4>Logistics & Admin</h4>
+        <div class="btn-grid">
+            <a onclick="toggleView('education')" class="btn grey-btn"><img src="learning.png">Training Portal</a>
+            <a onclick="openAdmin()" class="btn grey-btn"><img src="admin.png"> ADMIN PORTAL</a>
+            <a onclick="toggleView('gear-view')" class="btn grey-btn full-width"><img src="firegear.png">Gear Portal</a>
+        </div>
+
         <div id="versionStamp" style="text-align: center; margin-top: 40px; font-size: 10px; color: #444;">APP VERSION: LOADING...</div>
     </div>
 
@@ -72,6 +114,8 @@
         <h3 class="print-hide" style="color: #d32f2f;">Smoke / CO Certificate</h3>
         <div class="btn-grid print-hide" style="margin-bottom: 15px;">
             <button class="nav-btn full-width" style="background:#444;" onclick="printSmokeCert('full')">🖨️ PDF Full Form</button>
+            <button class="nav-btn" style="background:#444;" onclick="printSmokeCert('top')">🖨️ PDF App (Top)</button>
+            <button class="nav-btn" style="background:#444;" onclick="printSmokeCert('bottom')">🖨️ PDF Cert (Bottom)</button>
         </div>
         <div class="print-hide">
             <input type="text" id="certCity" placeholder="City or Town">
@@ -98,7 +142,20 @@
         <div id="smokeCertEntries" class="print-hide"></div>
         <button class="nav-btn print-hide" onclick="toggleView('main-view')">Back</button>
     </div>
-</div>
+
+    <div id="burn-view" class="hidden sub-menu">
+        <h3>BFD Burn Log</h3>
+        <div class="print-hide">
+            <input type="text" id="burnDate" placeholder="Date">
+            <input type="text" id="burnName" placeholder="Name">
+            <input type="text" id="burnAddr" placeholder="Address">
+            <button class="nav-btn" onclick="submitBurn()">Post</button>
+        </div>
+        <div id="sharedEntries"></div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
+    </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
@@ -106,20 +163,27 @@
     const firebaseConfig = { apiKey: "AIzaSyA6WXoG46CNznnS21Q6fannxDo9kn8l4iY", authDomain: "ops-hub-burnlog.firebaseapp.com", databaseURL: "https://ops-hub-burnlog-default-rtdb.firebaseio.com", projectId: "ops-hub-burnlog", storageBucket: "ops-hub-burnlog.firebasestorage.app", messagingSenderId: "922294998280", appId: "1:922294998280:web:29401e54dd8921cd4208bd" };
     firebase.initializeApp(firebaseConfig);
     const dbSmokeCert = firebase.database().ref('smokeCert');
+    const dbBurn = firebase.database().ref('burnLog');
 
-    function updateTime() { document.getElementById('liveTime').innerText = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); }
+    function updateTime() { 
+        const now = new Date();
+        document.querySelectorAll('#liveTime').forEach(el => el.innerText = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})); 
+    }
     setInterval(updateTime, 1000); updateTime();
 
     async function getWx() {
         try {
             const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=42.1584&longitude=-72.3287&current=temperature_2m&temperature_unit=fahrenheit');
-            const d = await r.json(); document.getElementById('liveWx').innerText = Math.round(d.current.temperature_2m) + "°F";
-        } catch(e) { document.getElementById('liveWx').innerText = "WXR --"; }
+            const d = await r.json(); 
+            document.querySelectorAll('#liveWx').forEach(el => el.innerText = Math.round(d.current.temperature_2m) + "°F");
+        } catch(e) { document.querySelectorAll('#liveWx').forEach(el => el.innerText = "WXR --"); }
     }
     getWx(); setInterval(getWx, 1800000);
 
-    function toggleView(v) { document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); document.getElementById(v).classList.remove('hidden'); }
-    
+    function toggleView(v) { document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); document.getElementById(v).classList.remove('hidden'); window.scrollTo(0,0); }
+    function smartLink(appUrl, webUrl) { window.location.href=appUrl; setTimeout(()=> { if(!document.hidden) window.location.href=webUrl; }, 2500); }
+    function openAdmin() { if (prompt("Enter Admin Password:") === "BFD30") toggleView('admin-view'); else alert("Unauthorized."); }
+
     function printSmokeCert(section, data = null) {
         if (!data) data = { city: document.getElementById('certCity').value, date: document.getElementById('certDate').value, loc: document.getElementById('certLoc').value, inspector: document.getElementById('certInspector').value, title: document.getElementById('certTitle').value };
         document.getElementById('ptCity').innerText = data.city || "";
