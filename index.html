@@ -125,7 +125,7 @@
             <a onclick="openAdmin()" class="btn grey-btn"><img src="admin.png"> ADMIN PORTAL</a>
         </div>
 
-        <div style="text-align: center; margin-top: 40px; font-size: 10px; color: #444; letter-spacing: 1px;">APP VERSION: V7</div>
+       <div id="versionStamp" style="text-align: center; margin-top: 40px; font-size: 10px; color: #444; letter-spacing: 1px;">APP VERSION: LOADING...</div>
     </div>
 
     <div id="admin-view" class="hidden sub-menu">
@@ -412,7 +412,16 @@
     // NAV
     function toggleView(v) { document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); document.getElementById(v).classList.remove('hidden'); window.scrollTo(0,0); }
     function smartLink(appUrl, webUrl) { window.location.href=appUrl; setTimeout(()=> { if(!document.hidden) window.location.href=webUrl; }, 2500); }
-
+// SMART VERSION SYNC (Reads from sw.js)
+    async function syncVersion() {
+        try {
+            const response = await fetch('/sw.js');
+            const text = await response.text();
+            const match = text.match(/'ops-hub-(v\d+)'/);
+            if (match) document.getElementById('versionStamp').innerText = "APP VERSION: " + match[1].toUpperCase();
+        } catch(e) { document.getElementById('versionStamp').innerText = "APP VERSION: OFFLINE"; }
+    }
+    syncVersion();
 // START OFFLINE MODE (Upgraded with Auto-Refresh)
     if ('serviceWorker' in navigator) {
         let refreshing = false;
