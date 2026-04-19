@@ -1,23 +1,41 @@
-const CACHE_NAME = 'ops-hub-v100-revert';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icon.png',
-  '/flag.jpg',
-  '/bondsville.png'
-];
+const CACHE_NAME = 'ops-hub-v2.1';
 
-self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
+// INSTALL: Force the new worker to take over immediately (No waiting!)
+self.addEventListener('install', (event) => {
+    self.skipWaiting(); 
 });
 
-self.addEventListener('fetch', event => {
-  event.respondWith(caches.match(event.request).then(response => response || fetch(event.request)));
+// ACTIVATE: Wipe out all old versions of the cache permanently
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (cacheName !== CACHE_NAME) {
+                        console.log('Deleting old cache:', cacheName);
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+    self.clients.claim(); // Take control of all open tabs/apps instantly
 });
 
-self.addEventListener('activate', event => {
-  event.waitUntil(caches.keys().then(cacheNames => {
-    return Promise.all(cacheNames.filter(name => name !== CACHE_NAME).map(name => caches.delete(name)));
-  }));
+// FETCH: Network-First Strategy (Always get the newest code if online)
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        fetch(event.request)
+            .then((networkResponse) => {
+                // If the internet works, save a fresh copy to the cache
+                return caches.open(CACHE_NAME).then((cache) => {
+                    cache.put(event.request, networkResponse.clone());
+                    return networkResponse;
+                });
+            })
+            .catch(() => {
+                // If offline (no service), pull from the cache
+                return caches.match(event.request);
+            })
+    );
 });
