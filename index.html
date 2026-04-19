@@ -188,6 +188,10 @@
                 <input type="text" id="certInspDate" placeholder="Inspection Date">
                 <input type="text" id="certInspector" placeholder="Inspector Name">
             </div>
+            <div class="input-grid">
+                <input type="text" id="certTitle" placeholder="Title / Rank">
+                <input type="text" id="certIssueDate" placeholder="Date of Issue">
+            </div>
             
             <button class="nav-btn" style="background:#2e7d32; margin-top:20px;" onclick="submitSmokeCert()">Add to Log</button>
         </div>
@@ -227,6 +231,13 @@
                 <div class="doc-row">
                     <span><strong>Date of Inspection:</strong> <span class="doc-line" id="ptInspDate"></span></span>
                     <span><strong>Inspector:</strong> <span class="doc-line" id="ptInspector"></span></span>
+                </div>
+                <div class="doc-row">
+                    <span><strong>Title / Rank:</strong> <span class="doc-line" id="ptTitle"></span></span>
+                    <span><strong>Date of Issue:</strong> <span class="doc-line" id="ptIssueDate"></span></span>
+                </div>
+                <div class="doc-row" style="margin-top: 40px;">
+                    <span><strong>Signature of Inspector / Designee:</strong> <span class="doc-line" style="width: 350px;"></span></span>
                 </div>
             </div>
         </div>
@@ -499,10 +510,9 @@
     function openAdmin() { if (prompt("Enter Admin Password:") === "BFD30") toggleView('admin-view'); else alert("Unauthorized."); }
 
     // ==============================================
-    // SMOKE CO CERT LOGIC (WITH DOCUMENT CLONE)
+    // SMOKE CO CERT LOGIC (FULLY MAPPED)
     // ==============================================
     function printSmokeCert(section) {
-        // Map user inputs to the Official Document Clone
         document.getElementById('ptCity').innerText = document.getElementById('certCity').value || " ";
         document.getElementById('ptDate').innerText = document.getElementById('certDate').value || " ";
         document.getElementById('ptLoc').innerText = document.getElementById('certLoc').value || " ";
@@ -512,6 +522,8 @@
         document.getElementById('ptApp').innerText = document.getElementById('certApplicant').value || " ";
         document.getElementById('ptInspDate').innerText = document.getElementById('certInspDate').value || " ";
         document.getElementById('ptInspector').innerText = document.getElementById('certInspector').value || " ";
+        document.getElementById('ptTitle').innerText = document.getElementById('certTitle').value || " ";
+        document.getElementById('ptIssueDate').innerText = document.getElementById('certIssueDate').value || " ";
 
         if (section === 'top') document.body.classList.add('print-top-only');
         if (section === 'bottom') document.body.classList.add('print-bottom-only');
@@ -524,11 +536,11 @@
     function stampCertToday() { const d = new Date(); document.getElementById('certDate').value = (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear(); }
     
     function submitSmokeCert() {
-        const city=document.getElementById('certCity').value, date=document.getElementById('certDate').value, loc=document.getElementById('certLoc').value, owner=document.getElementById('certOwner').value, units=document.getElementById('certUnits').value, app=document.getElementById('certApplicant').value, inspDate=document.getElementById('certInspDate').value, fee=document.getElementById('certFee').value, inspector=document.getElementById('certInspector').value;
+        const city=document.getElementById('certCity').value, date=document.getElementById('certDate').value, loc=document.getElementById('certLoc').value, owner=document.getElementById('certOwner').value, units=document.getElementById('certUnits').value, app=document.getElementById('certApplicant').value, inspDate=document.getElementById('certInspDate').value, fee=document.getElementById('certFee').value, inspector=document.getElementById('certInspector').value, title=document.getElementById('certTitle').value, issueDate=document.getElementById('certIssueDate').value;
         
         if(loc && owner) { 
-            dbSmokeCert.push({ city, date, loc, owner, units, app, inspDate, fee, inspector, stamp: new Date().toLocaleString() }); 
-            ['certCity','certDate','certLoc','certOwner','certUnits','certApplicant','certInspDate','certFee','certInspector'].forEach(i=>document.getElementById(i).value=''); 
+            dbSmokeCert.push({ city, date, loc, owner, units, app, inspDate, fee, inspector, title, issueDate, stamp: new Date().toLocaleString() }); 
+            ['certCity','certDate','certLoc','certOwner','certUnits','certApplicant','certInspDate','certFee','certInspector','certTitle','certIssueDate'].forEach(i=>document.getElementById(i).value=''); 
         } else alert("Required fields missing (Location & Owner).");
     }
 
@@ -538,7 +550,7 @@
         for (let k in data) {
             const e = data[k];
             const safeTop = ('APPLICATION\\nLocation: ' + (e.loc||'') + '\\nOwner: ' + (e.owner||'') + '\\nCity: ' + (e.city||'') + '\\nDate: ' + (e.date||'') + '\\nUnits: ' + (e.units||'') + '\\nFee: ' + (e.fee||'') + '\\nApplicant: ' + (e.app||'')).replace(/'/g, '');
-            const safeBottom = ('CERTIFICATE\\nLocation: ' + (e.loc||'') + '\\nInsp Date: ' + (e.inspDate||'') + '\\nInspector: ' + (e.inspector||'')).replace(/'/g, '');
+            const safeBottom = ('CERTIFICATE\\nLocation: ' + (e.loc||'') + '\\nInsp Date: ' + (e.inspDate||'') + '\\nInspector: ' + (e.inspector||'') + '\\nTitle/Rank: ' + (e.title||'') + '\\nIssue Date: ' + (e.issueDate||'')).replace(/'/g, '');
             const safeFull = safeTop + '\\n\\n' + safeBottom;
             
             ce.innerHTML = `<div class="burn-entry" style="border-left: 5px solid #d32f2f;">
@@ -548,6 +560,7 @@
                     <div><b>Owner:</b> ${e.owner || 'N/A'}</div><div><b>City:</b> ${e.city || 'N/A'}</div>
                     <div><b>Units:</b> ${e.units || 'N/A'}</div><div><b>Fee:</b> ${e.fee || 'N/A'}</div>
                     <div><b>Insp Date:</b> ${e.inspDate || 'N/A'}</div><div><b>Inspector:</b> ${e.inspector || 'N/A'}</div>
+                    <div><b>Title:</b> ${e.title || 'N/A'}</div><div><b>Issue Date:</b> ${e.issueDate || 'N/A'}</div>
                 </div>
                 <div style="display:flex; gap:5px; margin-top:10px;">
                     <button class="small-btn print-hide" style="background:rgba(255,255,255,0.2); font-size:0.7em;" onclick="shareData('Smoke App (Top)', \`${safeTop}\`)">📤 Share Top</button>
