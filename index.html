@@ -12,7 +12,7 @@
         body { font-family: -apple-system, system-ui; background: #000 url('flag.jpg') no-repeat center center fixed; background-size: cover; color: white; text-align: center; margin: 0; padding: env(safe-area-inset-top) 15px 60px 15px; }
         .container { max-width: 500px; margin: auto; }
         
-        /* HEADER & UI */
+        /* HEADER */
         .header { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; border-bottom: 2px solid #d32f2f; margin-bottom: 20px; background: rgba(0,0,0,0.85); border-radius: 0 0 15px 15px; position: relative; }
         .title-container { display: flex; flex-direction: column; align-items: center; }
         .header h1 { margin: 0; font-size: 1.8em; letter-spacing: 1px; }
@@ -21,17 +21,26 @@
         .live-weather { position: absolute; bottom: 8px; right: 15px; color: #d32f2f; font-size: 0.75em; font-weight: bold; letter-spacing: 1px; }
         .live-time { position: absolute; bottom: 8px; left: 15px; color: #d32f2f; font-size: 0.75em; font-weight: bold; letter-spacing: 1px; }
         
-        /* BUTTONS */
+        /* BUTTONS & GRID */
         h4 { text-align: left; color: #ccc; text-transform: uppercase; font-size: 0.75em; letter-spacing: 1px; margin: 25px 0 10px 5px; }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { color: white; padding: 18px 5px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 0.85em; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
         .btn img { width: 38px; height: 38px; margin-bottom: 8px; border-radius: 5px; object-fit: contain; }
         .red-btn { background: #d32f2f !important; } .blue-btn { background: #1e3a8a !important; } .grey-btn { background: #262626 !important; }
         .full-width { grid-column: span 2; } .hidden { display: none !important; }
+        .big-icon { width: 60px !important; height: 60px !important; }
 
+        /* SUB-MENUS */
         .sub-menu { background: rgba(0,0,0,0.95); padding: 20px; border-radius: 20px; border: 2px solid #444; margin-top: 10px; }
         .nav-btn { background: #d32f2f; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 20px; cursor: pointer; }
         
+        /* INPUTS & TABLES */
+        textarea, input { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
+        table { width: 100%; color: white; font-size: 0.72em; border-collapse: collapse; margin-top: 10px; }
+        td, th { border: 1px solid #444; padding: 10px 4px; text-align: left; }
+        tr:nth-child(even) { background: rgba(255,255,255,0.05); }
+        .cat-head { background: #444; color: #fff; font-weight: bold; padding: 5px; text-align: center; }
+
         /* TABS (For Gear Portal) */
         .tab-btn { background: #333; color: white; border: none; padding: 12px; border-radius: 8px 8px 0 0; cursor: pointer; flex: 1; margin-right: 2px; font-weight: bold; }
         .tab-btn.active { background: #d32f2f; }
@@ -39,15 +48,21 @@
         .tab-content.active { display: block; }
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
-        textarea, input { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #eee; color: #222; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
+        /* FIREBASE STYLES */
         .burn-entry { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; margin-bottom: 10px; text-align: left; border-left: 5px solid #d32f2f; }
+        .admin-item { background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 12px; border-radius: 8px; margin-bottom: 8px; text-align: left; }
+        .admin-controls { display: flex; gap: 8px; margin-top: 10px; }
         .small-btn { padding: 8px 12px; border-radius: 6px; border: none; color: white; font-size: 0.8em; font-weight: bold; cursor: pointer; flex: 1; margin-top: 8px;}
 
+        /* PRINT STYLES */
         @media print {
-            body { background: white !important; color: black !important; padding: 0 !important; }
-            .btn-grid, .header, h4, input, button, textarea, .nav-btn, .small-btn, .tab-btn { display: none !important; }
-            .sub-menu { background: white !important; border: none !important; color: black !important; }
-            .burn-entry { background: white !important; color: black !important; border: 1px solid #ccc !important; border-left: 5px solid #333 !important; break-inside: avoid; }
+            body { background: white !important; color: black !important; padding: 0 !important; font-family: Arial, sans-serif; }
+            .container { max-width: 100%; }
+            .btn-grid, .header, h4, input, button, textarea, .nav-btn, .small-btn, .tab-btn, #roster-view, #utilities, #fees, #emergency-list, #education, #hospitals { display: none !important; }
+            .sub-menu { background: white !important; border: none !important; color: black !important; padding: 0 !important; }
+            .burn-entry { background: white !important; color: black !important; border: 1px solid #ccc !important; break-inside: avoid; border-left: 5px solid #333 !important; }
+            * { text-shadow: none !important; }
+            h3 { color: black !important; font-size: 24px; text-transform: uppercase; border-bottom: 2px solid black; padding-bottom: 10px; }
             .print-hide { display: none !important; }
         }
     </style>
@@ -78,22 +93,104 @@
             <a onclick="toggleView('hospitals')" class="btn red-btn"><img src="hospital.png">Hospital Lines</a>
         </div>
 
+        <h4>Fire Prevention & Inspections</h4>
+        <div class="btn-grid">
+            <a href="Smoke_Requirements.pdf" target="_blank" class="btn red-btn"><img src="smoke.png">Smoke Specs</a>
+            <a onclick="toggleView('fees')" class="btn red-btn"><img src="fee.png">Inspection Fees</a>
+            <a href="https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter148" target="_blank" class="btn red-btn full-width"><span>⚖️</span> MGL Ch. 148</a>
+        </div>
+
+        <h4>Local Departments</h4>
+        <div class="btn-grid">
+            <a href="https://www.townofpalmer.com/palmerfire" target="_blank" class="btn grey-btn"><img src="palmer.png">Palmer FD</a>
+            <a href="https://www.townofpalmer.com/bondsvillefire" target="_blank" class="btn grey-btn"><img src="bondsville.png">Bondsville FD</a>
+            <a href="https://www.townofpalmer.com/?SEC=98D8F89E-9FF3-49B5-9C65-AEDF8D0F88FA" target="_blank" class="btn grey-btn"><img src="threeriverspatch.png">Three Rivers FD</a>
+            <a onclick="toggleView('roster-view')" class="btn grey-btn"><img src="bondsville.png">BFD ROSTER</a>
+        </div>
+
         <h4>Field Resources</h4>
         <div class="btn-grid">
             <a onclick="toggleView('emergency-list')" class="btn blue-btn"><img src="contacs.png">Call List</a>
             <a href="tel:4132838792" class="btn blue-btn"><img src="disp.png"> Dispatch</a>
             <a onclick="smartLink('zello://talk?channel=BFD3%20TALK%20AROUND', 'https://zello.com/')" class="btn blue-btn"><img src="zello.png">Zello Radio</a>
             <a href="https://hosting.tighebond.com/palmerma_Public/" target="_blank" class="btn blue-btn"><img src="gis.png">Palmer GIS</a>
+            <a onclick="smartLink('shortcuts://run-shortcut?name=OpenERG', 'https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/ERG2024-Eng-Web-a.pdf')" class="btn blue-btn"><img src="erg.png">ERG 2024</a>
             <a onclick="toggleView('utilities')" class="btn blue-btn"><img src="utilities.png"> Utilities</a>
+            <a href="tel:8883041133" class="btn blue-btn"><img src="hazmatresponse.png" class="big-icon">Hazmat Activation</a>
             <a onclick="smartLink('weather://', 'https://weather.com/')" class="btn blue-btn"><img src="weather.png">Weather</a>
+        </div>
+
+        <h4>Wellness & Peer Support</h4>
+        <div class="btn-grid">
+            <a href="https://www.iaffrecoverycenter.com/" target="_blank" class="btn red-btn"><img src="iaff.png">IAFF Wellness</a>
+            <a href="https://www.nvfc.org/programs/share-the-load-program/" target="_blank" class="btn red-btn"><img src="sharetheload.png">Share The Load</a>
         </div>
 
         <h4>Logistics & Admin</h4>
         <div class="btn-grid">
+            <a onclick="toggleView('education')" class="btn grey-btn"><img src="learning.png">Training Portal</a>
+            <a onclick="openAdmin()" class="btn grey-btn"><img src="admin.png"> ADMIN PORTAL</a>
             <a onclick="toggleView('gear-view')" class="btn grey-btn full-width"><img src="tacmed.png" style="filter: invert(1);">Gear Portal</a>
         </div>
 
-        <div id="versionStamp" style="text-align: center; margin-top: 40px; font-size: 10px; color: #444; letter-spacing: 1px;">APP VERSION: LOADING...</div>
+       <div id="versionStamp" style="text-align: center; margin-top: 40px; font-size: 10px; color: #444; letter-spacing: 1px;">APP VERSION: LOADING...</div>
+    </div>
+
+    <div id="admin-view" class="hidden sub-menu">
+        <h2 style="color: #d32f2f; margin-bottom: 5px;">Admin Portal</h2>
+        <p style="font-size:0.8em; color:#aaa; margin-top:0;">Select a module to manage.</p>
+        <div class="btn-grid" style="margin-top: 20px;">
+            <a onclick="toggleView('admin-roster')" class="btn grey-btn full-width"><span>👥</span> Edit Roster</a>
+            <a onclick="toggleView('admin-calls')" class="btn grey-btn full-width"><span>📞</span> Edit Call List</a>
+        </div>
+        <button class="nav-btn" style="margin-top: 40px;" onclick="toggleView('main-view')">Exit Admin</button>
+    </div>
+
+    <div id="admin-roster" class="hidden sub-menu">
+        <h3 style="color: #d32f2f;">Roster Management</h3>
+        <div class="print-hide" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+            <input type="hidden" id="editKey">
+            <input type="text" id="admID" placeholder="ID (e.g., Chief 31, 3F5)">
+            <input type="text" id="admRank" placeholder="Rank (e.g., Captain, FF)">
+            <input type="text" id="admName" placeholder="Full Name">
+            <input type="text" id="admPhone" placeholder="Phone">
+            <button id="saveBtn" class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="saveMember()">Add New Member</button>
+            <button id="cancelBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelEdit()">Cancel Edit</button>
+        </div>
+        <div id="adminRosterFeed"></div>
+        <button class="nav-btn print-hide" onclick="toggleView('admin-view')">Back to Admin</button>
+    </div>
+
+    <div id="admin-calls" class="hidden sub-menu">
+        <h3 style="color: #d32f2f;">Call List Management</h3>
+        <div class="print-hide" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+            <input type="hidden" id="editCallKey">
+            <input type="text" id="admCallCat" placeholder="Category (e.g., Police, Fire Stations)">
+            <input type="text" id="admCallName" placeholder="Agency Name">
+            <input type="text" id="admCallPhone" placeholder="Phone">
+            <button id="saveCallBtn" class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="saveCall()">Add Contact</button>
+            <button id="cancelCallBtn" class="nav-btn hidden" style="background:#444; margin-top:5px;" onclick="cancelCallEdit()">Cancel Edit</button>
+        </div>
+        <div id="adminCallFeed"></div>
+        <button class="nav-btn print-hide" onclick="toggleView('admin-view')">Back to Admin</button>
+    </div>
+
+    <div id="burn-view" class="hidden sub-menu">
+        <h3>BFD Burn Log</h3>
+        <button class="nav-btn print-hide" style="background:#444; margin-top: 0; margin-bottom: 15px; padding: 10px;" onclick="window.print()">🖨️ Print or Save as PDF</button>
+        
+        <div class="print-hide" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+            <input type="text" id="burnDate" placeholder="Date (MM/DD/YYYY)">
+            <button class="nav-btn" style="margin-top:0; margin-bottom:10px; background:#1e3a8a; padding: 8px;" onclick="stampToday()">📅 Auto-Fill Today</button>
+            <input type="text" id="burnName" placeholder="Resident Name">
+            <input type="text" id="burnAddr" placeholder="Address">
+            <input type="text" id="burnPhone" placeholder="Phone Number">
+            <input type="text" id="burnPermit" placeholder="Permit #">
+            <button class="nav-btn" style="background:#2e7d32; margin-top:5px;" onclick="submitBurn()">Post to Burn Log</button>
+        </div>
+        <div id="sharedEntries"></div>
+        <button class="nav-btn print-hide" onclick="toggleView('main-view')">Back</button>
+        <button class="nav-btn print-hide" style="background:#8b0000; font-size:0.7em;" onclick="clearBurnLog()">Wipe All Entries</button>
     </div>
 
     <div id="scratchpad" class="hidden sub-menu">
@@ -103,7 +200,9 @@
         <div class="print-hide" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
             <input type="text" id="padId" placeholder="Run # or Identifier">
             <input type="text" id="padMental" placeholder="Mental Status (e.g., A&O x4)">
+            
             <input type="text" id="padComplaint" placeholder="Chief Complaint / Narrative">
+            
             <input type="text" id="padVitals1" placeholder="Initial Vitals: BP | HR | RR | SpO2">
             <input type="text" id="padVitals2" placeholder="Second Vitals: BP | HR | RR | SpO2">
             <input type="text" id="padVitals3" placeholder="Third Vitals: BP | HR | RR | SpO2">
@@ -115,6 +214,74 @@
         
         <button class="nav-btn print-hide" style="margin-top: 30px;" onclick="toggleView('main-view')">Back</button>
         <button class="nav-btn print-hide" style="background:#8b0000; font-size:0.7em;" onclick="clearScratchpad()">Wipe All Notes</button>
+    </div>
+
+    <div id="roster-view" class="hidden sub-menu">
+        <h3>BFD Personnel Directory</h3>
+        <div style="overflow-x:auto;">
+            <table><thead><tr><th>ID</th><th>Rank</th><th>Name</th><th>Call</th></tr></thead><tbody id="rosterBody"></tbody></table>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
+    <div id="emergency-list" class="hidden sub-menu">
+        <h3>Emergency Call List</h3>
+        <div style="overflow-x:auto;">
+            <table id="callListTable"></table>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
+    <div id="hospitals" class="hidden sub-menu">
+        <h3>Medical Facilities</h3>
+        <div class="btn-grid">
+            <a href="tel:4132833611" class="btn red-btn">Wing Memorial</a>
+            <a href="tel:4137940000" class="btn red-btn">Baystate Med</a>
+            <a href="tel:4137489000" class="btn red-btn">Mercy Medical</a>
+            <a href="tel:4135342500" class="btn red-btn">Holyoke Hospital</a>
+            <a href="tel:4135363000" class="btn red-btn">Providence</a>
+            <a href="tel:5087659771" class="btn red-btn">Harrington</a>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
+    <div id="utilities" class="hidden sub-menu">
+        <h3>Emergency Utilities</h3>
+        <div class="btn-grid">
+            <a href="tel:8772473602" class="btn blue-btn">NatGrid P1</a>
+            <a href="tel:8004629852" class="btn blue-btn">NatGrid P2</a>
+            <a href="tel:8773041179" class="btn blue-btn">Gas Emergency</a>
+            <a href="tel:8003223223" class="btn blue-btn">Gas Customer</a>
+            <a href="tel:4132837674" class="btn grey-btn">AmeriGas</a>
+            <a href="tel:4132838356" class="btn grey-btn">Chudy Oil</a>
+            <a href="tel:4134367485" class="btn grey-btn">Ed & Son</a>
+            <a href="tel:4132891777" class="btn grey-btn">Noonan Energy</a>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
+    <div id="fees" class="hidden sub-menu">
+        <h3>Inspection Fees</h3>
+        <table>
+            <tr><th class="cat-head">Service</th><th class="cat-head">Fee</th></tr>
+            <tr><td>Smoke/CO (1-Family)</td><td>$50</td></tr>
+            <tr><td>Smoke/CO (2-Family)</td><td>$100</td></tr>
+            <tr><td>Oil Burner Permit</td><td>$50</td></tr>
+            <tr><td>Propane Tank Install</td><td>$50</td></tr>
+            <tr><td>Tank Removal</td><td>$100</td></tr>
+        </table>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
+    </div>
+
+    <div id="education" class="hidden sub-menu">
+        <h3>Training Portal</h3>
+        <div class="btn-grid">
+            <a href="https://hraccess-us.technomedia.com/mfa/index.cfm" target="_blank" class="btn grey-btn">MFA Portal</a>
+            <a href="https://training.fema.gov/" target="_blank" class="btn grey-btn">FEMA Training</a>
+            <a href="https://elearning.heart.org/" target="_blank" class="btn grey-btn">AHA Training</a>
+            <a href="https://alerrt.org/" target="_blank" class="btn grey-btn">ALERRT</a>
+        </div>
+        <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
     </div>
 
     <div id="gear-view" class="hidden sub-menu">
@@ -190,6 +357,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
 <script>
+    // FIREBASE SETUP
     const firebaseConfig = {
         apiKey: "AIzaSyA6WXoG46CNznnS21Q6fannxDo9kn8l4iY",
         authDomain: "ops-hub-burnlog.firebaseapp.com",
@@ -200,6 +368,9 @@
         appId: "1:922294998280:web:29401e54dd8921cd4208bd"
     };
     firebase.initializeApp(firebaseConfig);
+    const dbBurn = firebase.database().ref('burnLog');
+    const dbRoster = firebase.database().ref('roster');
+    const dbCalls = firebase.database().ref('calls'); 
     const dbScratchpad = firebase.database().ref('scratchpad');
     const dbGear = firebase.database().ref('gearTracking');
 
@@ -221,10 +392,73 @@
             document.getElementById('liveWx').innerText = Math.round(data.current.temperature_2m) + "°F";
         } catch(e) { document.getElementById('liveWx').innerText = "WXR --"; }
     }
-    getLiveWeather();
+    getLiveWeather(); setInterval(getLiveWeather, 1800000); 
 
-    function toggleView(v) { document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); document.getElementById(v).classList.remove('hidden'); }
+    function toggleView(v) { document.querySelectorAll('.sub-menu, #main-view').forEach(e => e.classList.add('hidden')); document.getElementById(v).classList.remove('hidden'); window.scrollTo(0,0); }
     function smartLink(appUrl, webUrl) { window.location.href=appUrl; setTimeout(()=> { if(!document.hidden) window.location.href=webUrl; }, 2500); }
+
+    // ADMIN AUTH
+    function openAdmin() { if (prompt("Enter Admin Password:") === "BFD30") toggleView('admin-view'); else alert("Unauthorized."); }
+
+    // ==============================================
+    // ROSTER & ADMIN LOGIC
+    // ==============================================
+    function saveMember() {
+        const id=document.getElementById('admID').value, r=document.getElementById('admRank').value, n=document.getElementById('admName').value, p=document.getElementById('admPhone').value, k=document.getElementById('editKey').value;
+        if(n && p) { if(k) dbRoster.child(k).update({id:id, rank:r, name:n, phone:p}); else dbRoster.push({id:id, rank:r, name:n, phone:p}); cancelEdit(); } else alert("Required fields missing.");
+    }
+    function cancelEdit() { ['admID','admRank','admName','admPhone','editKey'].forEach(i => document.getElementById(i).value=''); document.getElementById('saveBtn').innerText='Add New Member'; document.getElementById('cancelBtn').classList.add('hidden'); }
+    dbRoster.on('value', (snap) => {
+        const rb = document.getElementById('rosterBody'), af = document.getElementById('adminRosterFeed'); 
+        rb.innerHTML=''; af.innerHTML=''; const data = snap.val(); 
+        for (let k in data) { 
+            const m = data[k];
+            rb.innerHTML += `<tr><td>${m.id||''}</td><td>${m.rank||''}</td><td>${m.name}</td><td><a href="tel:${m.phone.replace(/[^0-9]/g, '')}">📞</a></td></tr>`;
+            af.innerHTML += `<div class="admin-item"><strong>${m.name}</strong> (${m.id})<div class="admin-controls"><button class="small-btn" style="background:#1e3a8a;" onclick="editMember('${k}','${m.id}','${m.rank}','${m.name}','${m.phone}')">Edit</button><button class="small-btn" style="background:#8b0000;" onclick="deleteMember('${k}')">Delete</button></div></div>`;
+        }
+    });
+    function editMember(k,id,r,n,p) { document.getElementById('editKey').value=k; document.getElementById('admID').value=id; document.getElementById('admRank').value=r; document.getElementById('admName').value=n; document.getElementById('admPhone').value=p; document.getElementById('saveBtn').innerText='Update Member'; document.getElementById('cancelBtn').classList.remove('hidden'); window.scrollTo(0,0); }
+    function deleteMember(k) { if(confirm("Delete member?")) dbRoster.child(k).remove(); }
+
+    function saveCall() {
+        const c=document.getElementById('admCallCat').value, n=document.getElementById('admCallName').value, p=document.getElementById('admCallPhone').value, k=document.getElementById('editCallKey').value;
+        if(c && n && p) { if(k) dbCalls.child(k).update({cat:c, name:n, phone:p}); else dbCalls.push({cat:c, name:n, phone:p}); cancelCallEdit(); } else alert("Required fields missing.");
+    }
+    function cancelCallEdit() { ['admCallCat','admCallName','admCallPhone','editCallKey'].forEach(i => document.getElementById(i).value=''); document.getElementById('saveCallBtn').innerText='Add Contact'; document.getElementById('cancelCallBtn').classList.add('hidden'); }
+    dbCalls.on('value', (snap) => {
+        const cb = document.getElementById('callListTable'), acf = document.getElementById('adminCallFeed'); 
+        cb.innerHTML=''; acf.innerHTML=''; const data = snap.val(); if(!data) return;
+        const grouped = {};
+        for (let k in data) {
+            const c = data[k]; if(!grouped[c.cat]) grouped[c.cat] = []; grouped[c.cat].push(c);
+            acf.innerHTML += `<div class="admin-item"><strong>${c.name}</strong><br><span style="color:#aaa; font-size:0.8em;">${c.cat} | ${c.phone}</span><div class="admin-controls"><button class="small-btn" style="background:#1e3a8a;" onclick="editCall('${k}','${c.cat}','${c.name}','${c.phone}')">Edit</button><button class="small-btn" style="background:#8b0000;" onclick="deleteCall('${k}')">Delete</button></div></div>`;
+        }
+        for(let cat in grouped) {
+            cb.innerHTML += `<tr><th colspan="2" class="cat-head">${cat}</th></tr>`;
+            grouped[cat].forEach(c => cb.innerHTML += `<tr><td>${c.name}</td><td><a href="tel:${c.phone.replace(/[^0-9]/g, '')}">${c.phone}</a></td></tr>`);
+        }
+    });
+    function editCall(k,c,n,p) { document.getElementById('editCallKey').value=k; document.getElementById('admCallCat').value=c; document.getElementById('admCallName').value=n; document.getElementById('admCallPhone').value=p; document.getElementById('saveCallBtn').innerText='Update Contact'; document.getElementById('cancelCallBtn').classList.remove('hidden'); window.scrollTo(0,0); }
+    function deleteCall(k) { if(confirm("Delete contact?")) dbCalls.child(k).remove(); }
+
+    // ==============================================
+    // BURN LOG LOGIC
+    // ==============================================
+    function stampToday() { const d = new Date(); document.getElementById('burnDate').value = (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear(); }
+    function submitBurn() { 
+        const d=document.getElementById('burnDate').value, n=document.getElementById('burnName').value, a=document.getElementById('burnAddr').value, p=document.getElementById('burnPhone').value, pr=document.getElementById('burnPermit').value; 
+        if(n && a) { dbBurn.push({date:d, name:n, addr:a, phone:p, permit:pr}); ['burnDate','burnName','burnAddr','burnPhone','burnPermit'].forEach(i=>document.getElementById(i).value=''); } else alert("Required fields missing.");
+    }
+    dbBurn.on('value', (snap) => { 
+        const de = document.getElementById('sharedEntries'); de.innerHTML=''; const data = snap.val(); 
+        for (let k in data) { 
+            const e = data[k]; 
+            const safeTitle = ('Burn Log: ' + (e.addr || '')).replace(/'/g, '');
+            const safeText = ('Date: ' + (e.date||'') + ' | Name: ' + (e.name||'') + ' | Addr: ' + (e.addr||'') + ' | Permit: ' + (e.permit||'N/A')).replace(/'/g, '');
+            de.innerHTML = `<div class="burn-entry"><p style="color:#d32f2f; font-weight:bold; font-size:0.75em;">${e.date||''}</p><p><strong>${e.name}</strong> (Permit: ${e.permit || 'N/A'})</p><p>${e.addr}</p><p style="color:#aaa; font-size:0.85em;">${e.phone || ''}</p><button class="small-btn print-hide" style="background:rgba(255,255,255,0.2); margin-top:12px; width:100%; border:1px solid #444;" onclick="shareData('${safeTitle}', '${safeText}')">📤 Share Log</button></div>` + de.innerHTML; 
+        } 
+    });
+    function clearBurnLog() { if(confirm("Wipe Burn Log?")) dbBurn.set(null); }
 
     // ==============================================
     // PATIENT SCRATCHPAD LOGIC
@@ -243,7 +477,6 @@
             ['padId','padMental','padComplaint','padVitals1','padVitals2','padVitals3'].forEach(i=>document.getElementById(i).value='');
         }
     }
-    
     dbScratchpad.on('value', (snap) => {
         const se = document.getElementById('scratchpadEntries'); se.innerHTML = '';
         const data = snap.val();
@@ -331,7 +564,6 @@
             }
         }
     });
-
     function clearGearLog() { if(confirm("Wipe entire Gear Log?")) dbGear.set(null); }
 
     // ==============================================
