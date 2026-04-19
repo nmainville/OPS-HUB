@@ -158,7 +158,7 @@
         <button class="nav-btn" style="background:#2e7d32;" onclick="submitScratchpad()">Save</button>
         <div id="scratchpadEntries"></div>
         <button class="nav-btn" onclick="toggleView('main-view')">Back</button>
-    </div>
+    </di
 
     <div id="gear-view" class="hidden sub-menu">
         <h3>Gear Portal</h3>
@@ -213,7 +213,7 @@
     function submitScratchpad() { db.ref('scratchpad').push({ id:document.getElementById('padId').value, mental:document.getElementById('padMental').value, complaint:document.getElementById('padComplaint').value, v1:document.getElementById('padV1').value, v2:document.getElementById('padV2').value, v3:document.getElementById('padV3').value }); }
     db.ref('scratchpad').on('value', s => { const se = document.getElementById('scratchpadEntries'); se.innerHTML = ''; const d = s.val(); for (let k in d) { const e = d[k]; se.innerHTML = `<div class="burn-entry"><strong>ID: ${e.id}</strong><br>Vitals: ${e.v1} | ${e.v2} | ${e.v3}</div>` + se.innerHTML; } });
 
-    // ROSTER
+    // RoOSTER
     db.ref('roster').on('value', s => { const rb = document.getElementById('rosterBody'); rb.innerHTML=''; const d = s.val(); for (let k in d) { const m = d[k]; rb.innerHTML += `<tr><td>${m.id||''}</td><td>${m.rank||''}</td><td>${m.name}</td><td><a href="tel:${m.phone}">📞</a></td></tr>`; } });
     db.ref('calls').on('value', s => { const cb = document.getElementById('callListTable'); cb.innerHTML=''; const d = s.val(); const g = {}; for (let k in d) { const c = d[k]; if(!g[c.cat]) g[c.cat] = []; g[c.cat].push(c); } for(let c in g) { cb.innerHTML += `<tr><th colspan="2" class="cat-head">${c}</th></tr>`; g[c].forEach(x => cb.innerHTML += `<tr><td>${x.name}</td><td><a href="tel:${x.phone}">${x.phone}</a></td></tr>`); } });
 
