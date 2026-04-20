@@ -380,10 +380,10 @@
     }
 
     function updateTime() {
-        const now = new Date();
-        document.getElementById('liveTime').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    }
-    updateTime(); setInterval(updateTime, 1000);
+    const now = new Date();
+    document.getElementById('liveTime').innerText = now.toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit', hour12: false});
+}
+updateTime(); setInterval(updateTime, 1000);
 
     async function getLiveWeather() {
         try {
